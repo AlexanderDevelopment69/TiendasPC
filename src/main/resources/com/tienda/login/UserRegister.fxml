@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" stylesheets="@../../../Styles/RegisterUser.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.User.RegisterUserController">
+   <children>
+      <Pane>
+         <children>
+            <Label layoutX="240.0" layoutY="60.0" prefHeight="57.0" prefWidth="99.0" styleClass="title" text="SIGN UP" />
+            <Label layoutX="149.0" layoutY="123.0" prefHeight="17.0" prefWidth="319.0" text="Completar todos los campos para tener un registro exitoso." />
+            <MFXTextField fx:id="textDni" floatMode="BORDER" floatingText="Dni" layoutX="49.0" layoutY="176.0" prefHeight="40.0" prefWidth="220.0" />
+            <MFXTextField fx:id="textNames" floatMode="BORDER" floatingText="Nombres" layoutX="49.0" layoutY="235.0" prefHeight="40.0" prefWidth="220.0" />
+            <MFXTextField fx:id="textLastNames" floatMode="BORDER" floatingText="Apellidos" layoutX="49.0" layoutY="295.0" prefHeight="40.0" prefWidth="220.0" />
+            <MFXTextField fx:id="textEmail" floatMode="BORDER" floatingText="Email" layoutX="332.0" layoutY="176.0" prefHeight="40.0" prefWidth="220.0" />
+            <MFXPasswordField fx:id="textPassword" floatMode="BORDER" floatingText="Contraseñá" layoutX="332.0" layoutY="235.0" prefHeight="40.0" prefWidth="220.0" />
+            <MFXButton fx:id="btnRegister" layoutX="226.0" layoutY="384.0" onAction="#handleRegister" prefHeight="38.0" prefWidth="113.0" styleClass="button-Register" text="Registrar">
+               <rippleColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#5771f7" />
+                        <Stop color="#8a7dff" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </rippleColor>
+            </MFXButton>
+            <MFXButton fx:id="btnBack" depthLevel="LEVEL1" layoutX="226.0" layoutY="434.0" onAction="#handleBack" prefHeight="38.0" prefWidth="113.0" styleClass="button-Exit" text="Atras">
+               <rippleColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#dfdfdf" />
+                        <Stop color="BLACK" offset="0.007604451955014276" />
+                        <Stop color="#fcfcfd" offset="0.9961832061068702" />
+                        <Stop color="BLACK" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </rippleColor>
+            </MFXButton>
+         </children>
+      </Pane>
+   </children>
+</StackPane>

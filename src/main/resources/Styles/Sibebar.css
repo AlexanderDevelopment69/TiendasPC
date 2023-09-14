@@ -1,0 +1,49 @@
+/*Estilo para el botón dentro del Sidebar*/
+JFXButton {
+    -fx-background-color: transparent;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 40px;
+    -fx-text-fill: white;
+    /*Alinear el icono del button*/
+    -fx-graphic-text-gap: 15; /* Espacio entre el icono y el texto */
+    -fx-padding: 0px 0px 0px 10px; /* Espaciado interno para ajustar la alineación */
+    -fx-alignment: center-left;
+}
+
+/* Estilo para el botón cuando el mouse está sobre él */
+JFXButton:hover {
+    /*-fx-background-color: #E1E7F5; !* Color de fondo en estado hover *!*/
+    /*-fx-text-fill: yellow; !* Color de texto en estado hover *!*/
+    /*-fx-padding: 20px 20px ; !* Espaciado interno en estado hover *!*/
+    /*-fx-opacity: 0.3;*/
+    /*-fx-background-color: gray;*/
+
+}
+
+VBox {
+    -fx-background-color: #242527;
+}
+
+.jfx-hamburger StackPane {
+    -fx-pref-width: 20px;
+    -fx-pref-height: 3px;
+    -fx-background-color: white;
+}
+
+/*.scroll-pane {*/
+/*    -fx-background: #333;*/
+/*    -fx-border-color: none;*/
+/*    -fx-background-color: none;*/
+/*}*/
+
+
+.stack-image:hover{
+    -fx-background-color: #5771F7;
+    -fx-background-radius: 7px;
+    /*-fx-padding: 10 10 10 10;*/
+}
+
+.stack-image{
+    -fx-background-color: transparent;
+    /*-fx-padding: 10 10 10 10;*/
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox fx:id="sidebarVBox" minHeight="-Infinity" minWidth="55.0" prefWidth="55.0" stylesheets="@../../../Styles/Sibebar.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.Components.Sidebar">
+   <children>
+      <JFXHamburger fx:id="hamburgerButton">
+         <VBox.margin>
+            <Insets top="20.0" />
+         </VBox.margin>
+      </JFXHamburger>
+      <Label style="-fx-text-fill: white;" text="Overview">
+         <VBox.margin>
+            <Insets left="10.0" top="40.0" />
+         </VBox.margin>
+      </Label>
+      <JFXButton layoutX="10.0" layoutY="118.0" mnemonicParsing="false" text="Administracion usuario">
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" glyphName="USER" selectionEnd="0" size="20px" />
+         </graphic>
+      </JFXButton>
+      <JFXButton layoutX="10.0" layoutY="118.0" mnemonicParsing="false" text="Inventario">
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" glyphName="PRINT" selectionEnd="0" size="20px" />
+         </graphic>
+      </JFXButton>
+      <JFXButton layoutX="10.0" layoutY="158.0" mnemonicParsing="false" text="Clientes">
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" glyphName="FOLDER" selectionEnd="0" size="20px" />
+         </graphic>
+      </JFXButton>
+      <JFXButton layoutX="10.0" layoutY="198.0" mnemonicParsing="false" text="Ventas">
+         <graphic>
+            <FontAwesomeIcon fill="WHITE" glyphName="APPLE" selectionEnd="0" size="20px" />
+         </graphic>
+      </JFXButton>
+      <StackPane minHeight="-Infinity" minWidth="55.0" prefWidth="55.0" VBox.vgrow="ALWAYS">
+         <children>
+            <JFXButton mnemonicParsing="false" text="Salir" StackPane.alignment="BOTTOM_LEFT">
+               <graphic>
+                  <FontAwesomeIcon fill="WHITE" glyphName="CLOSE" selectionEnd="0" size="20px" />
+               </graphic>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </JFXButton>
+         </children>
+      </StackPane>
+   </children>
+</VBox>

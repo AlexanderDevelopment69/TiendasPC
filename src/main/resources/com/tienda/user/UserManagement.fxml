@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<AnchorPane fx:id="centerAnchorPane" prefHeight="630.0" prefWidth="900.0" stylesheets="@../../../Styles/UserManagement.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.User.UserManagementController">
+   <children>
+      <MFXTextField fx:id="txtfSearchUser" floatMode="BORDER" floatingText="Buscar Usuario" layoutX="60.0" layoutY="108.0" prefHeight="38.0" prefWidth="302.0" />
+      <Label layoutX="60.0" layoutY="41.0" styleClass="label-Title" text="Administracion de Usuarios" />
+      <MFXLegacyTableView fx:id="userTable" layoutX="60.0" layoutY="193.0" prefHeight="400.0" prefWidth="646.0">
+         <columns>
+            <TableColumn fx:id="colCodigo" prefWidth="95.1999740600586" text="Codigo" />
+            <TableColumn fx:id="colDni" prefWidth="95.1999740600586" text="DNI" />
+            <TableColumn fx:id="colApellidos" prefWidth="139.20001220703125" text="Apellidos" />
+            <TableColumn fx:id="colNombres" prefWidth="143.20001220703125" text="Nombres" />
+            <TableColumn fx:id="colEmail" prefWidth="171.19998779296873" text="email" />
+         </columns>
+      </MFXLegacyTableView>
+      <Label layoutX="60.0" layoutY="76.0" text="Actualizar datos del usuario" />
+      <MFXButton layoutX="383.0" layoutY="108.0" onAction="#handleLoadDate" prefHeight="38.0" prefWidth="113.0" style="-fx-background-color: #5771F7; -fx-text-fill: white;" styleClass="button-Sign-login" text="Cargar datos">
+         <rippleColor>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#5771f7" />
+                  <Stop color="#8a7dff" offset="0.9961832061068702" />
+                  <Stop color="#8a7dff" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </rippleColor>
+      </MFXButton>
+   </children>
+</AnchorPane>

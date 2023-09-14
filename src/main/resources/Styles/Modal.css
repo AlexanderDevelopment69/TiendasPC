@@ -1,0 +1,44 @@
+StackPane{
+    -fx-background-color: white;
+}
+VBox{
+    -fx-background-color:white;
+}
+
+HBox{
+    -fx-background-color:white;
+}
+
+/* Cambia el fondo del TextArea */
+.text-area {
+    -fx-background-color: white; /* Cambia el color de fondo */
+    -fx-font-size:12px; /* Cambia el tamaño de la fuente */
+}
+
+
+.text-area .content {
+    -fx-background-color: white;
+    -fx-padding: 10 80;
+}
+
+
+
+
+
+
+.button-confirm{
+    -fx-background-color: #5771f7;
+    -fx-text-fill: white;
+}
+
+.button-exit {
+    -fx-background-color: #F1F5F5;
+    -fx-text-fill: black;
+}
+
+.label-title{
+    -fx-font-weight: bold; /* Establece el texto en negrita */
+   -fx-font-size: 14;
+    /*-fx-text-fill: black;*/
+}
+

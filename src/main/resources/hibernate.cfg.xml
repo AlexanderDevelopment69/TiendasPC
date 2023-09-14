@@ -1,0 +1,30 @@
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <!-- Configuración de la base de datos -->
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://172.190.209.140:3306/TiendaPC</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+
+        <!-- Configuración de dialecto SQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+        <!-- Configuración de la sesión de Hibernate -->
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.show_sql">true</property>
+<!--        <property name="hibernate.hbm2ddl.auto">create-drop</property>-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Configuración de clases de modelo -->
+        <!-- Aquí se agregarían todas las clases de modelo (entidades) que deseas mapear -->
+        <mapping class="com.tienda.Model.User"/>
+        <mapping class="com.tienda.Model.Role"/>
+        <mapping class="com.tienda.Model.UserRoleChange"/>
+<!--        <mapping class="com.tienda.Model.Product"/>-->
+
+    </session-factory>
+</hibernate-configuration>

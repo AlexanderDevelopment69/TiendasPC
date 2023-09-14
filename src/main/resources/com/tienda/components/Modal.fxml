@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0" stylesheets="@../../../Styles/Modal.css" type="StackPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="400.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="130.0" prefWidth="406.0">
+               <graphic>
+                  <ImageView fx:id="iconImageView" fitHeight="118.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/iconCheck.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="titleLabel" alignment="CENTER" prefHeight="38.0" prefWidth="400.0" styleClass="label-title" text="Registrado correctamente." />
+            <TextArea fx:id="messageTextArea" editable="false" prefHeight="97.0" prefWidth="400.0" text="Registrado correctamente, ahora puedes &#10;ingresar al sistema.&#10;&#10;" />
+            <HBox fx:id="hBox" prefHeight="73.0" prefWidth="400.0">
+               <children>
+                  <MFXButton fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="85.0" styleClass="button-exit" text="Salir">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin>
+                  </MFXButton>
+                  <MFXButton fx:id="confirmButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="95.0" styleClass="button-confirm" text="Iniciar sesion" />
+               </children>
+               <padding>
+                  <Insets left="100.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</fx:root>

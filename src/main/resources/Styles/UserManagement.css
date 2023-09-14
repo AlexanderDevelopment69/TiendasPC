@@ -1,0 +1,8 @@
+AnchorPane{
+    -fx-background-color: white;
+}
+.label-Title{
+    -fx-font-size: 15;
+    -fx-text-fill: black;
+    -fx-font-family: Bold;
+}

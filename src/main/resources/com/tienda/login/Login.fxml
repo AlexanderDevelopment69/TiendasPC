@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" stylesheets="@../../../Styles/Login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.User.LoginController">
+   <children>
+      <Pane fx:id="Pane">
+         <children>
+            <Label layoutX="247.0" layoutY="58.0" prefHeight="57.0" prefWidth="99.0" styleClass="title-login" text="SIGN IN" />
+            <Label layoutX="158.0" layoutY="122.0" prefHeight="17.0" prefWidth="309.0" text="Ingresar el usuario y contraseña correctamente" />
+            <MFXTextField fx:id="textEmail" floatMode="BORDER" floatingText="Email" layoutX="179.0" layoutY="185.0" prefHeight="44.0" prefWidth="223.0" />
+            <Label fx:id="emailValidationLabel" layoutX="179.0" layoutY="236.0" textFill="#ef6e6b" />
+            <MFXPasswordField fx:id="textPassword" floatMode="BORDER" floatingText="Contraseñá" layoutX="179.0" layoutY="262.0" prefHeight="44.0" prefWidth="223.0" />
+            <Label fx:id="passwordValidationLabel" layoutX="179.0" layoutY="314.0" textFill="#ef6e6b" />
+            <MFXButton layoutX="264.0" layoutY="338.0" prefHeight="25.0" prefWidth="146.0" styleClass="text-RecoveryPassword" text="Recuperar contraseñá.">
+               <rippleColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#29eda8" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </rippleColor>
+            </MFXButton>
+            <MFXButton layoutX="224.0" layoutY="396.0" onAction="#handleLogin" prefHeight="38.0" prefWidth="113.0" styleClass="button-Sign-login" text="Ingresar">
+               <rippleColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#5771f7" />
+                        <Stop color="#8a7dff" offset="0.9961832061068702" />
+                        <Stop color="#8a7dff" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </rippleColor></MFXButton>
+            <MFXButton layoutX="224.0" layoutY="446.0" onAction="#handleExit" prefHeight="38.0" prefWidth="113.0" styleClass="button-Exit-login" text="Salir">
+               <rippleColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#5771f7" />
+                        <Stop color="#8a7dff" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </rippleColor>
+            </MFXButton>
+            <MFXButton fx:id="btnRegister" layoutX="208.0" layoutY="504.0" onAction="#handleRegister" prefHeight="7.0" prefWidth="166.0" styleClass="button-Register-login" text="Registrar nueva cuenta.">
+               <rippleColor>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#5771f7" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </rippleColor></MFXButton>
+
+         </children>
+      </Pane>
+   </children>
+</StackPane>
