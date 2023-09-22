@@ -1,8 +1,0 @@
-
-o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‹Ş†ü
-´
-java:S6548"˜A Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(îû™âûÿÿÿÿ
-G
-java:S1128"2Remove this unused import 'com.tienda.Model.Role'.(Âèë
-E
-java:S1128"*Remove this unused import 'java.util.Set'.(ö²„¤şÿÿÿÿ

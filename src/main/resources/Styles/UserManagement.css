@@ -6,3 +6,35 @@ AnchorPane{
     -fx-text-fill: black;
     -fx-font-family: Bold;
 }
+
+MFXLegacyTableView {
+    -fx-border-color: white;
+    -fx-fixed-cell-size: 40px;
+}
+
+MFXLegacyTableView .table-column {
+    -fx-alignment: center;
+
+}
+
+MFXLegacyTableView .column-header {
+    -fx-background-color: #F9FAFC;
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+
+
+
+.centered-buttons {
+    -fx-alignment: center;
+    -fx-spacing: 5px; /* Espacio entre botones si es necesario */
+}
+
+.buttonA{
+    -fx-background-color: #5771f7;
+    -fx-text-fill: white;
+}
+.buttonB{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}

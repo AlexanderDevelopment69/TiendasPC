@@ -169,11 +169,11 @@ public class MFXTextFieldValidator {
     public Boolean validateCharactersOnly(String input) {
         boolean isValid = isValidCharactersOnly(input);
         if (isValid) {
-            textField.setFloatingText("Caracteres válidos");
+//            textField.setFloatingText("Caracteres válidos");
             textField.setStyle("-mfx-main: " + VALID_COLOR + ";");
             textField.setStyle("-fx-border-color: " + VALID_COLOR + ";");
         } else {
-            textField.setFloatingText("No se permiten números ni signos");
+//            textField.setFloatingText("No se permiten números ni signos");
             textField.setStyle("-mfx-main: " + INVALID_COLOR + ";");
             textField.setStyle("-fx-border-color: " + INVALID_COLOR + ";");
         }

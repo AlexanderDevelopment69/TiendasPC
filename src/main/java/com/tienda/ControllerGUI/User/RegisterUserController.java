@@ -1,21 +1,18 @@
 package com.tienda.ControllerGUI.User;
 
-import com.jfoenix.controls.JFXSnackbar;
-import com.jfoenix.controls.JFXSnackbarLayout;
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.ViewsManager.ViewsManager;
-import com.tienda.DAO.UserDao;
-import com.tienda.DAO.UserDaoHibernate;
+import com.tienda.Dao.UserDao;
+import com.tienda.Dao.UserDaoHibernate;
+
 import com.tienda.Model.User;
 import com.tienda.Tools.MFXTextFieldValidator;
-import com.tienda.Tools.TextFieldValidator;
 import com.tienda.Utils.DataLoadingUtil;
+import com.tienda.dto.UserDTO;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,8 +61,6 @@ public class RegisterUserController implements Initializable {
     MFXTextFieldValidator lastNamesValidator;
     MFXTextFieldValidator namesValidator;
 
-    DataLoadingUtil dataLoadingUtil;
-
 
     @FXML
     void handleBack(ActionEvent event) {
@@ -73,91 +68,6 @@ public class RegisterUserController implements Initializable {
 
     }
 
-//    @FXML
-//    void handleRegister(ActionEvent event) {
-//
-//        // Obtener datos de los campos
-//        String email = textEmail.getText();
-//        String password = textPassword.getText();
-//        String dni = textDni.getText();
-//        String lastNames = textLastNames.getText();
-//        String names = textNames.getText();
-//
-//
-//        // Validar campos vacíos
-//        if (email.isEmpty() || password.isEmpty() || dni.isEmpty() || lastNames.isEmpty() || names.isEmpty()) {
-//            System.out.println("Por favor, complete todos los campos.");
-//            return; // Detener la operación si faltan datos
-//        }
-//
-//        // Validar contraseña
-//        if (!passwordValidator.validatePassword(password)) {
-//            System.out.println("La contraseña no cumple con los requisitos");
-//            return; // Detener la validación si la contraseña no es válida
-//        }
-//
-//        // Validar DNI
-//        if (!dniValidator.validateDni(dni)) {
-//            System.out.println("El DNI no es válido");
-//            return; // Detener la validación si el DNI no es válido
-//        }
-//
-//        // Validar correo electrónico
-//        if (!emailValidator.validateEmail(email)) {
-//            System.out.println("El correo electrónico no es válido");
-//            return; // Detener la validación si el correo electrónico no es válido
-//        }
-//
-//        // Validar apellidos
-//        if (!lastNamesValidator.validateCharactersOnly(lastNames)) {
-//            System.out.println("Los caracteres para el apellido no están permitidos");
-//            return; // Detener la validación si los apellidos no son válidos
-//        }
-//
-//        // Validar nombres
-//        if (!namesValidator.validateCharactersOnly(names)) {
-//            System.out.println("Los caracteres para el nombre no están permitidos");
-//            return; // Detener la validación si los nombres no son válidos
-//        }
-//
-//        // Verificar si el usuario existe en la base de datos
-//        Boolean isEmailExists = userDAO.isEmailExists(email);
-//        Boolean isDniExists = userDAO.isDniExists(dni);
-//
-//        if (isEmailExists) {
-//            System.out.println("Usuario ya registrado con este correo");
-//            MFXTextFieldValidator.emailExists(textEmail, true);
-//            return; // Detener la operación si el correo ya está registrado
-//        }
-//
-//        if (isDniExists) {
-//            System.out.println("Usuario ya registrado con este DNI");
-//            MFXTextFieldValidator.dniExists(textDni, true);
-//            return; // Detener la operación si el DNI ya está registrado
-//        }
-//
-//        // Crear un objeto User con los datos ingresados
-//        User newUser = new User(email, password, dni, lastNames, names);
-//
-//        try {
-//            // Guardar el nuevo usuario en la base de datos
-//            userDAO.addUser(newUser);
-//
-//            // Limpiar los campos después del registro
-//            textDni.clear();
-//            textEmail.clear();
-//            textNames.clear();
-//            textLastNames.clear();
-//            textPassword.clear();
-//
-//            // Mostrar un mensaje de éxito
-//            System.out.println("Usuario registrado con éxito.");
-//        } catch (HibernateException e) {
-//            // Manejar errores de acceso a la base de datos
-//            System.out.println("Error al registrar el usuario.");
-//        }
-//
-//    }
 
     @FXML
     void handleRegister(ActionEvent event) {
@@ -175,7 +85,8 @@ public class RegisterUserController implements Initializable {
 
         // Validar campos vacíos
         if (email.isEmpty() || password.isEmpty() || dni.isEmpty() || lastNames.isEmpty() || names.isEmpty()) {
-            errorMessages.append("Por favor, complete todos los campos.\n");
+            System.out.println("Por favor, complete todos los campos.\n");
+            return;
         }
 
         // Validar contraseña
@@ -222,11 +133,33 @@ public class RegisterUserController implements Initializable {
         if (errorMessages.length() > 0) {
             System.out.println("Errores de validación:");
             System.out.println(errorMessages);
+
+
+            //Crear una instancia del modal
+            ModalDialog modalDialog = new ModalDialog();
+            // Configurar el modal mediante un solo método
+            modalDialog.configureModal(
+                    new Image("Images/alert.png"),
+                    "Registro incorrecto.",
+                    "No se pudo registrar correctamente, verfifica todos los campos: \n" + "\n" + errorMessages,
+                    "OK",
+                    e -> {
+                        // Lógica cuando se hace clic en el botón "Confirmar"
+                        System.out.println("Se hizo clic en Confirmar");
+                        modalDialog.close();
+
+                    }
+
+            );
+
+            modalDialog.showModal(root);
+
+
         } else {
 
             // Si no hay errores, proceder con el registro
-            // Crear un objeto User con los datos ingresados
-            User newUser = new User(email, password, dni, lastNames, names);
+            // Crear un objeto UserDTO con los datos ingresados
+            UserDTO newUser = new UserDTO(email, password, dni, lastNames, names);
             try {
                 // Guardar el nuevo usuario en la base de datos
                 userDao.addUser(newUser);
@@ -245,10 +178,10 @@ public class RegisterUserController implements Initializable {
                 modalDialog.configureModal(
                         new Image("Images/iconCheck.png"),
                         "Registrado correctamente.",
-                        "Registrado correctamente, ahora \npuedes ingresar al sistema.",
+                        "Registrado correctamente, ahora puedes ingresar al sistema.",
                         "Confirmar",
                         "Cancelar",
-                        e-> {
+                        e -> {
                             // Lógica cuando se hace clic en el botón "Confirmar"
                             System.out.println("Se hizo clic en Confirmar");
                             viewsManager.showLogin();
@@ -263,9 +196,6 @@ public class RegisterUserController implements Initializable {
                 modalDialog.showModal(root);
 
 
-
-
-
                 // Mostrar un mensaje de éxito
                 System.out.println("Usuario registrado con éxito.");
             } catch (HibernateException e) {
@@ -274,13 +204,8 @@ public class RegisterUserController implements Initializable {
             }
 
 
-
         }
     }
-
-
-
-
 
 
     @Override
@@ -301,7 +226,6 @@ public class RegisterUserController implements Initializable {
         namesValidator = new MFXTextFieldValidator(textNames, MFXTextFieldValidator.ValidationCriteria.NAMES);
 
 
-        dataLoadingUtil = new DataLoadingUtil(userDao);
     }
 
 

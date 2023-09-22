@@ -1,19 +1,18 @@
 package com.tienda.ControllerGUI.User;
 
-import com.tienda.Model.Role;
-
-import java.util.Set;
 
 public class UserSession {
     private static UserSession instance;
     private Long userId;
+    private String dni;
     private String name;
-
     private String lastName;
     private String email;
-    private String role;
+    private String roleName;
 
-    private UserSession() {}
+    private UserSession() {
+
+    }
 
     public static UserSession getInstance() {
         if (instance == null) {
@@ -22,12 +21,13 @@ public class UserSession {
         return instance;
     }
 
-    public void setUser(Long userId, String name,String lastName,String email, String  role) {
+    public void setUser(Long userId, String name, String lastName, String email, String dni, String roleName) {
         this.userId = userId;
         this.name = name;
-        this.lastName=lastName;
-        this.email=email;
-        this.role = role;
+        this.lastName = lastName;
+        this.email = email;
+        this.dni = dni;
+        this.roleName = roleName;
     }
 
 
@@ -47,16 +47,22 @@ public class UserSession {
         return email;
     }
 
-    public String getRole() {
-        return role;
+
+    public String getDni() {
+        return dni;
+    }
+
+    public String getRoleName() {
+        return roleName;
     }
 
     public void clearSession() {
         userId = null;
         name = null;
-        lastName=null;
-        email=null;
-        role = null;
+        lastName = null;
+        email = null;
+        dni = null;
+        roleName = null;
     }
 
     public boolean isLoggedIn() {

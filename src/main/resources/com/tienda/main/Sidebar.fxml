@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.Main.SidebarController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.Main.SidebarController">
     <left>
         <VBox fx:id="sidebarVBox" minHeight="-Infinity" minWidth="55.0" prefWidth="55.0" stylesheets="@../../../Styles/Sibebar.css" BorderPane.alignment="CENTER">
             <children>
@@ -28,7 +28,7 @@
                   <Insets left="10.0" top="40.0" />
                </VBox.margin>
             </Label>
-            <JFXButton layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleMainView" text="Vista principal">
+            <JFXButton fx:id="btnMain" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleMainView" text="Vista principal">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -44,7 +44,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleUserManagement" text="Administracion de usuario">
+            <JFXButton fx:id="btnUserManagement" layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleUserManagement" text="Administracion de usuario">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -57,7 +57,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="156.0" mnemonicParsing="false" text="Invantario">
+            <JFXButton fx:id="btnInventory" layoutX="10.0" layoutY="156.0" mnemonicParsing="false" text="Invantario">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -70,7 +70,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="196.0" mnemonicParsing="false" text="Ventas">
+            <JFXButton fx:id="btnSales" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" text="Ventas">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -83,7 +83,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="236.0" mnemonicParsing="false" text="Compras">
+            <JFXButton fx:id="btnPurchase" layoutX="10.0" layoutY="236.0" mnemonicParsing="false" text="Compras">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -96,7 +96,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="276.0" mnemonicParsing="false" text="Administracion Clientes">
+            <JFXButton fx:id="btnCustomer" layoutX="10.0" layoutY="276.0" mnemonicParsing="false" text="Administracion Clientes">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -203,15 +203,20 @@
    <center>
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="900.0" stylesheets="@../../../Styles/Main.css" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane fx:id="topAnchorPane" layoutY="97.0" minHeight="-Infinity" minWidth="-Infinity" styleClass="AnchorPane-top" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="topAnchorPane" layoutY="97.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" styleClass="AnchorPane-top" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="589.0" layoutY="14.0" styleClass="rol-title" text="Rol: " AnchorPane.rightAnchor="285.0" />
-                  <Label fx:id="labelRol" layoutX="629.0" layoutY="14.0" text="Administrador" AnchorPane.rightAnchor="195.0" />
+                  <Label fx:id="labelRol" layoutX="629.0" layoutY="14.0" AnchorPane.rightAnchor="195.0" />
                   <Label layoutX="749.0" layoutY="14.0" styleClass="username-title" text="Username" AnchorPane.rightAnchor="102.0" />
-                  <Label fx:id="labelNameUser" layoutX="829.0" layoutY="14.0" text="DNI" AnchorPane.rightAnchor="39.799999999999955" />
+                  <Label fx:id="labelNameUser" layoutX="829.0" layoutY="14.0" AnchorPane.rightAnchor="39.799999999999955" />
+                  <ImageView fitHeight="71.0" fitWidth="160.0" layoutX="20.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="centerAnchorPane" layoutX="93.0" layoutY="191.0" minHeight="-Infinity" minWidth="-Infinity" styleClass="AnchorPane-center" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+            <AnchorPane fx:id="centerAnchorPane" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
          </children></AnchorPane>
    </center>
 </BorderPane>

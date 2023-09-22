@@ -1,44 +1,27 @@
-#version: '3.3'
-#services:
-#  db:
-#    image: mysql
-#    restart: always
-#    container_name: my-sql-composer
-#    environment:
-#      MYSQL_DATABASE: 'TiendaPC'
-#      # So you don't have to use root, but you can if you like
-#      #      MYSQL_USER: 'root'
-#      # You can use whatever password you like
-#      #      MYSQL_PASSWORD: 'root'
-#      # Password for root access
-#      MYSQL_ROOT_PASSWORD: 'root'
-#    ports:
-#      # <Port exposed> : <MySQL Port running inside container>
-#      - '3306:3306'
-#    expose:
-#      # Opens port 3306 on the container
-#      - '3306'
-#      # Where our data will be persisted
-#    volumes:
-#      - /var/docker_data/mysql_data:/var/lib/mysql
-### Names our volume
-#volumes:
-#  my-db:
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql
+    container_name: my-mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: EwYNY0Dvz6bst3vI
+      MYSQL_DATABASE: TiendaPC
+      MYSQL_USER: alexander
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - /home/alexander/mysql/data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  mysql-data:
 
 
-    version: '3.8'
 
-    services:
-      mysql:
-        image: mysql:latest
-        container_name: mysql_container
-        environment:
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: TiendaPC
-#          MYSQL_USER: root
-#          MYSQL_PASSWORD: root
-        ports:
-          - "3306:3306"
-        volumes:
-          - /var/lib/mysql
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci

@@ -9,19 +9,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -40,7 +34,7 @@ public class ModalDialog extends StackPane {
     @FXML
     private Label titleLabel;
     @FXML
-    private TextArea messageTextArea;
+    private Label labelContent;
     @FXML
     private HBox hBox;
     @FXML
@@ -49,7 +43,7 @@ public class ModalDialog extends StackPane {
     private MFXButton confirmButton;
 
     public ModalDialog() {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tienda/components/Modal.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tienda/components/ModalDialog.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -69,7 +63,7 @@ public class ModalDialog extends StackPane {
     }
 
     public void setMessage(String message) {
-        messageTextArea.setText(message);
+        labelContent.setText(message);
     }
 
     public void setConfirmButtonText(String text) {
@@ -100,6 +94,16 @@ public class ModalDialog extends StackPane {
         setExitButtonAction(exitButtonAction);
     }
 
+    public void configureModal(Image iconImage, String title, String message, String confirmButtonText,
+                               EventHandler<ActionEvent> confirmButtonAction) {
+        setIconImage(iconImage);
+        setTitle(title);
+        setMessage(message);
+        setConfirmButtonText(confirmButtonText);
+        setConfirmButtonAction(confirmButtonAction);
+        exitButton.setVisible(false);
+
+    }
 
     public void showModal(StackPane parentStackPane) {
         // Añade el fondo oscuro al StackPane

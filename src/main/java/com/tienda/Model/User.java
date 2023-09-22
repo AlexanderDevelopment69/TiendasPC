@@ -3,7 +3,9 @@ package com.tienda.Model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @ToString
@@ -34,7 +36,13 @@ public class User {
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
     private String password;
 
-//    // Relación Many-to-Many con la entidad Role, EAGER carga los roles cuando se carga un usuario.
+    @OneToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+
+
+    // Relación Many-to-Many con la entidad Role, EAGER carga los roles cuando se carga un usuario.
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    // Define la tabla intermedia para la relación Many-to-Many.
 //    @JoinTable(
@@ -46,20 +54,5 @@ public class User {
 //    // Inicializa una colección vacía de roles.
 //    private Set<Role> roles = new HashSet<>();
 
-    @OneToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
 
-    public User(String email, String password) {
-        this.email=email;
-        this.password=password;
-    }
-
-    public User(String email, String password, String dni, String lastNames, String names) {
-        this.email=email;
-        this.password=password;
-        this.dni=dni;
-        this.lastName=lastNames;
-        this.name=names;
-    }
 }

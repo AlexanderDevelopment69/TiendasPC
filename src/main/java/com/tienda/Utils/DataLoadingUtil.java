@@ -1,12 +1,17 @@
 package com.tienda.Utils;
 
+import com.tienda.Model.Role;
+import com.tienda.dto.UserDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.TableView;
-import com.tienda.DAO.UserDao;
+import com.tienda.Dao.UserDao;
 import com.tienda.Model.User;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DataLoadingUtil {
 
@@ -17,7 +22,7 @@ public class DataLoadingUtil {
         this.userDao = userDao;
     }
 
-    public void loadUserTableData(TableView<User> userTable) {
+    public void loadUserTableData(TableView<UserDTO> userTable) {
         // Verificar si la carga de datos ya está en curso
         if (isDataLoading) {
             // El hilo ya se ha iniciado, no hacer nada adicional
@@ -26,15 +31,15 @@ public class DataLoadingUtil {
 
         isDataLoading = true; // Marcar que la carga de datos está en curso
 
-        Service<ObservableList<User>> dataLoadingService = new Service<>() {
+        Service<ObservableList<UserDTO>> dataLoadingService = new Service<>() {
             @Override
-            protected Task<ObservableList<User>> createTask() {
-                return new Task<ObservableList<User>>() {
+            protected Task<ObservableList<UserDTO>> createTask() {
+                return new Task<>() {
                     @Override
-                    protected ObservableList<User> call() throws Exception {
-                        // Realiza la carga de datos desde la base de datos aquí
-                        // Obtén la lista de usuarios desde tu UserDao
-                        ObservableList<User> userList = FXCollections.observableArrayList(userDao.getAllUsers());
+                    protected ObservableList<UserDTO> call() {
+//                         Realiza la carga de datos desde la base de datos aquí
+//                         Obtén la lista de usuarios desde tu UserDao
+                        ObservableList<UserDTO> userList = FXCollections.observableArrayList(userDao.getAllUsers());
                         return userList;
                     }
                 };
@@ -49,8 +54,9 @@ public class DataLoadingUtil {
         // Acción cuando el hilo ha terminado con éxito
         dataLoadingService.setOnSucceeded(event -> {
             System.out.println("El hilo ha terminado");
+            userTable.refresh();
             // Enlaza los datos a la TableView
-            ObservableList<User> userList = dataLoadingService.getValue();
+            ObservableList<UserDTO> userList = dataLoadingService.getValue();
             userTable.setItems(userList);
 
             // Marcar que la carga de datos ha terminado

@@ -8,10 +8,10 @@ import java.util.Set;
 
 // Marca la clase como una entidad de JPA, que se mapeará a una tabla en la base de datos.
 @Entity
-
-// Lombok: Genera automáticamente getters, setters, toString, hashCode, y equals para los campos de la clase.
-@Data
-
+//@ToString(exclude = {"users"})
+@ToString
+@Getter
+@Setter
 // Constructor sin argumentos.
 @NoArgsConstructor
 
@@ -24,10 +24,8 @@ public class Role {
 
     // Identificador único para cada rol.
     @Id
-
     // Generación automática del ID utilizando una estrategia de base de datos.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     // Nombre de la columna en la base de datos.
     @Column(name = "role_id")
     private Long id;
@@ -40,4 +38,9 @@ public class Role {
 //    @ManyToMany(mappedBy = "roles")
 //    // Inicializa una colección vacía de usuarios.
 //    private Set<User> users = new HashSet<>();
+
+
+    public Role(Long id) {
+        this.id = id;
+    }
 }

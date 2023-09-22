@@ -9,11 +9,11 @@
 <?import javafx.scene.paint.LinearGradient?>
 <?import javafx.scene.paint.Stop?>
 
-<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" stylesheets="@../../../Styles/RegisterUser.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.User.RegisterUserController">
+<StackPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" stylesheets="@../../../Styles/RegisterUser.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.User.RegisterUserController">
    <children>
       <Pane>
          <children>
-            <Label layoutX="240.0" layoutY="60.0" prefHeight="57.0" prefWidth="99.0" styleClass="title" text="SIGN UP" />
+            <Label layoutX="225.0" layoutY="60.0" prefHeight="57.0" styleClass="title" text="Crear cuenta" />
             <Label layoutX="149.0" layoutY="123.0" prefHeight="17.0" prefWidth="319.0" text="Completar todos los campos para tener un registro exitoso." />
             <MFXTextField fx:id="textDni" floatMode="BORDER" floatingText="Dni" layoutX="49.0" layoutY="176.0" prefHeight="40.0" prefWidth="220.0" />
             <MFXTextField fx:id="textNames" floatMode="BORDER" floatingText="Nombres" layoutX="49.0" layoutY="235.0" prefHeight="40.0" prefWidth="220.0" />

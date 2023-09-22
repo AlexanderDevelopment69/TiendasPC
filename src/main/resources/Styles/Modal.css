@@ -1,44 +1,39 @@
-StackPane{
+StackPane {
     -fx-background-color: white;
 }
-VBox{
-    -fx-background-color:white;
-}
 
-HBox{
-    -fx-background-color:white;
-}
-
-/* Cambia el fondo del TextArea */
-.text-area {
-    -fx-background-color: white; /* Cambia el color de fondo */
-    -fx-font-size:12px; /* Cambia el tamaño de la fuente */
-}
-
-
-.text-area .content {
+VBox {
     -fx-background-color: white;
-    -fx-padding: 10 80;
+}
+
+HBox {
+    -fx-background-color: white;
+    -fx-padding: 0 0 20 30; /* arriba derecha abajo izquierda */
+
+}
+
+.label-title {
+    -fx-font-weight: bold; /* Establece el texto en negrita */
+    -fx-font-size: 14;
+    -fx-alignment: center-left;
+    -fx-padding: 30 0 0 20;  /* arriba derecha abajo izquierda */
+    /*-fx-text-fill: black;*/
+}
+
+.label-subTitle {
+    -fx-padding: 10 0 40 20;
 }
 
 
 
-
-
-
-.button-confirm{
+.button-confirm {
     -fx-background-color: #5771f7;
     -fx-text-fill: white;
 }
 
-.button-exit {
+.button-cancel{
     -fx-background-color: #F1F5F5;
     -fx-text-fill: black;
 }
 
-.label-title{
-    -fx-font-weight: bold; /* Establece el texto en negrita */
-   -fx-font-size: 14;
-    /*-fx-text-fill: black;*/
-}
 

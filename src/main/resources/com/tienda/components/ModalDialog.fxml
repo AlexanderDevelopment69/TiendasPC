@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" stylesheets="@../../../Styles/ModalDialog.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox fx:id="vBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+         <children>
+            <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0">
+               <graphic>
+                  <ImageView fx:id="iconImageView" fitHeight="118.0" fitWidth="148.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../Images/iconCheck.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets top="20.0" />
+               </padding>
+            </Label>
+            <Label fx:id="titleLabel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="label-title" text="Registrado correctamente.">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Label>
+            <Label fx:id="labelContent" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="label-content" text="xasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasxxasxasxasx" wrapText="true" />
+            <HBox fx:id="hBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0">
+               <children>
+                  <MFXButton fx:id="confirmButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="40.0" prefWidth="95.0" styleClass="button-confirm" text="Iniciar sesion">
+                     <HBox.margin>
+                        <Insets right="15.0" />
+                     </HBox.margin></MFXButton>
+                  <MFXButton fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="85.0" styleClass="button-exit" text="Salir">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </MFXButton>
+               </children>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</fx:root>

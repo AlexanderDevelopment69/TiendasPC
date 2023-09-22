@@ -1,5 +1,6 @@
 package com.tienda.ControllerGUI.Main;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXHamburger;
 import com.tienda.ControllerGUI.User.UserManagementController;
 import com.tienda.ControllerGUI.User.UserSession;
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class SidebarController  {
+public class SidebarController {
 
     @FXML
     private BorderPane mainBorderPane;
@@ -39,13 +40,29 @@ public class SidebarController  {
     @FXML
     private JFXHamburger hamburgerButton;
 
-
     @FXML
     private Label labelRol;
 
     @FXML
     private Label labelNameUser;
 
+    @FXML
+    private JFXButton btnMain;
+
+    @FXML
+    private JFXButton btnUserManagement;
+
+    @FXML
+    private JFXButton btnInventory;
+
+    @FXML
+    private JFXButton btnSales;
+
+    @FXML
+    private JFXButton btnPurchase;
+
+    @FXML
+    private JFXButton btnCustomer;
 
 
     private boolean isExpanded = false;
@@ -53,36 +70,51 @@ public class SidebarController  {
     private double collapsedWidth = 55;
 
     private ViewsManager viewsManager;
-    private static String userName;
-    private static String role;
+
+    //Gestion del usuario - Variables donde almacenar los datos de la session del usuario
+    private Long userId;
+    private String userName;
+    private String email;
+    private String dni;
+    private String role;
 
     @FXML
     private void initialize() throws IOException {
         viewsManager = new ViewsManager(centerAnchorPane);
+        viewsManager.showMainView();
 
         UserSession session = UserSession.getInstance();
         if (session.isLoggedIn()) {
-            Long userId = session.getUserId();
-            userName = session.getName();
-            String email= session.getEmail();
-            role = session.getRole();
-
-            labelRol.setText(role);
-            labelNameUser.setText(userName);
-
-            System.out.println(userId);
-            System.out.println(userName);
-            System.out.println(email);
-            System.out.println(role);
-
             // Utiliza esta información para personalizar la interfaz o tomar decisiones basadas en el usuario actual.
+            userId = session.getUserId();
+            userName = session.getName();
+            email = session.getEmail();
+            dni=session.getDni();
+            role = session.getRoleName();
+
+            System.out.println("Usuario Iniciado");
+            System.out.println("ID: "+userId);
+            System.out.println("EMAIL: "+email);
+            System.out.println("DNI: "+dni);
+
+            labelNameUser.setText(dni);
+            labelRol.setText(role);
+
+            if (role.equals("Vendedor")) {
+                    // Si es igual, desactivar los buttons
+                    btnInventory.setDisable(true);
+                    btnMain.setDisable(true);
+                    btnPurchase.setDisable(true);
+                    btnUserManagement.setDisable(true);
+            }
+
+
+
         } else {
             // El usuario no ha iniciado sesión, redirige a la página de inicio de sesión.
         }
 
 
-
-//        viewsManager.showMainView();
 
 
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tienda/main/MainView.fxml"));
@@ -90,16 +122,6 @@ public class SidebarController  {
 //
 //        mainBorderPane.setCenter(null);
 //        mainBorderPane.setCenter(newView);
-
-
-
-
-
-
-
-
-
-
 
 
 //        // Configura el botón de hamburguesa para mostrar/ocultar el Sidebar
@@ -187,9 +209,10 @@ public class SidebarController  {
 
     @FXML
     void handleExit(ActionEvent event) {
+        //Cierre de session de usuario
         UserSession session = UserSession.getInstance();
         session.clearSession();
-
+        //Llamada a la vista
         viewsManager.showLogin();
 
     }
@@ -220,8 +243,6 @@ public class SidebarController  {
     void handleMainView(ActionEvent event) {
         viewsManager.showMainView();
     }
-
-
 
 
 //    DOCUMENTACION
