@@ -4,7 +4,7 @@ import com.tienda.dto.UserDTO;
 
 import java.util.List;
 
-public interface UserDao {
+public interface UserDAO {
     void addUser(UserDTO userDTO);
     void updateUser(Long userId, UserDTO updatedUserDTO);
     void updateUserRole(Long userId, Long newRoleId);

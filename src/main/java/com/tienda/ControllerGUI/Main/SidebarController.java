@@ -50,20 +50,16 @@ public class SidebarController {
     private JFXButton btnMain;
 
     @FXML
-    private JFXButton btnUserManagement;
-
-    @FXML
-    private JFXButton btnInventory;
+    private JFXButton btnProduct;
 
     @FXML
     private JFXButton btnSales;
 
     @FXML
-    private JFXButton btnPurchase;
+    private JFXButton btnSupplier;
 
     @FXML
-    private JFXButton btnCustomer;
-
+    private JFXButton btnUser;
 
     private boolean isExpanded = false;
     private double expandedWidth = 200;
@@ -89,25 +85,23 @@ public class SidebarController {
             userId = session.getUserId();
             userName = session.getName();
             email = session.getEmail();
-            dni=session.getDni();
+            dni = session.getDni();
             role = session.getRoleName();
 
             System.out.println("Usuario Iniciado");
-            System.out.println("ID: "+userId);
-            System.out.println("EMAIL: "+email);
-            System.out.println("DNI: "+dni);
+            System.out.println("ID: " + userId);
+            System.out.println("EMAIL: " + email);
+            System.out.println("DNI: " + dni);
 
             labelNameUser.setText(dni);
             labelRol.setText(role);
 
             if (role.equals("Vendedor")) {
-                    // Si es igual, desactivar los buttons
-                    btnInventory.setDisable(true);
-                    btnMain.setDisable(true);
-                    btnPurchase.setDisable(true);
-                    btnUserManagement.setDisable(true);
+                // Si es igual, desactivar los buttons
+                btnSupplier.setDisable(true);
+                btnMain.setDisable(true);
+                btnUser.setDisable(true);
             }
-
 
 
         } else {
@@ -115,9 +109,7 @@ public class SidebarController {
         }
 
 
-
-
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tienda/main/MainView.fxml"));
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/tienda/main/ProductManagement.fxml"));
 //        Parent newView = loader.load();
 //
 //        mainBorderPane.setCenter(null);
@@ -236,6 +228,17 @@ public class SidebarController {
         viewsManager.showUserManagement();
 
 
+    }
+
+    @FXML
+    void handleProductManagement(ActionEvent event) {
+        viewsManager.showProductManagement();
+    }
+
+
+    @FXML
+    void handleSupplierManagement(ActionEvent event) {
+        viewsManager.showSupplierManagement();
     }
 
 

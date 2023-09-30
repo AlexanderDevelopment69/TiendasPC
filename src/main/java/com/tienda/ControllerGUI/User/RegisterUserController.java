@@ -3,12 +3,10 @@ package com.tienda.ControllerGUI.User;
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.ViewsManager.ViewsManager;
-import com.tienda.Dao.UserDao;
-import com.tienda.Dao.UserDaoHibernate;
+import com.tienda.Dao.UserDAO;
+import com.tienda.Dao.UserDAOHibernate;
 
-import com.tienda.Model.User;
 import com.tienda.Tools.MFXTextFieldValidator;
-import com.tienda.Utils.DataLoadingUtil;
 import com.tienda.dto.UserDTO;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -52,7 +50,7 @@ public class RegisterUserController implements Initializable {
 
     private ViewsManager viewsManager;
 
-    private UserDao userDao;
+    private UserDAO userDAO;
 
 
     MFXTextFieldValidator passwordValidator;
@@ -115,8 +113,8 @@ public class RegisterUserController implements Initializable {
         }
 
         // Verificar si el usuario existe en la base de datos
-        Boolean isEmailExists = userDao.isEmailExists(email);
-        Boolean isDniExists = userDao.isDniExists(dni);
+        Boolean isEmailExists = userDAO.isEmailExists(email);
+        Boolean isDniExists = userDAO.isDniExists(dni);
 
 
         if (isEmailExists) {
@@ -159,10 +157,15 @@ public class RegisterUserController implements Initializable {
 
             // Si no hay errores, proceder con el registro
             // Crear un objeto UserDTO con los datos ingresados
-            UserDTO newUser = new UserDTO(email, password, dni, lastNames, names);
+            UserDTO newUser = new UserDTO();
+            newUser.setUserDni(dni);
+            newUser.setUserPassword(password);
+            newUser.setUserLastName(lastNames);
+            newUser.setUserName(names);
+            newUser.setUserEmail(email);
             try {
                 // Guardar el nuevo usuario en la base de datos
-                userDao.addUser(newUser);
+                userDAO.addUser(newUser);
 
                 // Limpiar los campos después del registro
                 textDni.clear();
@@ -179,7 +182,7 @@ public class RegisterUserController implements Initializable {
                         new Image("Images/iconCheck.png"),
                         "Registrado correctamente.",
                         "Registrado correctamente, ahora puedes ingresar al sistema.",
-                        "Confirmar",
+                        "Continuar",
                         "Cancelar",
                         e -> {
                             // Lógica cuando se hace clic en el botón "Confirmar"
@@ -211,7 +214,7 @@ public class RegisterUserController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicializar el objeto UserDaoHibernate con la fábrica de sesiones de Hibernate
-        userDao = new UserDaoHibernate(HibernateUtil.getSessionFactory());
+        userDAO = new UserDAOHibernate(HibernateUtil.getSessionFactory());
 
         // Inicializa ViewsManager con el StackPane principal
         viewsManager = new ViewsManager(root);

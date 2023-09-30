@@ -28,7 +28,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // Nombre de la columna en la base de datos.
     @Column(name = "role_id")
-    private Long id;
+    private Long roleId;
 
     // Nombre del rol (p. ej., "ADMINISTRATOR" o "USER").
     @Column(name = "role_name", nullable = false, unique = true)
@@ -40,7 +40,7 @@ public class Role {
 //    private Set<User> users = new HashSet<>();
 
 
-    public Role(Long id) {
-        this.id = id;
+    public Role(Long roleId) {
+        this.roleId = roleId;
     }
 }

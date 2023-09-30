@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  * SessionFactory sessionFactory = HibernateUtil.getSessionFactory(); // Obtén la fábrica de sesiones desde tu clase HibernateUtil
  * UserDao userDao = new UserDaoHibernate(sessionFactory); // Crea una instancia del UserDaoHibernate pasando la fábrica de sesiones
  */
-public class UserDaoHibernate implements UserDao {
+public class UserDAOHibernate implements UserDAO {
 
     // La fábrica de sesiones de Hibernate que se inyectará en el constructor.
     private final SessionFactory sessionFactory;
@@ -30,7 +31,7 @@ public class UserDaoHibernate implements UserDao {
      *
      * @param sessionFactory La fábrica de sesiones de Hibernate.
      */
-    public UserDaoHibernate(SessionFactory sessionFactory) {
+    public UserDAOHibernate(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -47,7 +48,7 @@ public class UserDaoHibernate implements UserDao {
         try {
             session = sessionFactory.openSession();
             // Crea una consulta para buscar un usuario por dirección de correo electrónico.
-            Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class);
+            Query<User> query = session.createQuery("FROM User WHERE userEmail = :email", User.class);
             query.setParameter("email", email);
 
             // Obtiene el usuario encontrado o null si no existe.
@@ -86,7 +87,7 @@ public class UserDaoHibernate implements UserDao {
         try {
             session = sessionFactory.openSession();
             // Crea una consulta para buscar un usuario por el dni.
-            Query<User> query = session.createQuery("FROM User WHERE dni = :dni", User.class);
+            Query<User> query = session.createQuery("FROM User WHERE userDni = :dni", User.class);
             query.setParameter("dni", dni);
 
             // Obtiene el usuario encontrado o null si no existe.
@@ -128,15 +129,19 @@ public class UserDaoHibernate implements UserDao {
             // Abre una nueva sesión de Hibernate.
             session = sessionFactory.openSession();
 
-            // Crea una consulta para buscar un usuario por el dni.
-            Query<User> query = session.createQuery("FROM User WHERE dni = :dni", User.class);
+            // Crea una consulta para buscar un usuario por el DNI.
+            Query<User> query = session.createQuery("FROM User WHERE userDni = :dni", User.class);
             query.setParameter("dni", dni);
 
             // Obtiene el usuario encontrado o null si no existe.
             User user = query.uniqueResult();
 
-            // Verifica si el usuario existe y si la contraseña coincide.
-            return user != null && user.getPassword().equals(password);
+            // Verifica si el usuario existe y si la contraseña coincide utilizando BCrypt.
+            if (user != null && BCrypt.checkpw(password, user.getUserPassword())) {
+                return true; // Autenticación exitosa
+            } else {
+                return false; // Contraseña incorrecta o usuario no encontrado
+            }
         } catch (Exception e) {
             // Manejar la excepción aquí (por ejemplo, registrarla o lanzar una excepción personalizada).
             e.printStackTrace();
@@ -167,6 +172,11 @@ public class UserDaoHibernate implements UserDao {
 
             // Utiliza el mapeador para convertir el DTO a una entidad User.
             User user = UserMapper.userDTOToUser(userDTO);
+
+            // Genera el hash de la contraseña utilizando jBCrypt.
+            String hashedPassword = BCrypt.hashpw(userDTO.getUserPassword(), BCrypt.gensalt());
+            // Asigna el hash de la contraseña al usuario.
+            user.setUserPassword(hashedPassword);
 
             // Guarda el nuevo usuario en la base de datos.
             session.save(user);
@@ -210,20 +220,20 @@ public class UserDaoHibernate implements UserDao {
             if (user != null) {
                 // Actualiza los campos del usuario con los datos del objeto UserDTO,
                 // solo si los campos en UserDTO no son nulos.
-                if (updatedUserDTO.getName() != null) {
-                    user.setName(updatedUserDTO.getName());
+                if (updatedUserDTO.getUserName() != null) {
+                    user.setUserName(updatedUserDTO.getUserName());
                 }
-                if (updatedUserDTO.getLastName() != null) {
-                    user.setLastName(updatedUserDTO.getLastName());
+                if (updatedUserDTO.getUserLastName() != null) {
+                    user.setUserLastName(updatedUserDTO.getUserLastName());
                 }
-                if (updatedUserDTO.getDni() != null) {
-                    user.setDni(updatedUserDTO.getDni());
+                if (updatedUserDTO.getUserDni() != null) {
+                    user.setUserDni(updatedUserDTO.getUserDni());
                 }
-                if (updatedUserDTO.getEmail() != null) {
-                    user.setEmail(updatedUserDTO.getEmail());
+                if (updatedUserDTO.getUserEmail() != null) {
+                    user.setUserEmail(updatedUserDTO.getUserEmail());
                 }
-                if (updatedUserDTO.getPassword() != null) {
-                    user.setPassword(updatedUserDTO.getPassword());
+                if (updatedUserDTO.getUserPassword() != null) {
+                    user.setUserPassword(updatedUserDTO.getUserPassword());
                 }
 
                 // Obtén el ID del nuevo rol del objeto UserDTO.
@@ -466,7 +476,7 @@ public class UserDaoHibernate implements UserDao {
             try (Session session = sessionFactory.openSession()) {
                 // Crea una consulta de Hibernate para contar la cantidad de registros en la tabla "User"
                 // donde el campo "dni" sea igual al valor proporcionado como parámetro ":dni".
-                Query<Long> query = session.createQuery("SELECT COUNT(u) FROM User u WHERE u.dni = :dni", Long.class);
+                Query<Long> query = session.createQuery("SELECT COUNT(u) FROM User u WHERE u.userDni = :dni", Long.class);
 
                 // PARAM: Asigna el valor del parámetro ":dni" en la consulta para que coincida con el valor proporcionado.
                 query.setParameter("dni", dni);
@@ -500,7 +510,7 @@ public class UserDaoHibernate implements UserDao {
             try (Session session = sessionFactory.openSession()) {
                 // Crea una consulta de Hibernate para contar la cantidad de registros en la tabla "User"
                 // donde el campo "email" sea igual al valor proporcionado como parámetro ":email".
-                Query<Long> query = session.createQuery("SELECT COUNT(u) FROM User u WHERE u.email = :email", Long.class);
+                Query<Long> query = session.createQuery("SELECT COUNT(u) FROM User u WHERE u.userEmail = :email", Long.class);
 
                 // PARAM: Asigna el valor del parámetro ":email" en la consulta para que coincida con el valor proporcionado.
                 query.setParameter("email", email);

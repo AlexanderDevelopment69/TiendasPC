@@ -19,22 +19,22 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Long userid;
 
     @Column(name = "user_name", nullable = false) // Personaliza el nombre de la columna y otras propiedades
-    private String name;
+    private String userName;
 
     @Column(name = "user_last_name" , nullable = false) // Personaliza el nombre de la columna
-    private String lastName;
+    private String userLastName;
 
     @Column(name = "dni", nullable = false, columnDefinition = "VARCHAR(9)",unique = true)
-    private String dni;
+    private String userDni;
 
     @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)",unique = true)
-    private String email;
+    private String userEmail;
 
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")
-    private String password;
+    private String userPassword;
 
     @OneToOne
     @JoinColumn(name = "role_id")

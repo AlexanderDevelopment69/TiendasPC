@@ -12,6 +12,8 @@ public interface ViewsInterface {
     //module User
     void showUserManagement();
     void showMainView();
+    void showProductManagement();
+    void showSupplierManagement();
 
 
 }

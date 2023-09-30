@@ -5,8 +5,8 @@ JFXButton {
     -fx-pref-height: 40px;
     -fx-text-fill: white;
     /*Alinear el icono del button*/
-    -fx-graphic-text-gap: 15; /* Espacio entre el icono y el texto */
-    -fx-padding: 0px 0px 0px 10px; /* Espaciado interno para ajustar la alineación */
+    -fx-graphic-text-gap: 5; /* Espacio entre el icono y el texto */
+    -fx-padding: 0px 0px 0px 10px; /* Espaciado interno para ajustar la alineación */ /* arriba derecha abajo izquierda */
     -fx-alignment: center-left;
 }
 

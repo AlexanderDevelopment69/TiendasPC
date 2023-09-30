@@ -3,18 +3,16 @@ package com.tienda.ControllerGUI.User;
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.Modal;
 import com.tienda.ControllerGUI.Components.ModalDialog;
-import com.tienda.Dao.UserDao;
-import com.tienda.Dao.UserDaoHibernate;
-import com.tienda.Model.User;
-import com.tienda.Utils.DataLoadingUtil;
+import com.tienda.Dao.UserDAO;
+import com.tienda.Dao.UserDAOHibernate;
+import com.tienda.Utils.UserDataLoadingUtil;
 import com.tienda.dto.UserDTO;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -22,12 +20,12 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserManagementController implements Initializable {
@@ -65,21 +63,33 @@ public class UserManagementController implements Initializable {
     @FXML
     private TableColumn<UserDTO, Void> colActions;
 
-    private UserDao userDao;
+    private UserDAO userDAO;
 
-    private DataLoadingUtil dataLoadingUtil;
+    private UserDataLoadingUtil dataLoadingUtil;
 
 
     private boolean isDataLoading = false; // Controla si la carga de datos está en curso
 
 
     private void configureTable() {
+        // Agrega un EventHandler para deseleccionar la fila cuando el cursor esté fuera de la tabla
+        userTable.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                // Deseleccionar la fila activa
+                userTable.getSelectionModel().clearSelection();
+            }
+        });
+
+
+
+
         // Configura las celdas de la tablaalex
-        colCodigo.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colDni.setCellValueFactory(new PropertyValueFactory<>("dni"));
-        colApellidos.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        colNombres.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colCodigo.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        colDni.setCellValueFactory(new PropertyValueFactory<>("userDni"));
+        colApellidos.setCellValueFactory(new PropertyValueFactory<>("userLastName"));
+        colNombres.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("userEmail"));
         colRol.setCellValueFactory(new PropertyValueFactory<>("roleName"));
 
         // Configura la columna de acciones
@@ -99,7 +109,7 @@ public class UserManagementController implements Initializable {
                 editButton.setOnAction(event -> {
                     UserDTO userDTO = getTableView().getItems().get(getIndex());
                     // Lógica para editar el usuarioalex
-                    System.out.println("Editar usuario: " + userDTO.getId());
+                    System.out.println("Editar usuario: " + userDTO.getUserId());
 
 
                     Modal modal = new Modal();
@@ -127,7 +137,7 @@ public class UserManagementController implements Initializable {
 
 
 
-                                userDao.updateUser(userDTO.getId(),updateUser);
+                                userDAO.updateUser(userDTO.getUserId(),updateUser);
                                 modal.close();
 
 
@@ -136,7 +146,7 @@ public class UserManagementController implements Initializable {
                                 // Configurar el modal mediante un solo método
                                 modalDialog.configureModal(new Image("Images/iconCheck.png"),
                                         "El usuario ha sido actualizado correctamente.",
-                                        "El usuario con DNI: "+userDTO.getDni()+" ha cambiado su rol a: "+modal.getValueSelectedRol(),
+                                        "El usuario con DNI: "+userDTO.getUserDni()+" ha cambiado su rol a: "+modal.getValueSelectedRol(),
                                         "Ok",
                                         ev -> {
                                             modalDialog.close(); // Cierra el modal
@@ -147,9 +157,8 @@ public class UserManagementController implements Initializable {
 
 
 
-
-                                // Carga los datos en la TableView al inicializar la ventana
-                                dataLoadingUtil.loadUserTableData(userTable);
+                                //Actualiza la tabla
+                                handleLoadDate();
 
                             },
                             e -> {
@@ -169,9 +178,11 @@ public class UserManagementController implements Initializable {
                 deleteButton.setOnAction(event -> {
                     UserDTO userDTO = getTableView().getItems().get(getIndex());
                     // Lógica para eliminar el usuario
-                    System.out.println("Eliminar usuario: " + userDTO.getId());
-                    userDao.deleteUserById(userDTO.getId());
-                    dataLoadingUtil.loadUserTableData(userTable);
+                    System.out.println("Eliminar usuario: " + userDTO.getUserId());
+                    userDAO.deleteUserById(userDTO.getUserId());
+
+                    //Actualiza la tabla
+                    handleLoadDate();
 
 
                     //Crear una instancia del modal
@@ -179,7 +190,7 @@ public class UserManagementController implements Initializable {
                     // Configurar el modal mediante un solo método
                     modalDialog.configureModal(new Image("Images/iconCheck.png"),
                             "Usuario eliminado correctamente.",
-                            "El usuario con DNI:  "+userDTO.getDni()+" ha sido eliminado correctamente",
+                            "El usuario con DNI:  "+userDTO.getUserDni()+" ha sido eliminado correctamente",
                             "Ok",
                             ev -> {
                                 modalDialog.close(); // Cierra el modal
@@ -259,7 +270,7 @@ public class UserManagementController implements Initializable {
 
         if (!dni.isEmpty()) {
             // Busca un usuario en la base de datos por su DNI.
-            UserDTO filteredUsers = userDao.getUserByDni(dni);
+            UserDTO filteredUsers = userDAO.getUserByDni(dni);
 
             if (filteredUsers != null) {
                 // Si se encuentra un usuario con el DNI ingresado, lo muestra en la tabla.
@@ -275,10 +286,10 @@ public class UserManagementController implements Initializable {
 
 
     @FXML
-    void handleLoadDate(ActionEvent event) {
+    void handleLoadDate() {
 //        loadUserTableData();
         // Carga los datos en la TableView al inicializar la ventana
-        userTable.getItems().clear();
+//        userTable.getItems().clear();
         dataLoadingUtil.loadUserTableData(userTable);
 
     }
@@ -293,7 +304,7 @@ public class UserManagementController implements Initializable {
         } else {
             // Si no está vacío, buscar y cargar usuarios que coincidan con el texto de búsqueda
             // Busca un usuario en la base de datos por su DNI.
-            UserDTO filteredUsers = userDao.getUserByDni(searchValue);
+            UserDTO filteredUsers = userDAO.getUserByDni(searchValue);
             if (filteredUsers != null) {
                 userTable.refresh();
                 // Si se encuentra un usuario con el DNI ingresado, lo muestra en la tabla.
@@ -310,10 +321,10 @@ public class UserManagementController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicializar el objeto UserDaoHibernate con la fábrica de sesiones de Hibernate
-        userDao = new UserDaoHibernate(HibernateUtil.getSessionFactory());
+        userDAO = new UserDAOHibernate(HibernateUtil.getSessionFactory());
         configureTable();
         // Crear una instancia de DataLoadingUtil con UserDao inyectado
-        dataLoadingUtil = new DataLoadingUtil(userDao);
+        dataLoadingUtil = new UserDataLoadingUtil(userDAO);
         // Carga los datos en la TableView al inicializar la ventana
         dataLoadingUtil.loadUserTableData(userTable);
 

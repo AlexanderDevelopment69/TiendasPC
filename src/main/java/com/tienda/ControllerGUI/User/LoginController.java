@@ -3,18 +3,13 @@ package com.tienda.ControllerGUI.User;
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.ViewsManager.ViewsManager;
-import com.tienda.Dao.UserDao;
-import com.tienda.Dao.UserDaoHibernate;
-import com.tienda.Model.Role;
-import com.tienda.Model.User;
+import com.tienda.Dao.UserDAO;
+import com.tienda.Dao.UserDAOHibernate;
 import com.tienda.Tools.MFXTextFieldValidator;
 import com.tienda.dto.UserDTO;
-import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,8 +22,6 @@ import javafx.scene.layout.StackPane;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
 public class LoginController implements Initializable {
@@ -50,7 +43,7 @@ public class LoginController implements Initializable {
     private Label emailValidationLabel;
 
 
-    private UserDao userDao;
+    private UserDAO userDAO;
 
     private ViewsManager viewsManager;
 
@@ -86,7 +79,7 @@ public class LoginController implements Initializable {
         if (dni.isEmpty() || password.isEmpty()) {
             // Mostrar una alerta indicando que se deben completar ambos campos
             System.out.println("Error de inicio de sesión\", \"Por favor, complete todos los campos");
-            return; // Salir del método
+//            return; // Salir del método
         }
 
         Task<Boolean> loginTask = new Task<>() {
@@ -94,7 +87,7 @@ public class LoginController implements Initializable {
             @Override
             protected Boolean call() throws Exception {
                 // Realiza la autenticación (consulta a la base de datos u otro método) aquí
-                Boolean isAuthenticated = userDao.authenticateUser(dni, password);
+                Boolean isAuthenticated = userDAO.authenticateUser(dni, password);
                 return isAuthenticated;
             }
         };
@@ -107,13 +100,13 @@ public class LoginController implements Initializable {
                 System.out.println("Password correcto");
 
                 // Ahora, puedes obtener los detalles del usuario autenticado desde la base de datos.
-                UserDTO authenticatedUser = userDao.getUserByDni(dni);
+                UserDTO authenticatedUser = userDAO.getUserByDni(dni);
 
                 if (authenticatedUser.getRoleId()!= null) {
 
                     // Crear y gestionar la sesión de usuario
                     UserSession session = UserSession.getInstance();
-                    session.setUser(authenticatedUser.getId(), authenticatedUser.getName(), session.getLastName(), authenticatedUser.getEmail(),authenticatedUser.getDni(), authenticatedUser.getRoleName());
+                    session.setUser(authenticatedUser.getUserId(),authenticatedUser.getUserName(), session.getLastName(), authenticatedUser.getUserEmail(),authenticatedUser.getUserDni(), authenticatedUser.getRoleName());
                     //Mostrar la vista
                     viewsManager.showMain();
 
@@ -222,8 +215,8 @@ public class LoginController implements Initializable {
 //                  // Agregar aquí más campos según la estructura de tu clase User.
 //              });
 
-// Llamar al método getAllUsers y obtener la lista de usuarios.
-        List<UserDTO> userList = userDao.getAllUsers();
+        // Llamar al método getAllUsers y obtener la lista de usuarios.
+        List<UserDTO> userList = userDAO.getAllUsers();
 
         // Verificar si la lista de usuarios no es nula.
         if (userList != null) {
@@ -245,7 +238,7 @@ public class LoginController implements Initializable {
     // Este método se llama después de cargar la vista y se utiliza para inicializar la clase
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicializar el objeto UserDaoHibernate con la fábrica de sesiones de Hibernate
-        userDao = new UserDaoHibernate(HibernateUtil.getSessionFactory());
+        userDAO = new UserDAOHibernate(HibernateUtil.getSessionFactory());
 
         // Inicializa ViewsManager con el StackPane principal
         viewsManager = new ViewsManager(root);

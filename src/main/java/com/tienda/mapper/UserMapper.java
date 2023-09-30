@@ -11,13 +11,13 @@ public class UserMapper {
         }
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setName(user.getName() != null ? user.getName() : null);
-        userDTO.setLastName(user.getLastName() != null ? user.getLastName() : null);
-        userDTO.setDni(user.getDni() != null ? user.getDni() : null);
-        userDTO.setEmail(user.getEmail() != null ? user.getEmail() : null);
-        userDTO.setPassword(user.getPassword() != null ? user.getPassword() : null);
-        userDTO.setRoleId(user.getRole() != null ? user.getRole().getId() : null);
+        userDTO.setUserId(user.getUserid());
+        userDTO.setUserName(user.getUserName() != null ? user.getUserName() : null);
+        userDTO.setUserLastName(user.getUserLastName() != null ? user.getUserLastName() : null);
+        userDTO.setUserDni(user.getUserDni() != null ? user.getUserDni() : null);
+        userDTO.setUserEmail(user.getUserEmail()!= null ? user.getUserEmail() : null);
+        userDTO.setUserPassword(user.getUserPassword() != null ? user.getUserPassword() : null);
+        userDTO.setRoleId(user.getRole() != null ? user.getRole().getRoleId(): null);
         userDTO.setRoleName(user.getRole() != null ? user.getRole().getRoleName() : null);
         return userDTO;
     }
@@ -27,12 +27,12 @@ public class UserMapper {
             return null;
         }
         User user = new User();
-        user.setId(userDTO.getId());
-        user.setName(userDTO.getName());
-        user.setLastName(userDTO.getLastName());
-        user.setDni(userDTO.getDni());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
+        user.setUserid(userDTO.getUserId());
+        user.setUserName(userDTO.getUserName());
+        user.setUserLastName(userDTO.getUserLastName());
+        user.setUserDni(userDTO.getUserDni());
+        user.setUserEmail(userDTO.getUserEmail());
+        user.setUserPassword(userDTO.getUserPassword());
 
         // Si el campo roleId no es nulo en UserDTO, crea un nuevo objeto Role y asígnalo a User.
         if (userDTO.getRoleId() != null) {

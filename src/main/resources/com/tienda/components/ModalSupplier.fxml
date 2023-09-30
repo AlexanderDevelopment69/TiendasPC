@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="436.0" stylesheets="@../../../Styles/ModalProduct.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane>
+         <children>
+            <Label fx:id="labelDescriptionModal" layoutX="34.0" layoutY="44.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="label-subTitle" text="Completa todos los campos para registrar un nuevo proveedor." wrapText="true" />
+            <Label fx:id="labelTitleModal" alignment="BOTTOM_LEFT" layoutX="34.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="label-title" text="Nuevo proveedor" />
+            <MFXTextField fx:id="txtSupplierName" floatMode="BORDER" floatingText="Nombre del proveedor" layoutX="34.0" layoutY="82.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXTextField fx:id="txtSupplierRuc" floatMode="BORDER" floatingText="RUC" layoutX="34.0" layoutY="150.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXTextField fx:id="txtSupplierPhoneNumber" floatMode="BORDER" floatingText="Numero de celular" layoutX="34.0" layoutY="298.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXTextField fx:id="txtSupplierEmail" floatMode="BORDER" floatingText="Email" layoutX="34.0" layoutY="378.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXButton fx:id="confirmButton" alignment="CENTER" layoutX="34.0" layoutY="474.0" prefHeight="40.0" prefWidth="109.0" styleClass="button-confirm" text="Agregar" />
+            <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="474.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
+            <MFXTextField fx:id="txtSupplierAddress" floatMode="BORDER" floatingText="Direccion" layoutX="34.0" layoutY="229.0" prefHeight="44.0" prefWidth="349.0" />
+            <Label fx:id="labelValidateRUC" layoutX="34.0" layoutY="201.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />
+            <Label fx:id="labelValidatePhoneNumber" layoutX="34.0" layoutY="349.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />
+            <Label fx:id="labelValidateEmail" layoutX="34.0" layoutY="430.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>

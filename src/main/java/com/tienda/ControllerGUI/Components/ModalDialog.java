@@ -105,6 +105,20 @@ public class ModalDialog extends StackPane {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void showModal(StackPane parentStackPane) {
         // Añade el fondo oscuro al StackPane
         backdrop = createBackdrop(parentStackPane);

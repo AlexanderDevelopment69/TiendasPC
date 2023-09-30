@@ -1,24 +1,43 @@
 package com.tienda.Model;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.sun.istack.NotNull;
+import lombok.Data;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false)
-    private Long product_id;
-    @Column(name = "product_name", nullable = false)
-    private String product_name;
-    @Column(name = "product_price", nullable = false)
-    private Long product_price;
-    @Column(name = "product_cost", nullable = false)
-    private Long product_cost;
+    @Column(name = "product_id")
+    private Long productId;
 
+    @Column(name = "product_name",nullable = false)
+    private String productName;
+
+    @Column(name = "product_brand",nullable = false)
+    private String productBrand;
+
+    @Column(name = "product_description")
+    private String productDescription;
+
+    @Lob // Esta anotación indica que se almacenará un objeto grande (en este caso, la imagen)
+    @Column(name = "product_image", columnDefinition = "LONGBLOB")
+    private byte[] productImage; // Aquí se almacena la imagen como bytes
+
+    @Column(name = "unit_price",nullable = false)
+    private double unitPrice;
+
+    @Column(name = "available_stock",nullable = false)
+    private int availableStock;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "category_id", nullable = false)
+    private ProductCategory productCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "supplier_id", referencedColumnName = "supplier_id", nullable = false)
+    private Supplier supplier;
 }

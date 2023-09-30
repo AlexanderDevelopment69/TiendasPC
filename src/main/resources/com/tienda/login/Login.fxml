@@ -4,6 +4,8 @@
 <?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.LinearGradient?>
@@ -14,7 +16,7 @@
       <Pane fx:id="Pane">
          <children>
             <Label layoutX="225.0" layoutY="60.0" prefHeight="57.0" styleClass="title-login" text="Iniciar sesion" />
-            <Label layoutX="158.0" layoutY="122.0" prefHeight="17.0" prefWidth="309.0" text="Ingresar el usuario y contraseña correctamente" />
+            <Label layoutX="150.0" layoutY="122.0" prefHeight="17.0" text="Ingresar su dni y la contraseñá, complete todos los campos." />
             <MFXTextField fx:id="textDni" floatMode="BORDER" floatingText="Dni" layoutX="179.0" layoutY="185.0" prefHeight="44.0" prefWidth="223.0" />
             <Label fx:id="emailValidationLabel" layoutX="179.0" layoutY="236.0" textFill="#ef6e6b" />
             <MFXPasswordField fx:id="textPassword" floatMode="BORDER" floatingText="Contraseñá" layoutX="179.0" layoutY="262.0" prefHeight="44.0" prefWidth="223.0" />
@@ -58,6 +60,11 @@
                      </stops>
                   </LinearGradient>
                </rippleColor></MFXButton>
+            <ImageView fitHeight="38.0" fitWidth="166.0" layoutX="208.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Images/logo.png" />
+               </image>
+            </ImageView>
 
          </children>
       </Pane>

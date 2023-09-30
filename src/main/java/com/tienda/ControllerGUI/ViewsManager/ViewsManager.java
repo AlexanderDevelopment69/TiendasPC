@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -187,7 +188,7 @@ public class ViewsManager implements ViewsInterface {
             Stage newStage = new Stage();
 
             // Stage sin barra
-//            newStage.initStyle(StageStyle.UNDECORATED);
+            newStage.initStyle(StageStyle.UNDECORATED);
 
             // Establecer la escena recién creada como contenido de la ventana (Stage)
             newStage.setScene(scene);
@@ -241,7 +242,7 @@ public class ViewsManager implements ViewsInterface {
     @Override
     public void showMain() {
         showViewNewStage("/com/tienda/main/Sidebar.fxml", "Main");
-//        showViewNewStage("/com/tienda/Main/MainView.fxml", "Main");
+//        showViewNewStage("/com/tienda/Main/ProductManagement.fxml", "Main");
     }
 
 
@@ -256,7 +257,17 @@ public class ViewsManager implements ViewsInterface {
             switchView("/com/tienda/main/MainView.fxml", "Vista principal");
         }
 
-//        switchViewWithCircularReveal("/com/tienda/main/MainView.fxml", "Vista principal");
+//        switchViewWithCircularReveal("/com/tienda/main/ProductManagement.fxml", "Vista principal");
+    }
+
+    @Override
+    public void showProductManagement() {
+        switchView("/com/tienda/product/ProductManagement.fxml", "Administracion de producto");
+    }
+
+    @Override
+    public void showSupplierManagement() {
+        switchView("/com/tienda/supplier/SupplierManagement.fxml", "Administracion de proveedores");
     }
 
 

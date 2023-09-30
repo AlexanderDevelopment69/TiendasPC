@@ -23,8 +23,14 @@
         <!-- Aquí se agregarían todas las clases de modelo (entidades) que deseas mapear -->
         <mapping class="com.tienda.Model.User"/>
         <mapping class="com.tienda.Model.Role"/>
-<!--        <mapping class="com.tienda.Model.UserRoleChange"/>-->
-<!--        <mapping class="com.tienda.Model.Product"/>-->
-
+        <mapping class="com.tienda.Model.Product"/>
+        <mapping class="com.tienda.Model.ProductCategory"/>
+        <mapping class="com.tienda.Model.Supplier"/>
+        <mapping class="com.tienda.Model.Customer"/>
+        <mapping class="com.tienda.Model.Purchase"/>
+        <mapping class="com.tienda.Model.PurchaseDetail"/>
+        <mapping class="com.tienda.Model.Sale"/>
+        <mapping class="com.tienda.Model.SaleDetail"/>
+        <!--        <mapping class="com.tienda.Model.UserRoleChange"/>-->
     </session-factory>
 </hibernate-configuration>

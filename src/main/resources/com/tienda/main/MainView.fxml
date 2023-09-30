@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="centerAnchorPane" prefHeight="630.0" prefWidth="900.0" stylesheets="@../../../Styles/Main.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.tienda.ControllerGUI.Main.MainViewController">
    <children>
-      <MFXTextField fx:id="txtfSearchUser" floatMode="BORDER" floatingText="Buscar Usuario" layoutX="60.0" layoutY="108.0" prefHeight="38.0" prefWidth="658.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="181.60000000000002" />
-      <Label layoutX="327.0" layoutY="236.0" text="MAINVIEW">
+      <Label layoutX="322.0" layoutY="259.0" text="MAINVIEW">
          <font>
             <Font size="44.0" />
          </font>

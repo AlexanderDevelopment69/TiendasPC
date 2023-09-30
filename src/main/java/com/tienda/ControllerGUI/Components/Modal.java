@@ -72,12 +72,6 @@ public class Modal extends StackPane {
         return cbRol.getValue();
     }
 
-    @FXML
-    private void initialize(){
-
-
-    }
-
 
     public void setCancelButtonAction(EventHandler<ActionEvent> action) {
         cancelButton.setOnAction(action);

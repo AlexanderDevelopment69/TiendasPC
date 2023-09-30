@@ -22,6 +22,9 @@ public class TextFieldValidator {
         PASSWORD,
         DNI,
         CHARACTERS_ONLY,
+        PRICE,
+        RUC,
+        PHONE_NUMBER,
         CUSTOM // Puedes agregar otros criterios personalizados según tus necesidades
     }
 
@@ -70,6 +73,17 @@ public class TextFieldValidator {
                     case CHARACTERS_ONLY:
                         validateCharactersOnly(newValue);
                         break;
+                    case PRICE:
+                        validatePrice(newValue);
+                        break;
+                    case RUC:
+                        validateRUC(newValue);
+                        break;
+                    case PHONE_NUMBER:
+                        validatePhoneNumber(newValue);
+                        break;
+
+
                     case CUSTOM:
                         // Implementa tu lógica de validación personalizada aquí
                         break;
@@ -161,6 +175,64 @@ public class TextFieldValidator {
     }
 
 
+    public Boolean validatePrice(String input) {
+
+        try {
+            double price = Double.parseDouble(input);
+            if (price >= 0) {
+                validationLabel.setText("Precio valido");
+                validationLabel.setTextFill(VALID_COLOR);
+                return true;
+            } else {
+                validationLabel.setText("No se admiten negativos");
+                validationLabel.setTextFill(INVALID_COLOR);
+            }
+        } catch (NumberFormatException e) {
+            // No es un número decimal válido
+            validationLabel.setText("No se admiten caracteres");
+            validationLabel.setTextFill(INVALID_COLOR);
+        }
+
+        return false;
+    }
+
+    public Boolean validateRUC(String ruc) {
+        if (ruc.length() != 11 || !ruc.matches("^[0-9]+$")) {
+            validationLabel.setText("RUC no válido");
+            validationLabel.setTextFill(INVALID_COLOR);
+            return false;
+        }
+
+        validationLabel.setText("RUC válido");
+        validationLabel.setTextFill(VALID_COLOR);
+        return true;
+    }
+
+
+    public Boolean validatePhoneNumber(String phoneNumber) {
+
+        // Elimina los espacios en blanco y los guiones, si los hay
+        phoneNumber = phoneNumber.replaceAll("\\s+", "").replaceAll("-", "");
+
+        if (!phoneNumber.matches("^[0-9]+$")) {
+            validationLabel.setText("No es un número de teléfono válido");
+            validationLabel.setTextFill(INVALID_COLOR);
+            return false;
+        }
+
+        // Verifica que el número de teléfono tenga una longitud aceptable (puedes ajustar los valores)
+        if (phoneNumber.length() < 7 || phoneNumber.length() > 15) {
+            validationLabel.setText("Número de teléfono no válido (longitud incorrecta)");
+            validationLabel.setTextFill(INVALID_COLOR);
+            return false;
+        }
+
+        validationLabel.setText("Número de teléfono válido");
+        validationLabel.setTextFill(VALID_COLOR);
+        return true;
+    }
+
+
 
     private boolean isValidEmail(String email) {
         // Implementa tu lógica de validación de correo electrónico aquí
@@ -175,4 +247,6 @@ public class TextFieldValidator {
     private boolean isValidCharactersOnly(String input) {
         return input.matches("^[a-zA-Z ]*$");
     }
+
+
 }

@@ -22,6 +22,7 @@ public class MFXTextFieldValidator {
         CHARACTERS_ONLY,
         NAMES,
         LASTNAMES,
+        POSITIVE_DECIMAL_NUMBERS,
         CUSTOM // Puedes agregar otros criterios personalizados según tus necesidades
     }
 
@@ -84,6 +85,10 @@ public class MFXTextFieldValidator {
                         }
                         validateCharactersOnly(newValue);
                         break;
+                    case  POSITIVE_DECIMAL_NUMBERS:
+                        validatePositiveDecimalNumbers(newValue);
+                        break;
+
                     case CUSTOM:
                         // Implementa tu lógica de validación personalizada aquí
                         break;
@@ -219,6 +224,35 @@ public class MFXTextFieldValidator {
     private boolean isValidCharactersOnly(String input) {
         return input.matches("^[a-zA-Z ]*$");
     }
+
+    public Boolean validatePositiveDecimalNumbers(String input) {
+        if (input.isEmpty()) {
+            textField.setFloatingText("Precio");
+            textField.setStyle("-mfx-main: #5771f7;");
+            return false; // Empty input is not valid
+        }
+
+        try {
+            double number = Double.parseDouble(input);
+            if (number > 0) {
+                textField.setFloatingText("Positive Decimal Number");
+                textField.setStyle("-mfx-main: " + VALID_COLOR + ";");
+                textField.setStyle("-fx-border-color: " + VALID_COLOR + ";");
+                return true;
+            } else {
+                textField.setFloatingText("Not a positive decimal number");
+            }
+        } catch (NumberFormatException e) {
+            // Not a valid decimal number
+        }
+
+        textField.setStyle("-mfx-main: " + INVALID_COLOR + ";");
+        textField.setStyle("-fx-border-color: " + INVALID_COLOR + ";");
+        return false;
+    }
+
+
+
 
 
 }
