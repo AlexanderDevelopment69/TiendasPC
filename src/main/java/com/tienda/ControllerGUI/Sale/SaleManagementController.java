@@ -234,77 +234,77 @@ public class SaleManagementController implements Initializable {
 
     }
 
-    @FXML
-    void handleNewDocument(ActionEvent event) {
-        // Crea una instancia de DocumentDTO
-        DocumentDTO document = new DocumentDTO();
-
-        // Configura los atributos de DocumentDTO
-        document.setDocumentId(1L);
-        document.setDocumentNumber("F2023-001");
-        document.setIssueDate(new Date());
-        document.setSubtotal(new BigDecimal("250.00"));
-        document.setTotalDiscount(new BigDecimal("30.00"));
-        document.setIgvAmount(new BigDecimal("0.18"));
-        document.setTotalAmount(new BigDecimal("295.00"));
-
-        // Crea una instancia de DocumentTypeDTO con datos ficticios
-        DocumentTypeDTO documentType = new DocumentTypeDTO();
-        documentType.setDocumentTypeName("Boleta");
-        document.setDocumentType(documentType);
-
-        // Crea una instancia de SaleDTO con datos ficticios
-        SaleDTO sale = new SaleDTO();
-        sale.setSaleId(1L);
-        sale.setSaleDateTime(new Date());
-
-        // Crea una lista de detalles de venta (productos vendidos) con datos ficticios
-        List<SaleDetailDTO> saleDetails = new ArrayList<>();
-
-        SaleDetailDTO saleDetail1 = new SaleDetailDTO();
-        saleDetail1.setDetailId(1L);
-        saleDetail1.setQuantitySold(2);
-//        saleDetail1.setDiscountPerProduct(new BigDecimal("10.00"));
-        saleDetail1.setSubtotalPerProduct(new BigDecimal("90.00"));
-
-        // Crea una instancia de ProductDTO con datos ficticios
-        ProductDTO product1 = new ProductDTO();
-        product1.setProductId(1L);
-        product1.setProductName("Producto 1");
-        product1.setUnitPrice(new BigDecimal("266666.00"));
-        // Configura otros atributos del producto
-
-        // Asocia el producto al detalle de venta
-        saleDetail1.setProduct(product1);
-
-        // Agrega el detalle de venta a la lista de detalles
-        saleDetails.add(saleDetail1);
-
-        // Repite el proceso para otros detalles de venta (productos) si es necesario
-
-        // Asigna la lista de detalles de venta a la venta
-        sale.setSaleDetails(saleDetails);
-
-        // Asigna una instancia de CustomerDTO con datos ficticios a la venta
-        CustomerDTO customer = new CustomerDTO();
-        customer.setCustomerDni("23333");
-        customer.setCustomerFirstName("Alexander Bryan");
-        customer.setCustomerLastName("Onocc Navarro");
-        // Configura otros atributos del cliente
-        document.setCustomer(customer);
-
-        // Asigna una instancia de UserDTO con datos ficticios a la venta
-        UserDTO user = new UserDTO();
-        // Configura atributos del usuario
-        document.setUser(user);
-
-        // Asigna la instancia de SaleDTO a DocumentDTO
-        document.setSale(sale);
-
-        // Genera el PDF utilizando PDFGenerator
-        PDFGenerator pdfGenerator = new PDFGenerator();
-        pdfGenerator.generatePDF(document);
-    }
+//    @FXML
+//    void handleNewDocument(ActionEvent event) {
+//        // Crea una instancia de DocumentDTO
+//        DocumentDTO document = new DocumentDTO();
+//
+//        // Configura los atributos de DocumentDTO
+//        document.setDocumentId(1L);
+//        document.setDocumentNumber("F2023-001");
+//        document.setIssueDate(new Date());
+//        document.setSubtotal(new BigDecimal("250.00"));
+//        document.setTotalDiscount(new BigDecimal("30.00"));
+//        document.setIgvAmount(new BigDecimal("0.18"));
+//        document.setTotalAmount(new BigDecimal("295.00"));
+//
+//        // Crea una instancia de DocumentTypeDTO con datos ficticios
+//        DocumentTypeDTO documentType = new DocumentTypeDTO();
+//        documentType.setDocumentTypeName("Boleta");
+//        document.setDocumentType(documentType);
+//
+//        // Crea una instancia de SaleDTO con datos ficticios
+//        SaleDTO sale = new SaleDTO();
+//        sale.setSaleId(1L);
+//        sale.setSaleDateTime(new Date());
+//
+//        // Crea una lista de detalles de venta (productos vendidos) con datos ficticios
+//        List<SaleDetailDTO> saleDetails = new ArrayList<>();
+//
+//        SaleDetailDTO saleDetail1 = new SaleDetailDTO();
+//        saleDetail1.setDetailId(1L);
+//        saleDetail1.setQuantitySold(2);
+////        saleDetail1.setDiscountPerProduct(new BigDecimal("10.00"));
+//        saleDetail1.setSubtotalPerProduct(new BigDecimal("90.00"));
+//
+//        // Crea una instancia de ProductDTO con datos ficticios
+//        ProductDTO product1 = new ProductDTO();
+//        product1.setProductId(1L);
+//        product1.setProductName("Producto 1");
+//        product1.setUnitPrice(new BigDecimal("266666.00"));
+//        // Configura otros atributos del producto
+//
+//        // Asocia el producto al detalle de venta
+//        saleDetail1.setProduct(product1);
+//
+//        // Agrega el detalle de venta a la lista de detalles
+//        saleDetails.add(saleDetail1);
+//
+//        // Repite el proceso para otros detalles de venta (productos) si es necesario
+//
+//        // Asigna la lista de detalles de venta a la venta
+//        sale.setSaleDetails(saleDetails);
+//
+//        // Asigna una instancia de CustomerDTO con datos ficticios a la venta
+//        CustomerDTO customer = new CustomerDTO();
+//        customer.setCustomerDni("23333");
+//        customer.setCustomerFirstName("Alexander Bryan");
+//        customer.setCustomerLastName("Onocc Navarro");
+//        // Configura otros atributos del cliente
+//        document.setCustomer(customer);
+//
+//        // Asigna una instancia de UserDTO con datos ficticios a la venta
+//        UserDTO user = new UserDTO();
+//        // Configura atributos del usuario
+//        document.setUser(user);
+//
+//        // Asigna la instancia de SaleDTO a DocumentDTO
+//        document.setSale(sale);
+//
+//        // Genera el PDF utilizando PDFGenerator
+//        PDFGenerator pdfGenerator = new PDFGenerator();
+//        pdfGenerator.generatePDF(document);
+//    }
 
 
 

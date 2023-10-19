@@ -169,6 +169,8 @@ public class ModalSale extends StackPane implements Initializable {
     //id del cliente
     long customerId;
 
+    long saleId;
+
 
     // Calcula el descuento total
     BigDecimal totalDiscount = BigDecimal.ZERO;
@@ -603,19 +605,22 @@ public class ModalSale extends StackPane implements Initializable {
 
             modalDialog.showModal(stackPane);
 
-            txtSaleNumber.setText(String.valueOf(saleDAO.getLastSaleId()+1));
+            txtSaleNumber.setText(String.valueOf(saleId));
+
+
 
 
 
 //            // Crear un nuevo objeto DocumentDTO con la información del documento
 //            DocumentDTO newDocument = new DocumentDTO();
 //            DocumentTypeDTO documentTypeDTO= new DocumentTypeDTO();
+//
 //            documentTypeDTO.setDocumentTypeId(1L);
 //            newDocument.setDocumentType(documentTypeDTO);// Establece el tipo de documento
-//            newDocument.setDocumentNumber(String.valueOf(saleDAO.getLastSaleId()+1)); // Establece el número de documento
+//            newDocument.setDocumentNumber(txtSaleNumber.getText()); // Establece el número de documento
 //            newDocument.setIssueDate(currentDate); // Establece la fecha de emisión
 //            SaleDTO saleDTO= new SaleDTO();
-//            saleDTO.setSaleId(saleDAO.getLastSaleId()+1);
+//            saleDTO.setSaleId(saleId);
 //
 //            newDocument.setSale(saleDTO); // Establece la venta relacionada (si es relevante)
 //            newDocument.setCustomer(customerDetail); // Establece el cliente relacionado (si es relevante)
@@ -847,9 +852,13 @@ public class ModalSale extends StackPane implements Initializable {
 
         documentUtil= new DocumentUtil(documentDAO);
 
+        saleId= saleDAO.getLastSaleId()+1;
+
+        txtSaleNumber.setText(String.valueOf(saleId));
 
 
-        txtSaleNumber.setText(String.valueOf(saleDAO.getLastSaleId()+1));
+
+
 
         discountValidator= new TextFieldValidator(txtDiscount, labelValidateDiscount, TextFieldValidator.ValidationCriteria.DISCOUNT);
         quantityValidator = new TextFieldValidator(txtQuantity, labelValidateQuantity, TextFieldValidator.ValidationCriteria.QUANTITY);

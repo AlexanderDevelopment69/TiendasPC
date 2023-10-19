@@ -56,17 +56,6 @@
                   </LinearGradient>
                </rippleColor>
             </MFXButton>
-            <MFXButton layoutX="299.0" layoutY="112.0" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleNewDocument" prefHeight="38.0" prefWidth="126.0" text="Generar Boleta">
-               <rippleColor>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop color="#5771f7" />
-                        <Stop color="#8a7dff" offset="0.9961832061068702" />
-                        <Stop color="#8a7dff" offset="1.0" />
-                     </stops>
-                  </LinearGradient>
-               </rippleColor>
-            </MFXButton>
          </children>
       </AnchorPane>
    </children>
