@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="749.0" prefWidth="900.0" stylesheets="@../../../Styles/ModalPurchase.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="900.0" stylesheets="@../../../Styles/ModalPurchase.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane fx:id="anchorPane">
          <children>
@@ -25,7 +25,7 @@
             <MFXButton fx:id="cleanButton" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="383.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Limpiar" />
             <Label layoutX="34.0" layoutY="105.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Datos del proveedor" wrapText="true" />
             <Label layoutX="35.0" layoutY="210.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Datos del producto" wrapText="true" />
-            <MFXLegacyTableView fx:id="purchaseTable" layoutX="34.0" layoutY="452.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="636.0" styleClass="table-view-container" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="64.0">
+            <MFXLegacyTableView fx:id="purchaseTable" layoutX="34.0" layoutY="452.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="126.0" prefWidth="802.0" styleClass="table-view-container" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="64.0">
                <columns>
                   <TableColumn fx:id="colCode" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Codigo" />
                   <TableColumn fx:id="colProductName" prefWidth="113.5999984741211" text="Producto" />
@@ -40,10 +40,10 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </MFXLegacyTableView>
-            <MFXButton fx:id="confirmPurchaseButton" alignment="CENTER" layoutX="35.0" layoutY="670.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Registrar compra" />
-            <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="670.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
+            <MFXButton fx:id="confirmPurchaseButton" alignment="CENTER" layoutX="34.0" layoutY="600.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Registrar compra" />
+            <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="174.0" layoutY="600.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
             <MFXTextField fx:id="txtPurchaseNumber" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Numero de compra" layoutX="700.0" layoutY="32.0" prefHeight="44.0" prefWidth="135.0" AnchorPane.rightAnchor="64.80000000000001" />
-            <MFXTextField fx:id="txtTotalPurchase" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Total Compra" layoutX="653.0" layoutY="659.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="64.6" />
+            <MFXTextField fx:id="txtTotalPurchase" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Total Compra" layoutX="653.0" layoutY="589.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="64.60000000000002" />
             <MFXLegacyComboBox fx:id="cbSupplierName" layoutX="367.0" layoutY="143.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="280.0" promptText="Proveedores" unfocusedLineColor="#3a18ff" />
             <Label fx:id="labelValidateQuantity" layoutX="367.0" layoutY="298.0" prefHeight="18.0" wrapText="true" />
             <Label fx:id="labelValidateCost" layoutX="367.0" layoutY="374.0" prefHeight="18.0" wrapText="true" />

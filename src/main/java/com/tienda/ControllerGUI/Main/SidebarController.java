@@ -53,7 +53,9 @@ public class SidebarController {
     private JFXButton btnProduct;
 
     @FXML
-    private JFXButton btnSales;
+    private JFXButton btnSale;
+    @FXML
+    private JFXButton btnPurchase;
 
     @FXML
     private JFXButton btnSupplier;
@@ -99,9 +101,13 @@ public class SidebarController {
             if (role.equals("Vendedor")) {
                 // Si es igual, desactivar los buttons
                 btnSupplier.setDisable(true);
-                btnMain.setDisable(true);
                 btnUser.setDisable(true);
+                btnProduct.setDisable(true);
+                btnPurchase.setDisable(true);
+
             }
+
+
 
 
         } else {

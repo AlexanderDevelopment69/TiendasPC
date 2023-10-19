@@ -28,7 +28,7 @@
                   <Insets left="10.0" top="40.0" />
                </VBox.margin>
             </Label>
-            <JFXButton layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleMainView" text="Vista principal">
+            <JFXButton fx:id="btnMain" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleMainView" text="Vista principal">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -44,7 +44,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleUserManagement" text="Usuarios">
+            <JFXButton fx:id="btnUser" layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleUserManagement" text="Usuarios">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -57,7 +57,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleProductManagement" text="Productos">
+            <JFXButton fx:id="btnProduct" layoutX="10.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleProductManagement" text="Productos">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -70,7 +70,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleSaleManagement" text="Ventas">
+            <JFXButton fx:id="btnSale" layoutX="10.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleSaleManagement" text="Ventas">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -83,7 +83,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#handlePurchaseManagement" text="Compras">
+            <JFXButton fx:id="btnPurchase" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#handlePurchaseManagement" text="Compras">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -96,7 +96,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleSupplierManagement" text="Proveedores">
+            <JFXButton fx:id="btnSupplier" layoutX="10.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleSupplierManagement" text="Proveedores">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -109,7 +109,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton layoutX="10.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCustomerManagement" text="Clientes">
+            <JFXButton fx:id="btnCustomer" layoutX="10.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCustomerManagement" text="Clientes">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
