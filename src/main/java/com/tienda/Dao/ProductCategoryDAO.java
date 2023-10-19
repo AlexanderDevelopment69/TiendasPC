@@ -1,7 +1,6 @@
 package com.tienda.Dao;
 
 import com.tienda.dto.ProductCategoryDTO;
-import com.tienda.dto.ProductDTO;
 
 import java.util.List;
 

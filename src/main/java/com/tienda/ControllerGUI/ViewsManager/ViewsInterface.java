@@ -14,6 +14,10 @@ public interface ViewsInterface {
     void showMainView();
     void showProductManagement();
     void showSupplierManagement();
+    void showCustomerManagement();
+
+    void showPurchaseManagement();
+    void showSaleManagement();
 
 
 }

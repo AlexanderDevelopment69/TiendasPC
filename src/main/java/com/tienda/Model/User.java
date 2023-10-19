@@ -1,36 +1,28 @@
 package com.tienda.Model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-@ToString
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Entity
 @Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long userid;
+    private Long userId;
 
-    @Column(name = "user_name", nullable = false) // Personaliza el nombre de la columna y otras propiedades
+    @Column(name = "name", nullable = false) // Personaliza el nombre de la columna y otras propiedades
     private String userName;
 
-    @Column(name = "user_last_name" , nullable = false) // Personaliza el nombre de la columna
+    @Column(name = "last_name" , nullable = false) // Personaliza el nombre de la columna
     private String userLastName;
 
-    @Column(name = "dni", nullable = false, columnDefinition = "VARCHAR(9)",unique = true)
+    @Column(name = "dni", nullable = false,unique = true)
     private String userDni;
 
-    @Column(name = "email", nullable = false, columnDefinition = "VARCHAR(255)",unique = true)
+    @Column(name = "email", nullable = false,unique = true)
     private String userEmail;
 
     @Column(name = "password", nullable = false, columnDefinition = "VARCHAR(255)")

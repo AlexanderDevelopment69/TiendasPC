@@ -2,9 +2,8 @@ package com.tienda.ControllerGUI.Components;
 
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.Dao.SupplierDAO;
-import com.tienda.Dao.SupplierDAOHibernate;
+import com.tienda.DaoImpl.SupplierDAOHibernate;
 import com.tienda.Tools.TextFieldValidator;
-import com.tienda.dto.SupplierDTO;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.FadeTransition;
@@ -17,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -25,7 +23,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 public class ModalSupplier extends StackPane implements Initializable {
 
@@ -44,19 +41,19 @@ public class ModalSupplier extends StackPane implements Initializable {
     private StackPane stackPane;
 
     @FXML
-    private MFXTextField txtSupplierAddress;
+    public MFXTextField txtSupplierAddress;
 
     @FXML
-    private MFXTextField txtSupplierEmail;
+    public MFXTextField txtSupplierEmail;
 
     @FXML
-    private MFXTextField txtSupplierName;
+    public MFXTextField txtSupplierName;
 
     @FXML
-    private MFXTextField txtSupplierPhoneNumber;
+    public MFXTextField txtSupplierPhoneNumber;
 
     @FXML
-    private MFXTextField txtSupplierRuc;
+    public MFXTextField txtSupplierRuc;
 
 
     @FXML
@@ -164,6 +161,46 @@ public class ModalSupplier extends StackPane implements Initializable {
     }
 
 
+    public boolean validateTextFieldsSupplier(List<String> errorMessages) {
+        boolean validationSuccessful = true;
+
+        // Validar campos vacíos
+        if (txtSupplierRuc.getText().isEmpty() || txtSupplierEmail.getText().isEmpty() || txtSupplierPhoneNumber.getText().isEmpty() || txtSupplierName.getText().isEmpty() || txtSupplierAddress.getText().isEmpty()) {
+            errorMessages.add("Por favor, complete todos los campos.");
+            validationSuccessful = false;
+        }
+
+        if (validationSuccessful) {
+            if (!rucValidator.validateRUC(txtSupplierRuc.getText())) {
+                errorMessages.add("El RUC no cumple con los requisitos.\n");
+                validationSuccessful = false;
+            }
+
+            if (!emailValidator.validateEmail(txtSupplierEmail.getText())) {
+                errorMessages.add("El email no cumple con los requisitos.\n");
+                validationSuccessful = false;
+            }
+
+            if (!phoneNumberValidator.validatePhoneNumber(txtSupplierPhoneNumber.getText())) {
+                errorMessages.add("El numero no cumple con los requisitos.\n");
+                validationSuccessful = false;
+            }
+        }
+
+        return validationSuccessful;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public void showModal(StackPane parentStackPane) {
         // Añade el fondo oscuro al StackPane
         backdrop = createBackdrop(parentStackPane);
@@ -241,37 +278,6 @@ public class ModalSupplier extends StackPane implements Initializable {
             parentStackPane.getChildren().remove(this); // Remueve el modal
         });
         parallelTransition.play();
-    }
-
-
-
-    public boolean validateTextFieldsSupplier(List<String> errorMessages) {
-        boolean validationSuccessful = true;
-
-        // Validar campos vacíos
-        if (txtSupplierRuc.getText().isEmpty() || txtSupplierEmail.getText().isEmpty() || txtSupplierPhoneNumber.getText().isEmpty() || txtSupplierName.getText().isEmpty() || txtSupplierAddress.getText().isEmpty()) {
-            errorMessages.add("Por favor, complete todos los campos.");
-            validationSuccessful = false;
-        }
-
-        if (validationSuccessful) {
-            if (!rucValidator.validateRUC(txtSupplierRuc.getText())) {
-                errorMessages.add("El RUC no cumple con los requisitos.\n");
-                validationSuccessful = false;
-            }
-
-            if (!emailValidator.validateEmail(txtSupplierEmail.getText())) {
-                errorMessages.add("El email no cumple con los requisitos.\n");
-                validationSuccessful = false;
-            }
-
-            if (!phoneNumberValidator.validatePhoneNumber(txtSupplierPhoneNumber.getText())) {
-                errorMessages.add("El numero no cumple con los requisitos.\n");
-                validationSuccessful = false;
-            }
-        }
-
-        return validationSuccessful;
     }
 
 

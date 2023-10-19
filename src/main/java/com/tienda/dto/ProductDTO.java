@@ -3,6 +3,8 @@ package com.tienda.dto;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ProductDTO {
     private Long productId;
@@ -10,7 +12,7 @@ public class ProductDTO {
     private String productBrand;
     private String productDescription;
     private byte[] productImage; // Nuevo campo para la imagen del producto
-    private double unitPrice;
+    private BigDecimal unitPrice;
     private int availableStock;
 
 

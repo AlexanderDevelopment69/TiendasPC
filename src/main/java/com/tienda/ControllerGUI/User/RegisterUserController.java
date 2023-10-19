@@ -4,7 +4,7 @@ import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.ViewsManager.ViewsManager;
 import com.tienda.Dao.UserDAO;
-import com.tienda.Dao.UserDAOHibernate;
+import com.tienda.DaoImpl.UserDAOHibernate;
 
 import com.tienda.Tools.MFXTextFieldValidator;
 import com.tienda.dto.UserDTO;
@@ -165,7 +165,7 @@ public class RegisterUserController implements Initializable {
             newUser.setUserEmail(email);
             try {
                 // Guardar el nuevo usuario en la base de datos
-                userDAO.addUser(newUser);
+                userDAO.saveUser(newUser);
 
                 // Limpiar los campos después del registro
                 textDni.clear();

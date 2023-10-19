@@ -23,9 +23,18 @@ public class TextFieldValidator {
         DNI,
         CHARACTERS_ONLY,
         PRICE,
+        COST,
+        QUANTITY,
+
+        DISCOUNT,
         RUC,
         PHONE_NUMBER,
+        FIRST_NAME,
+        LAST_NAME,
+        CUSTOMER_EXISTS,
         CUSTOM // Puedes agregar otros criterios personalizados según tus necesidades
+
+
     }
 
 
@@ -47,8 +56,6 @@ public class TextFieldValidator {
 
         setupValidation();
     }
-
-
 
 
     private void setupValidation() {
@@ -82,8 +89,24 @@ public class TextFieldValidator {
                     case PHONE_NUMBER:
                         validatePhoneNumber(newValue);
                         break;
-
-
+                    case FIRST_NAME:
+                        validateFirstName(newValue);
+                        break;
+                    case LAST_NAME:
+                        validateLastName(newValue);
+                    break;
+                    case COST:
+                        validateCost(newValue);
+                        break;
+                    case QUANTITY:
+                        validateQuantity(newValue);
+                        break;
+                    case DISCOUNT:
+                        validateDiscount(newValue);
+                        break;
+                    case CUSTOMER_EXISTS:
+                        validateCustomerExists(newValue);
+                        break;
                     case CUSTOM:
                         // Implementa tu lógica de validación personalizada aquí
                         break;
@@ -155,6 +178,18 @@ public class TextFieldValidator {
         return isValid; // Devuelve true si el DNI es válido, false en caso contrario
     }
 
+    public Boolean validateRUC(String ruc) {
+        if (ruc.length() != 11 || !ruc.matches("^[0-9]+$")) {
+            validationLabel.setText("RUC no válido");
+            validationLabel.setTextFill(INVALID_COLOR);
+            return false;
+        }
+
+        validationLabel.setText("RUC válido");
+        validationLabel.setTextFill(VALID_COLOR);
+        return true;
+    }
+
     public Boolean validateCharactersOnly(String input) {
         boolean isValid = isValidCharactersOnly(input);
         if (isValid) {
@@ -196,17 +231,7 @@ public class TextFieldValidator {
         return false;
     }
 
-    public Boolean validateRUC(String ruc) {
-        if (ruc.length() != 11 || !ruc.matches("^[0-9]+$")) {
-            validationLabel.setText("RUC no válido");
-            validationLabel.setTextFill(INVALID_COLOR);
-            return false;
-        }
 
-        validationLabel.setText("RUC válido");
-        validationLabel.setTextFill(VALID_COLOR);
-        return true;
-    }
 
 
     public Boolean validatePhoneNumber(String phoneNumber) {
@@ -233,6 +258,126 @@ public class TextFieldValidator {
     }
 
 
+    public Boolean validateFirstName(String firstName) {
+        boolean isValid = isValidName(firstName);
+        if (isValid) {
+            validationLabel.setText("Nombre válido");
+            validationLabel.setTextFill(VALID_COLOR);
+        } else {
+            validationLabel.setText("Nombre no válido");
+            validationLabel.setTextFill(INVALID_COLOR);
+        }
+        return isValid; // Devuelve true si el nombre es válido, false en caso contrario
+    }
+
+    public Boolean validateLastName(String lastName) {
+        boolean isValid = isValidName(lastName);
+        if (isValid) {
+            validationLabel.setText("Apellido válido");
+            validationLabel.setTextFill(VALID_COLOR);
+        } else {
+            validationLabel.setText("Apellido no válido");
+            validationLabel.setTextFill(INVALID_COLOR);
+        }
+        return isValid; // Devuelve true si el apellido es válido, false en caso contrario
+    }
+
+    public Boolean validateCost(String cost) {
+        try {
+            double costValue = Double.parseDouble(cost);
+            if (costValue > 0) {
+                validationLabel.setText("Costo válido");
+                validationLabel.setTextFill(VALID_COLOR);
+                return true;
+            }
+            if (costValue == 0) {
+                validationLabel.setText("No se admiten costos en cero");
+                validationLabel.setTextFill(INVALID_COLOR);
+            }
+            else {
+                validationLabel.setText("No se admiten costos negativos");
+                validationLabel.setTextFill(INVALID_COLOR);
+            }
+        } catch (NumberFormatException e) {
+            // No es un número decimal válido
+            validationLabel.setText("No se admiten caracteres");
+            validationLabel.setTextFill(INVALID_COLOR);
+        }
+
+        return false;
+    }
+
+
+    public Boolean validateQuantity(String quantity) {
+        try {
+            int quantityValue = Integer.parseInt(quantity);
+            if (quantityValue > 0) {
+                validationLabel.setText("Cantidad válida");
+                validationLabel.setTextFill(VALID_COLOR);
+                return true;
+            }
+            if (quantityValue == 0) {
+                validationLabel.setText("No se admiten cantidades en cero");
+                validationLabel.setTextFill(INVALID_COLOR);
+            }
+
+            else {
+                validationLabel.setText("No se admiten cantidades negativas");
+                validationLabel.setTextFill(INVALID_COLOR);
+            }
+        } catch (NumberFormatException e) {
+            // No es un número entero válido
+            validationLabel.setText("No se admiten caracteres");
+            validationLabel.setTextFill(INVALID_COLOR);
+        }
+
+        return false;
+    }
+
+    public Boolean validateDiscount(String discount) {
+        try {
+            double discountValue = Double.parseDouble(discount);
+            if (discountValue >= 0) {
+                validationLabel.setText("Descuento válido");
+                validationLabel.setTextFill(VALID_COLOR);
+                return true;
+            } else {
+                validationLabel.setText("No se admite descuento negativo");
+                validationLabel.setTextFill(INVALID_COLOR);
+            }
+        } catch (NumberFormatException e) {
+            // No es un número decimal válido
+            validationLabel.setText("No se admiten caracteres");
+            validationLabel.setTextFill(INVALID_COLOR);
+        }
+
+        return false;
+    }
+
+    public Boolean validateCustomerExists(String customerDniOrRuc) {
+        if (!customerDniOrRuc.isEmpty()) {
+            // El campo no está vacío, consideramos que el cliente existe
+            validationLabel.setText("Cliente valido");
+            validationLabel.setTextFill(VALID_COLOR);
+            return true;
+        }
+//        else {
+//            // El campo está vacío, consideramos que el cliente no existe
+//            validationLabel.setText("Cliente no existe");
+//            validationLabel.setTextFill(INVALID_COLOR);
+//            return false;
+//        }
+        return false;
+    }
+
+
+    private boolean isValidName(String name) {
+        // Aquí puedes implementar tu lógica de validación de nombres
+        // Puedes establecer tus propios criterios, como la longitud mínima, caracteres permitidos, etc.
+        // Por ejemplo, este método verifica que el nombre no esté vacío y contenga solo letras y espacios.
+        return !name.isEmpty() && name.matches("^[a-zA-Z ]*$");
+    }
+
 
     private boolean isValidEmail(String email) {
         // Implementa tu lógica de validación de correo electrónico aquí
@@ -244,6 +389,7 @@ public class TextFieldValidator {
         // El DNI debe tener exactamente 8 dígitos
         return dni.matches("^[0-9]{8}$");
     }
+
     private boolean isValidCharactersOnly(String input) {
         return input.matches("^[a-zA-Z ]*$");
     }

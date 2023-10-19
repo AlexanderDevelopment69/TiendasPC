@@ -5,7 +5,10 @@ import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.Components.ModalProduct;
 import com.tienda.ControllerGUI.Components.ModalProductCategory;
 import com.tienda.Dao.*;
+import com.tienda.DaoImpl.ProductCategoryDAOHibernate;
+import com.tienda.DaoImpl.ProductDAOHibernate;
 import com.tienda.Utils.ProductDataLoadingUtil;
+import com.tienda.Utils.ProductUtil;
 import com.tienda.dto.ProductCategoryDTO;
 import com.tienda.dto.ProductDTO;
 import io.github.palexdev.materialfx.controls.MFXTextField;
@@ -24,8 +27,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
+import java.math.BigDecimal;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class ProductManagementController implements Initializable {
 
@@ -65,40 +70,50 @@ public class ProductManagementController implements Initializable {
     private StackPane root;
 
     @FXML
-    private MFXTextField txtfSearch;
+    private MFXTextField textSearch;
 
     ProductDAO productDAO;
     ProductCategoryDAO productCategoryDAO;
 
     ProductDataLoadingUtil productDataLoadingUtil;
 
+   ProductUtil productUtil;
+
     @FXML
     void handleAddProduct(ActionEvent event) {
         //Crear una instancia del modal
         ModalProduct modalProduct = new ModalProduct();
+
+
         // Configurar el modal mediante un solo método
         modalProduct.configureModal("Nuevo producto",
                 "Completa todos los campos para registrar un nuevo producto.",
                 "Registrar",
-                ev -> {
+                ev1 -> {
+                    String productName = modalProduct.textProductName.getText().trim();
+                    String brand = modalProduct.textBrand.getText().trim();
+                    String description = modalProduct.textDescription.getText().trim();
+                    String price = modalProduct.textPrice.getText().trim();
+                    byte[] image = modalProduct.imageToByteArray();
+                    Long productCategoryId = modalProduct.getValueSelectedProductCategory();
+                    Long supplierId = modalProduct.getValueSelectedSupplier();
 
-                    if (!modalProduct.getTxtProduct().isEmpty()
-                            && !modalProduct.getTxtBrand().isEmpty()
-                            && !modalProduct.getTxtDescription().isEmpty()
-                            && !modalProduct.getTxtPrice().isEmpty()
-                            && modalProduct.validateComboBox()) {
+                    List<String> errorMessages = new ArrayList<>();
+                    boolean validationSuccessful = modalProduct.validateTextFieldsProduct(errorMessages);
 
+                    if (validationSuccessful) {
                         ProductDTO newProductDTO = new ProductDTO();
-                        newProductDTO.setProductName(modalProduct.getTxtProduct());
-                        newProductDTO.setProductBrand(modalProduct.getTxtBrand());
-                        newProductDTO.setProductDescription(modalProduct.getTxtDescription());
-                        newProductDTO.setUnitPrice(Double.parseDouble(modalProduct.getTxtPrice()));
+                        newProductDTO.setProductName(productName);
+                        newProductDTO.setProductBrand(brand);
+                        newProductDTO.setProductDescription(description);
+                        newProductDTO.setUnitPrice(BigDecimal.valueOf(Double.parseDouble(price)));
                         newProductDTO.setAvailableStock(0);
-                        newProductDTO.setProductCategoryId(modalProduct.getValueSelectedProductCategory());
-                        newProductDTO.setSupplierId(modalProduct.getValueSelectedSupplier());
-                        newProductDTO.setProductImage(modalProduct.getImageToByteArray());
+                        newProductDTO.setProductCategoryId(productCategoryId);
+                        newProductDTO.setSupplierId(supplierId);
+                        newProductDTO.setProductImage(image);
                         productDAO.saveProduct(newProductDTO);
-                        handleLoadDate();
+                        // Mostrar los datos en al tabla
+                        productDataLoadingUtil.loadProductTableData(productTable);
 
                         //Crear una instancia del modal
                         ModalDialog modalDialog = new ModalDialog();
@@ -117,37 +132,38 @@ public class ProductManagementController implements Initializable {
 
                         modalDialog.showModal(root);
 
-
                     } else {
+                        // Mostrar mensajes de error si existen problemas de validación
+                        StringBuilder errorMessageBuilder = new StringBuilder();
+                        for (String errorMessage : errorMessages) {
+                            System.out.println(errorMessage);
+                            errorMessageBuilder.append("- ").append(errorMessage).append("\n");
+                        }
 
-                        //Crear una instancia del modal
+                        String errorMessageText = errorMessageBuilder.toString();
+
                         ModalDialog modalDialog = new ModalDialog();
-                        // Configurar el modal mediante un solo método
                         modalDialog.configureModal(
                                 new Image("Images/alert.png"),
                                 "Registro incorrecto.",
-                                "Completa todos los campos del producto, la imagen es opcional.",
-                                "Volver atras",
-                                e -> {
-                                    // Lógica cuando se hace clic en el botón "Confirmar"
+                                "No se pudo registrar el producto correctamente: \n" + "\n" + errorMessageText,
+                                "OK",
+                                ev -> {
                                     System.out.println("Se hizo clic en Confirmar");
                                     modalDialog.close();
-
                                 }
-
                         );
 
                         modalDialog.showModal(root);
-
 
                     }
 
 
                 },
-                ev -> {
+                ev2 -> {
                     modalProduct.close(); // Cierra el modal
                 },
-                ev -> {
+                ev3 -> {
                     //Obtiene la ruta de la imagen
                     modalProduct.getPathImage();
 
@@ -232,6 +248,7 @@ public class ProductManagementController implements Initializable {
 
     @FXML
     void handleLoadDate() {
+        productTable.getItems().clear();
         // Carga los datos en la TableView al inicializar la ventana
         productDataLoadingUtil.loadProductTableData(productTable);
     }
@@ -282,12 +299,12 @@ public class ProductManagementController implements Initializable {
 
                             ModalProduct modalProduct = new ModalProduct();
                             //Setea los campos del producto en el modal
-                            modalProduct.setTxtProduct(productDTO.getProductName());
-                            modalProduct.setTxtBrand(productDTO.getProductBrand());
-                            modalProduct.setTxtDescription(productDTO.getProductDescription());
-                            modalProduct.setTxtPrice(String.valueOf(productDTO.getUnitPrice()));
-                            modalProduct.setValueCbProductCategory(productDTO.getProductCategoryName());
-                            modalProduct.setValueCbSupplier(productDTO.getSupplierName());
+                            modalProduct.textProductName.setText(productDTO.getProductName());
+                            modalProduct.textBrand.setText(productDTO.getProductBrand());
+                            modalProduct.textDescription.setText(productDTO.getProductDescription());
+                            modalProduct.textPrice.setText(String.valueOf(productDTO.getUnitPrice()));
+                            modalProduct.cbProductCategory.setValue(productDTO.getProductCategoryName());
+                            modalProduct.cbSupplier.setValue(productDTO.getSupplierName());
                             modalProduct.showImageInImageView(productDTO.getProductImage());
 
                             // Configurar el modal
@@ -311,53 +328,95 @@ public class ProductManagementController implements Initializable {
                     // Lógica para editar el usuarioalex
                     System.out.println("Editar producto: " + productDTO.getProductId());
 
+
                     ModalProduct modalProduct = new ModalProduct();
                     //Setea los campos del producto en el modal
-                    modalProduct.setTxtProduct(productDTO.getProductName());
-                    modalProduct.setTxtBrand(productDTO.getProductBrand());
-                    modalProduct.setTxtDescription(productDTO.getProductDescription());
-                    modalProduct.setTxtPrice(String.valueOf(productDTO.getUnitPrice()));
-                    modalProduct.setValueCbProductCategory(productDTO.getProductCategoryName());
-                    modalProduct.setValueCbSupplier(productDTO.getSupplierName());
+                    modalProduct.textProductName.setText(productDTO.getProductName());
+                    modalProduct.textBrand.setText(productDTO.getProductBrand());
+                    modalProduct.textDescription.setText(productDTO.getProductDescription());
+                    modalProduct.textPrice.setText(String.valueOf(productDTO.getUnitPrice()));
+                    modalProduct.cbProductCategory.setValue(productDTO.getProductCategoryName());
+                    modalProduct.cbSupplier.setValue(productDTO.getSupplierName());
                     modalProduct.showImageInImageView(productDTO.getProductImage());
+
                     // Configurar el modal
                     modalProduct.configureModal("Actualizar Producto",
                             "Modifica los campos necesarios para actualizar el producto.",
                             "Actualizar",
                             e -> {
-                                //Crea un DTO de producto
-                                ProductDTO updateProduct = new ProductDTO();
 
-                                updateProduct.setProductId(productDTO.getProductId());
-                                updateProduct.setProductName(modalProduct.getTxtProduct());
-                                updateProduct.setProductBrand(modalProduct.getTxtBrand());
-                                updateProduct.setProductDescription(modalProduct.getTxtDescription());
-                                updateProduct.setProductImage(modalProduct.getImageToByteArray());
-                                updateProduct.setUnitPrice(Double.parseDouble(modalProduct.getTxtPrice()));
-                                updateProduct.setProductCategoryId(modalProduct.getValueSelectedProductCategory());
-                                updateProduct.setSupplierId(modalProduct.getValueSelectedSupplier());
-                                productDAO.updateProduct(updateProduct);
+                                String productName = modalProduct.textProductName.getText().trim();
+                                String brand = modalProduct.textBrand.getText().trim();
+                                String description = modalProduct.textDescription.getText().trim();
+                                String price = modalProduct.textPrice.getText().trim();
+                                Long productCategoryId = modalProduct.getValueSelectedProductCategory();
+                                Long supplierId = modalProduct.getValueSelectedSupplier();
+                                byte[] image = modalProduct.imageToByteArray(modalProduct.productImage.getImage());
 
-                                // Carga los datos en la TableView al inicializar la ventana
-                                productDataLoadingUtil.loadProductTableData(productTable);
+                                List<String> errorMessages = new ArrayList<>();
+                                boolean validationSuccessful = modalProduct.validateTextFieldsProduct(errorMessages);
 
-                                //Crear una instancia del modal
-                                ModalDialog modalDialog = new ModalDialog();
-                                // Configurar el modal mediante un solo método
-                                modalDialog.configureModal(
-                                        new Image("Images/iconCheck.png"),
-                                        "Actualizado correctamente.",
-                                        "Producto actualizado correctamente.",
-                                        "OK",
-                                        ev -> {
-                                            // Lógica cuando se hace clic en el botón "Confirmar"
-                                            System.out.println("Se hizo clic en Confirmar");
-                                            modalDialog.close();
-                                            modalProduct.close();
-                                        }
-                                );
+                                if (validationSuccessful) {
 
-                                modalDialog.showModal(root);
+                                    //Crea un DTO de producto
+                                    ProductDTO updateProduct = new ProductDTO();
+                                    updateProduct.setProductId(productDTO.getProductId());
+                                    updateProduct.setProductName(productName);
+                                    updateProduct.setProductBrand(brand);
+                                    updateProduct.setProductDescription(description);
+                                    updateProduct.setProductImage(image);
+                                    updateProduct.setUnitPrice(BigDecimal.valueOf(Double.parseDouble(price)));
+                                    updateProduct.setAvailableStock(productDTO.getAvailableStock());
+                                    updateProduct.setProductCategoryId(productCategoryId);
+                                    updateProduct.setSupplierId(supplierId);
+                                    productDAO.updateProduct(updateProduct);
+
+                                    // Actualiza la tabla producto
+                                    productDataLoadingUtil.loadProductTableData(productTable);
+
+                                    //Crear una instancia del modal
+                                    ModalDialog modalDialog = new ModalDialog();
+                                    // Configurar el modal mediante un solo método
+                                    modalDialog.configureModal(
+                                            new Image("Images/iconCheck.png"),
+                                            "Actualizado correctamente.",
+                                            "Producto actualizado correctamente.",
+                                            "OK",
+                                            ev -> {
+                                                // Lógica cuando se hace clic en el botón "Confirmar"
+                                                System.out.println("Se hizo clic en Confirmar");
+                                                modalDialog.close();
+                                                modalProduct.close();
+                                            }
+                                    );
+
+                                    modalDialog.showModal(root);
+
+                                } else {
+
+                                    // Mostrar mensajes de error si existen problemas de validación
+                                    StringBuilder errorMessageBuilder = new StringBuilder();
+                                    for (String errorMessage : errorMessages) {
+                                        System.out.println(errorMessage);
+                                        errorMessageBuilder.append("- ").append(errorMessage).append("\n");
+                                    }
+
+                                    String errorMessageText = errorMessageBuilder.toString();
+
+                                    ModalDialog modalDialog = new ModalDialog();
+                                    modalDialog.configureModal(
+                                            new Image("Images/alert.png"),
+                                            "Actualizacion incorrecta.",
+                                            "No se pudo actualizar el producto correctamente: \n" + "\n" + errorMessageText,
+                                            "OK",
+                                            ev -> {
+                                                System.out.println("Se hizo clic en Confirmar");
+                                                modalDialog.close();
+                                            }
+                                    );
+
+                                    modalDialog.showModal(root);
+                                }
 
 
                             },
@@ -386,7 +445,7 @@ public class ProductManagementController implements Initializable {
                     System.out.println("Eliminar usuario: " + productDTO.getProductId());
                     productDAO.deleteProduct(productDTO.getProductId());
                     //Actualizar la tabla con el proveedor eliminado
-                    handleLoadDate();
+                    productDataLoadingUtil.loadProductTableData(productTable);
 
 
                     //Crear una instancia del modal
@@ -420,6 +479,9 @@ public class ProductManagementController implements Initializable {
     }
 
 
+
+
+    private ScheduledExecutorService executor; // Para programar la búsqueda
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Inicializar el objeto UserDaoHibernate con la fábrica de sesiones de Hibernate
@@ -433,7 +495,13 @@ public class ProductManagementController implements Initializable {
         productDataLoadingUtil.loadProductTableData(productTable);
 
 
-//        List<ProductDTO> productList = productDAO.getAllProducts();
+        // Inicializa el ProductUtil y comienza la búsqueda de productos
+        productUtil = new ProductUtil(textSearch, productTable);
+        productUtil.startProductSearch();
+
+
+
+        //        List<ProductDTO> productList = productDAO.getAllProducts();
 //
 //        if (productList != null) {
 //            // Iterar
@@ -444,6 +512,16 @@ public class ProductManagementController implements Initializable {
 //                System.out.println();
 //            }
 //        }
+
+//        List<ProductDTO> productsByName = productDAO.searchProductsBySingleCriteria("lenovo");
+//
+//        // Ahora puedes iterar y trabajar con los productos encontrados
+//        for (ProductDTO product : productsByName) {
+//            System.out.println("Codigo producto: "+product.getProductId());
+//            System.out.println("Product Name: " + product.getProductName());
+//            // Agrega cualquier otra lógica que desees para trabajar con los productos encontrados
+//        }
+
 
     }
 }

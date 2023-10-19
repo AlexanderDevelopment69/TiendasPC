@@ -14,11 +14,11 @@
             <Label fx:id="labelTitleModal" alignment="BOTTOM_LEFT" layoutX="34.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="label-title" text="Nuevo proveedor" />
             <MFXTextField fx:id="txtSupplierName" floatMode="BORDER" floatingText="Nombre del proveedor" layoutX="34.0" layoutY="82.0" prefHeight="44.0" prefWidth="349.0" />
             <MFXTextField fx:id="txtSupplierRuc" floatMode="BORDER" floatingText="RUC" layoutX="34.0" layoutY="150.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXTextField fx:id="txtSupplierAddress" floatMode="BORDER" floatingText="Direccion" layoutX="34.0" layoutY="229.0" prefHeight="44.0" prefWidth="349.0" />
             <MFXTextField fx:id="txtSupplierPhoneNumber" floatMode="BORDER" floatingText="Numero de celular" layoutX="34.0" layoutY="298.0" prefHeight="44.0" prefWidth="349.0" />
             <MFXTextField fx:id="txtSupplierEmail" floatMode="BORDER" floatingText="Email" layoutX="34.0" layoutY="378.0" prefHeight="44.0" prefWidth="349.0" />
             <MFXButton fx:id="confirmButton" alignment="CENTER" layoutX="34.0" layoutY="474.0" prefHeight="40.0" prefWidth="109.0" styleClass="button-confirm" text="Agregar" />
             <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="155.0" layoutY="474.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
-            <MFXTextField fx:id="txtSupplierAddress" floatMode="BORDER" floatingText="Direccion" layoutX="34.0" layoutY="229.0" prefHeight="44.0" prefWidth="349.0" />
             <Label fx:id="labelValidateRUC" layoutX="34.0" layoutY="201.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />
             <Label fx:id="labelValidatePhoneNumber" layoutX="34.0" layoutY="349.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />
             <Label fx:id="labelValidateEmail" layoutX="34.0" layoutY="430.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />

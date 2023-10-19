@@ -240,6 +240,21 @@ public class SidebarController {
     void handleSupplierManagement(ActionEvent event) {
         viewsManager.showSupplierManagement();
     }
+    @FXML
+    void handleCustomerManagement(ActionEvent event) {
+        viewsManager.showCustomerManagement();
+    }
+
+    @FXML
+    void handlePurchaseManagement(ActionEvent event) {
+        viewsManager.showPurchaseManagement();
+    }
+
+
+    @FXML
+    void handleSaleManagement(ActionEvent event) {
+        viewsManager.showSaleManagement();
+    }
 
 
     @FXML

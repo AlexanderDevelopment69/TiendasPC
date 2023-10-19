@@ -2,22 +2,21 @@ package com.tienda.ControllerGUI.Components;
 
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.Dao.ProductCategoryDAO;
-import com.tienda.Dao.ProductCategoryDAOHibernate;
+import com.tienda.DaoImpl.ProductCategoryDAOHibernate;
 import com.tienda.Dao.SupplierDAO;
-import com.tienda.Dao.SupplierDAOHibernate;
-import com.tienda.Tools.MFXTextFieldValidator;
+import com.tienda.DaoImpl.SupplierDAOHibernate;
 import com.tienda.Tools.TextFieldValidator;
 import com.tienda.dto.ProductCategoryDTO;
 import com.tienda.dto.SupplierDTO;
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox;
+import io.github.palexdev.materialfx.utils.SwingFXUtils;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,15 +25,20 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import javax.xml.stream.EventFilter;
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.plugins.jpeg.JPEGImageWriteParam;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.util.List;
@@ -50,16 +54,16 @@ public class ModalProduct extends StackPane implements Initializable {
     private MFXButton cancelButton;
 
     @FXML
-    private MFXLegacyComboBox<String> cbProduct;
+    public MFXLegacyComboBox<String> cbProductCategory;
 
     @FXML
-    private MFXLegacyComboBox<String> cbSupplier;
+    public MFXLegacyComboBox<String> cbSupplier;
 
     @FXML
     private MFXButton confirmButton;
 
     @FXML
-    private ImageView productImage;
+    public ImageView productImage;
 
     @FXML
     private Label labelTitleImagen;
@@ -70,24 +74,24 @@ public class ModalProduct extends StackPane implements Initializable {
     private Label labelTitleModal;
 
     @FXML
-    private MFXTextField txtBrand;
+    public MFXTextField textBrand;
 
     @FXML
-    private TextArea txtDescription;
+    public TextArea textDescription;
 
     @FXML
-    private MFXTextField txtPath;
+    public MFXTextField textPath;
 
     @FXML
-    private MFXTextField txtPrice;
+    public MFXTextField textPrice;
 
     @FXML
-    private MFXTextField txtProduct;
+    public MFXTextField textProductName;
 
     @FXML
-    private MFXButton uploadButton;
+    public MFXButton uploadButton;
 
-    private String imagePATH;
+    public String imagePATH;
 
     @FXML
     private Label labelValidatePrice;
@@ -98,6 +102,7 @@ public class ModalProduct extends StackPane implements Initializable {
     List<ProductCategoryDTO> categoryList;
     List<SupplierDTO> supplierList;
 
+    TextFieldValidator priceValidator;
 
     public ModalProduct() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/tienda/components/ModalProduct.fxml"));
@@ -131,7 +136,7 @@ public class ModalProduct extends StackPane implements Initializable {
         if (categoryList != null) {
             // Iterar a través de la lista  e imprimir cada categoria .
             for (ProductCategoryDTO productCategoryDTO : categoryList) {
-                cbProduct.getItems().add(productCategoryDTO.getCategoryName());
+                cbProductCategory.getItems().add(productCategoryDTO.getCategoryName());
             }
         }
     }
@@ -157,8 +162,13 @@ public class ModalProduct extends StackPane implements Initializable {
      * Si no se encuentra un ID correspondiente, se devuelve null.
      */
     public Long getValueSelectedProductCategory() {
+        if (cbProductCategory.getSelectionModel().getSelectedItem()==null){
+            return null;
+        }
+
+
         // Obtener el nombre seleccionado en el ComboBox
-        String selectedCategoryName = cbProduct.getValue();
+        String selectedProductCategoryName = cbProductCategory.getValue();
 
         // Llamar al método getAllCategories() para obtener la lista de categorías
 //        List<ProductCategoryDTO> categoryList = productCategoryDAO.getAllCategories();
@@ -166,7 +176,7 @@ public class ModalProduct extends StackPane implements Initializable {
         // Buscar el ID correspondiente al nombre seleccionado en la lista de categorías
         for (ProductCategoryDTO productCategoryDTO : categoryList) {
             // Comparar el nombre seleccionado con el nombre de la categoría actual
-            if (selectedCategoryName.equals(productCategoryDTO.getCategoryName())) {
+            if (selectedProductCategoryName.equals(productCategoryDTO.getCategoryName())) {
                 // Si se encuentra una coincidencia, devolver el ID de la categoría
                 return productCategoryDTO.getCategoryId();
             }
@@ -184,6 +194,10 @@ public class ModalProduct extends StackPane implements Initializable {
      * Si no se encuentra un ID correspondiente, se devuelve null.
      */
     public Long getValueSelectedSupplier() {
+        if (cbSupplier.getSelectionModel().getSelectedItem()==null){
+            return null;
+        }
+
         // Obtener el nombre seleccionado en el ComboBox
         String selectedSupplierName = cbSupplier.getValue();
 
@@ -228,7 +242,7 @@ public class ModalProduct extends StackPane implements Initializable {
                 String nombreImagen = file.getName();
 
                 // Mostrar el nombre del archivo en un Label
-                txtPath.setText(nombreImagen);
+                textPath.setText(nombreImagen);
 
                 // Verificar si hay un error al cargar la imagen
                 if (image.isError()) { // Comprobar si la carga de la imagen generó un error
@@ -248,10 +262,6 @@ public class ModalProduct extends StackPane implements Initializable {
 
     public void getPathImage() {
         imagePATH = findImagePath();
-    }
-
-    public byte[] getImageToByteArray() {
-        return imageToByteArray(imagePATH);
     }
 
 
@@ -279,7 +289,7 @@ public class ModalProduct extends StackPane implements Initializable {
             String nombreImagen = selectedFile.getName();
 
             // Mostrar el nombre del archivo en un Label
-            txtPath.setText(nombreImagen);
+            textPath.setText(nombreImagen);
 
             // Mostrar la imagen en el ImageView
             productImage.setImage(image); // Establecer la imagen en el ImageView
@@ -292,43 +302,106 @@ public class ModalProduct extends StackPane implements Initializable {
         }
     }
 
-    /**
-     * Convierte una imagen en un arreglo de bytes a partir de su ruta de archivo.
-     *
-     * @param imagePath La ruta de archivo de la imagen a convertir en bytes.
-     * @return Un arreglo de bytes que representa la imagen o null si ocurre un error.
-     */
-    public static byte[] imageToByteArray(String imagePath) {
-        // Comprobar si la ruta de la imagen es válida
-        if (imagePath == null || imagePath.isEmpty()) {
-            System.err.println("Ruta de imagen no válida.");
-            return null;
-        }
+    private static final float COMPRESSION_QUALITY = 0.2f; // Ajusta la calidad de compresión (0.0f - 1.0f)
 
+    public byte[] imageToByteArray() {
         try {
-            // Abrir el archivo de imagen
-            File file = new File(imagePath); // Crear un objeto File con la ruta proporcionada
-            FileInputStream fis = new FileInputStream(file); // Crear un flujo de entrada para leer el archivo
-            ByteArrayOutputStream bos = new ByteArrayOutputStream(); // Crear un flujo de salida para almacenar los bytes
-
-            byte[] buffer = new byte[1024]; // Crear un búfer de bytes para la lectura
-            int bytesRead;
-
-            // Leer y escribir en un arreglo de bytes
-            while ((bytesRead = fis.read(buffer)) != -1) { // Leer bytes del archivo hasta el final
-                bos.write(buffer, 0, bytesRead); // Escribir los bytes en el flujo de salida
+            // Verificar si la ruta de la imagen es válida
+            if (imagePATH == null || imagePATH .isEmpty()) {
+                System.err.println("Ruta de imagen no válida.");
+                return null;
             }
 
-            fis.close(); // Cerrar el flujo de entrada
-            bos.close(); // Cerrar el flujo de salida
+            File file = new File(imagePATH);
+            BufferedImage bufferedImage = ImageIO.read(file);
 
-            return bos.toByteArray(); // Devuelve el arreglo de bytes que representa la imagen
+            // Crear un flujo de salida de bytes para almacenar la imagen comprimida en formato JPEG
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                // Obtener un escritor de imágenes JPEG
+                ImageWriter imageWriter = ImageIO.getImageWritersByFormatName("jpg").next();
+
+                // Configurar parámetros de compresión
+                ImageWriteParam imageWriteParam = new JPEGImageWriteParam(null);
+                imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                imageWriteParam.setCompressionQuality(COMPRESSION_QUALITY);
+
+                // Obtener un flujo de salida de imágenes
+                ImageOutputStream imageOutputStream = ImageIO.createImageOutputStream(byteArrayOutputStream);
+                imageWriter.setOutput(imageOutputStream);
+
+                // Escribir la imagen comprimida en el flujo de salida de bytes
+                imageWriter.write(null, new IIOImage(bufferedImage, null, null), imageWriteParam);
+
+                // Cerrar los flujos
+                imageOutputStream.close();
+                imageWriter.dispose();
+
+                return byteArrayOutputStream.toByteArray(); // Devuelve el arreglo de bytes que representa la imagen comprimida
+            }
         } catch (IOException e) {
-            e.printStackTrace(); // Imprimir la traza de la excepción en caso de error
-            System.err.println("Error al cargar la imagen: " + e.getMessage()); // Imprimir un mensaje de error
-            return null; // Manejo de errores, devuelve null en caso de error
+            e.printStackTrace();
+            System.err.println("Error al comprimir la imagen.");
+            return null;
         }
     }
+
+
+
+
+
+    /**
+     * Convierte una imagen en un arreglo de bytes en formato JPEG con calidad ajustable.
+     *
+     * @param image La imagen de JavaFX que se desea convertir.
+     * @return Un arreglo de bytes que representa la imagen comprimida en formato JPEG o null si ocurre un error.
+     */
+    public  byte[] imageToByteArray(Image image) {
+        try {
+            if (image == null) {
+                System.err.println("La imagen es nula.");
+                return null;
+            }
+
+            // Convierte la imagen de JavaFX en una BufferedImage
+            BufferedImage bufferedImage = SwingFXUtils.fromFXImage(image, null);
+
+            // Convierte a espacio de color RGB
+            BufferedImage rgbImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+            Graphics g = rgbImage.getGraphics();
+            g.drawImage(bufferedImage, 0, 0, null);
+            g.dispose();
+
+            // Crear un flujo de salida de bytes para almacenar la imagen comprimida en formato JPEG
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                // Obtener un escritor de imágenes JPEG
+                ImageWriter imageWriter = ImageIO.getImageWritersByFormatName("jpg").next();
+
+                // Configurar parámetros de compresión JPEG
+                ImageWriteParam imageWriteParam = new javax.imageio.plugins.jpeg.JPEGImageWriteParam(null);
+                imageWriteParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                imageWriteParam.setCompressionQuality(COMPRESSION_QUALITY);
+
+                // Establecer el flujo de salida del escritor de imágenes
+                imageWriter.setOutput(ImageIO.createImageOutputStream(byteArrayOutputStream));
+
+                // Escribir la imagen comprimida en el flujo de salida de bytes
+                imageWriter.write(null, new javax.imageio.IIOImage(rgbImage, null, null), imageWriteParam);
+
+                // Liberar recursos del escritor de imágenes
+                imageWriter.dispose();
+
+                // Devuelve el arreglo de bytes que representa la imagen comprimida
+                return byteArrayOutputStream.toByteArray();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Error al comprimir la imagen.");
+            return null;
+        }
+    }
+
+
+
 
     // Método para mostrar un arreglo de bytes en un ImageView
     public void showImageInImageView(byte[] imagenComoBytes) {
@@ -344,45 +417,9 @@ public class ModalProduct extends StackPane implements Initializable {
     }
 
 
-    public String getTxtBrand() {
-        return txtBrand.getText();
-    }
 
-    public String getTxtDescription() {
-        return txtDescription.getText();
-    }
 
-    public String getTxtPrice() {
-        return txtPrice.getText();
-    }
 
-    public String getTxtProduct() {
-        return txtProduct.getText();
-    }
-
-    public void setTxtBrand(String brand) {
-        txtBrand.setText(brand);
-    }
-
-    public void setTxtDescription(String description) {
-        txtDescription.setText(description);
-    }
-
-    public void setTxtPrice(String price) {
-        txtPrice.setText(price);
-    }
-
-    public void setTxtProduct(String productName) {
-        txtProduct.setText(productName);
-    }
-
-    public void setValueCbProductCategory(String value) {
-        cbProduct.setValue(value);
-    }
-
-    public void setValueCbSupplier(String value) {
-        cbSupplier.setValue(value);
-    }
 
     /**
      * Valida si un ComboBox tiene un valor seleccionado.
@@ -390,8 +427,38 @@ public class ModalProduct extends StackPane implements Initializable {
      */
     public boolean validateComboBox() {
         // Verificar si el ComboBox tiene un valor seleccionado o está vacío
-        return cbProduct.getValue() != null || cbSupplier.getValue()!=null ;
+        return cbProductCategory.getValue() != null || cbSupplier.getValue()!=null ;
     }
+
+
+    public boolean validateTextFieldsProduct(List<String> errorMessages) {
+        boolean validationSuccessful = true;
+        String productName = textProductName.getText().trim();
+        String brand = textBrand.getText().trim();
+        String description = textDescription.getText().trim();
+        String price = textPrice.getText().trim();
+        Long productCategoryId = getValueSelectedProductCategory();
+        Long supplierId = getValueSelectedSupplier();
+
+
+        if (productName.isEmpty() || brand.isEmpty() ||  description.isEmpty() ||  price.isEmpty() ||  productCategoryId == null ||  supplierId == null){
+            errorMessages.add("Completa todos los campos del producto, la imagen es opcional.\n");
+            validationSuccessful = false;
+        }
+
+        if (validationSuccessful) {
+
+            if (!price.isEmpty() && !priceValidator.validatePrice(price)) {
+                errorMessages.add("El precio no cumple con los requisitos.\n");
+                validationSuccessful = false;
+            }
+
+
+        }
+
+        return validationSuccessful;
+    }
+
 
     public void setConfirmButtonText(String text) {
         confirmButton.setText(text);
@@ -404,14 +471,15 @@ public class ModalProduct extends StackPane implements Initializable {
         labelDescriptionModal.setText(description);
         setConfirmButtonText(nameButton);
         setConfirmButtonAction(confirmButtonAction);
-        txtProduct.setEditable(false);
-        txtBrand.setEditable(false);
-        txtDescription.setEditable(false);
-        txtPrice.setEditable(false);
+        textProductName.setEditable(false);
+        textBrand.setEditable(false);
+        textDescription.setEditable(false);
+        textPrice.setEditable(false);
 
         anchorPane.getChildren().remove(cancelButton);
         anchorPane.getChildren().remove(uploadButton);
         anchorPane.getChildren().remove(labelTitleImagen);
+        anchorPane.getChildren().remove(textPath);
     }
 
     public void configureModal(String titleModal,String description,String nameButton, EventHandler<ActionEvent> confirmButtonAction, EventHandler<ActionEvent> exitButtonAction, EventHandler<ActionEvent> uploadButton) {
@@ -517,13 +585,9 @@ public class ModalProduct extends StackPane implements Initializable {
         productCategoryDAO = new ProductCategoryDAOHibernate(HibernateUtil.getSessionFactory());
         supplierDAO = new SupplierDAOHibernate(HibernateUtil.getSessionFactory());
 
-
         addElementsProductCategoryToCombobox();
         addElementsSuppliersToCombobox();
 
-
-        TextFieldValidator validator = new TextFieldValidator(txtPrice, labelValidatePrice, TextFieldValidator.ValidationCriteria.PRICE);
-
-
+        priceValidator = new TextFieldValidator(textPrice, labelValidatePrice, TextFieldValidator.ValidationCriteria.PRICE);
     }
 }

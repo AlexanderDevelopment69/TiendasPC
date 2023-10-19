@@ -28,6 +28,5 @@ public class Supplier {
     @Column(name = "supplier_email", nullable = false, unique = true)  // Correo electrónico no puede ser nulo
     private String supplierEmail;
 
-    // Getters y setters
 }
 

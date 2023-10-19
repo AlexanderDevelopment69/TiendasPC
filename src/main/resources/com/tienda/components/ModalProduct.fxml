@@ -16,26 +16,28 @@
          <children>
             <Label fx:id="labelTitleModal" alignment="BOTTOM_LEFT" layoutX="34.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="243.0" styleClass="label-title" text="Nuevo producto" />
             <Label fx:id="labelDescriptionModal" layoutX="34.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Completa todos los campos para registrar un nuevo producto." wrapText="true" />
-            <MFXTextField fx:id="txtProduct" floatMode="BORDER" floatingText="Nombre de producto" layoutX="34.0" layoutY="114.0" prefHeight="44.0" prefWidth="349.0" />
-            <MFXTextField fx:id="txtBrand" floatMode="BORDER" floatingText="Marca" layoutX="34.0" layoutY="173.0" prefHeight="44.0" prefWidth="349.0" />
-            <TextArea fx:id="txtDescription" layoutX="35.0" layoutY="241.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="348.0" promptText="Descripcion" wrapText="true" />
-            <MFXTextField fx:id="txtPrice" floatMode="BORDER" floatingText="Precio" layoutX="34.0" layoutY="373.0" prefHeight="44.0" prefWidth="349.0" />
-            <MFXLegacyComboBox fx:id="cbProduct" layoutX="34.0" layoutY="470.0" lineStrokeWidth="1.0" prefHeight="40.0" prefWidth="338.0" promptText="Tipo de producto" unfocusedLineColor="#3a18ff" />
+            <MFXTextField fx:id="textProductName" floatMode="BORDER" floatingText="Nombre de producto" layoutX="34.0" layoutY="114.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXTextField fx:id="textBrand" floatMode="BORDER" floatingText="Marca" layoutX="34.0" layoutY="173.0" prefHeight="44.0" prefWidth="349.0" />
+            <TextArea fx:id="textDescription" layoutX="34.0" layoutY="241.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="348.0" promptText="Descripcion" wrapText="true" />
+            <MFXTextField fx:id="textPrice" floatMode="BORDER" floatingText="Precio" layoutX="34.0" layoutY="373.0" prefHeight="44.0" prefWidth="349.0" />
+            <MFXLegacyComboBox fx:id="cbProductCategory" layoutX="34.0" layoutY="479.0" lineStrokeWidth="1.0" prefHeight="40.0" prefWidth="338.0" promptText="Tipo de producto" unfocusedLineColor="#3a18ff" />
+            <MFXLegacyComboBox fx:id="cbSupplier" layoutX="451.0" layoutY="114.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="338.0" promptText="Proveedor" unfocusedLineColor="#3a18ff" />
+            <MFXTextField fx:id="textPath" editable="false" floatMode="BORDER" floatingText="Nombre de la imagen" layoutX="451.0" layoutY="232.0" prefHeight="44.0" prefWidth="210.0" />
+            <MFXButton fx:id="uploadButton" alignment="CENTER" layoutX="675.0" layoutY="234.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Subir imagen" />
+            <Label layoutX="451.0" layoutY="296.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="243.0" styleClass="label-subTitle" text="Imagen de producto" wrapText="true" />
+            <ImageView fx:id="productImage" fitHeight="262.0" fitWidth="330.0" layoutX="451.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true" />
             <MFXButton fx:id="confirmButton" alignment="CENTER" layoutX="35.0" layoutY="561.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Agregar producto" />
             <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="180.0" layoutY="561.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
-            <MFXLegacyComboBox fx:id="cbSupplier" layoutX="451.0" layoutY="114.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="338.0" promptText="Proveedor" unfocusedLineColor="#3a18ff" />
-            <MFXTextField fx:id="txtPath" editable="false" floatMode="BORDER" floatingText="Path" layoutX="451.0" layoutY="232.0" prefHeight="44.0" prefWidth="210.0" />
-            <MFXButton fx:id="uploadButton" alignment="CENTER" layoutX="675.0" layoutY="234.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Subir imagen" />
-            <Label layoutX="451.0" layoutY="296.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="400.0" styleClass="label-subTitle" text="Imagen de producto" wrapText="true" />
-            <ImageView fx:id="productImage" fitHeight="211.0" fitWidth="375.0" layoutX="451.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true" />
             <Label fx:id="labelTitleImagen" layoutX="451.0" layoutY="186.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Agregar imagen del producto" wrapText="true" />
             <Label fx:id="labelValidatePrice" layoutX="34.0" layoutY="425.0" prefHeight="18.0" prefWidth="350.0" wrapText="true" />
+            <Label layoutX="451.0" layoutY="96.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="330.0" styleClass="label-subTitle" text="Proveedor" wrapText="true" />
+            <Label layoutX="34.0" layoutY="459.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="330.0" styleClass="label-subTitle" text="Categoria de producto" wrapText="true" />
          </children>
          <StackPane.margin>
             <Insets />
          </StackPane.margin>
          <padding>
-            <Insets bottom="20.0" />
+            <Insets bottom="20.0" left="20.0" />
          </padding>
       </AnchorPane>
    </children>

@@ -3,6 +3,7 @@ package com.tienda.Model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -10,8 +11,17 @@ import javax.persistence.*;
 public class SaleDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sale_detail_id")
-    private Long saleDetailId;
+    @Column(name = "detail_id")
+    private Long detailId;
+
+    @Column(name = "quantity_sold")
+    private int quantitySold;
+
+    @Column(name = "discount_per_product", precision = 10, scale = 2) // precision = total de dígitos, scale = decimales
+    private BigDecimal discountPerProduct;
+
+    @Column(name = "subtotal_per_product", precision = 10, scale = 2) // precision = total de dígitos, scale = decimales
+    private BigDecimal subtotalPerProduct;
 
     @ManyToOne
     @JoinColumn(name = "sale_id")
@@ -20,13 +30,4 @@ public class SaleDetail {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
-    @Column(name = "quantity_sold")
-    private int quantitySold;
-
-    @Column(name = "unit_price_at_sale")
-    private double unitPriceAtSale;
-
-    @Column(name = "subtotal")
-    private double subtotal;
 }

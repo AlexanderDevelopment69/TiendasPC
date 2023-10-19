@@ -269,6 +269,20 @@ public class ViewsManager implements ViewsInterface {
     public void showSupplierManagement() {
         switchView("/com/tienda/supplier/SupplierManagement.fxml", "Administracion de proveedores");
     }
+    @Override
+    public void showCustomerManagement() {
+        switchView("/com/tienda/customer/CustomerManagement.fxml", "Administracion de clientes");
+    }
+
+
+    @Override
+    public void showPurchaseManagement() {
+        switchView("/com/tienda/purchase/PurchaseManagement.fxml", "Administracion de compras");
+    }
+    @Override
+    public void showSaleManagement() {
+        switchView("/com/tienda/sale/SaleManagement.fxml", "Administracion de ventas");
+    }
 
 
 }

@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -27,8 +28,8 @@ public class Product {
     @Column(name = "product_image", columnDefinition = "LONGBLOB")
     private byte[] productImage; // Aquí se almacena la imagen como bytes
 
-    @Column(name = "unit_price",nullable = false)
-    private double unitPrice;
+    @Column(name = "unit_price", nullable = false, precision = 10, scale = 2) // precision = total de dígitos, scale = decimales
+    private BigDecimal unitPrice;
 
     @Column(name = "available_stock",nullable = false)
     private int availableStock;

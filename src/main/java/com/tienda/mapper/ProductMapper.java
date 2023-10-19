@@ -4,7 +4,6 @@ import com.tienda.Model.Product;
 import com.tienda.Model.ProductCategory;
 import com.tienda.Model.Supplier;
 import com.tienda.dto.ProductDTO;
-import com.tienda.dto.SupplierDTO;
 
 import java.util.List;
 import java.util.stream.Collectors;

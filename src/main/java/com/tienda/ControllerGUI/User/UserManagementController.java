@@ -4,8 +4,9 @@ import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.Modal;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.Dao.UserDAO;
-import com.tienda.Dao.UserDAOHibernate;
+import com.tienda.DaoImpl.UserDAOHibernate;
 import com.tienda.Utils.UserDataLoadingUtil;
+import com.tienda.Utils.UserUtil;
 import com.tienda.dto.UserDTO;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
@@ -37,7 +38,7 @@ public class UserManagementController implements Initializable {
     private StackPane root;
 
     @FXML
-    private MFXTextField txtfSearchUser;
+    private MFXTextField textSearch;
 
     @FXML
     private MFXLegacyTableView<UserDTO> userTable;
@@ -71,6 +72,8 @@ public class UserManagementController implements Initializable {
     private boolean isDataLoading = false; // Controla si la carga de datos está en curso
 
 
+    private UserUtil userUtil;
+
     private void configureTable() {
         // Agrega un EventHandler para deseleccionar la fila cuando el cursor esté fuera de la tabla
         userTable.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -80,8 +83,6 @@ public class UserManagementController implements Initializable {
                 userTable.getSelectionModel().clearSelection();
             }
         });
-
-
 
 
         // Configura las celdas de la tablaalex
@@ -121,40 +122,31 @@ public class UserManagementController implements Initializable {
                             e -> {
                                 // Lógica cuando se hace clic en el botón "Confirmar"
                                 System.out.println("Click mouse");
-//                                userDao.updateUserRole(userDTO.getId(), Long.valueOf(2));
-                                UserDTO updateUser= new UserDTO();
-
-                                if(modal.getValueSelectedRol()==null){
+                                if (modal.getValueSelectedRol() == null) {
                                     return;
                                 }
-                                if(modal.getValueSelectedRol().equals("Administrador")){
-                                    updateUser.setRoleId(Long.valueOf(1));
+                                if (modal.getValueSelectedRol().equals("Administrador")) {
+                                    userDAO.assignUserRole(userDTO.getUserId(), Long.valueOf(1));
 
                                 }
-                                if(modal.getValueSelectedRol().equals("Vendedor")){
-                                    updateUser.setRoleId(Long.valueOf(2));
+                                if (modal.getValueSelectedRol().equals("Vendedor")) {
+                                    userDAO.assignUserRole(userDTO.getUserId(), Long.valueOf(2));
                                 }
 
-
-
-                                userDAO.updateUser(userDTO.getUserId(),updateUser);
                                 modal.close();
-
 
                                 //Crear una instancia del modal
                                 ModalDialog modalDialog = new ModalDialog();
                                 // Configurar el modal mediante un solo método
                                 modalDialog.configureModal(new Image("Images/iconCheck.png"),
                                         "El usuario ha sido actualizado correctamente.",
-                                        "El usuario con DNI: "+userDTO.getUserDni()+" ha cambiado su rol a: "+modal.getValueSelectedRol(),
+                                        "El usuario con DNI: " + userDTO.getUserDni() + " ha cambiado su rol a: " + modal.getValueSelectedRol(),
                                         "Ok",
                                         ev -> {
                                             modalDialog.close(); // Cierra el modal
                                         });
 
                                 modalDialog.showModal(root);
-
-
 
 
                                 //Actualiza la tabla
@@ -179,7 +171,7 @@ public class UserManagementController implements Initializable {
                     UserDTO userDTO = getTableView().getItems().get(getIndex());
                     // Lógica para eliminar el usuario
                     System.out.println("Eliminar usuario: " + userDTO.getUserId());
-                    userDAO.deleteUserById(userDTO.getUserId());
+                    userDAO.deleteUser(userDTO.getUserId());
 
                     //Actualiza la tabla
                     handleLoadDate();
@@ -190,15 +182,13 @@ public class UserManagementController implements Initializable {
                     // Configurar el modal mediante un solo método
                     modalDialog.configureModal(new Image("Images/iconCheck.png"),
                             "Usuario eliminado correctamente.",
-                            "El usuario con DNI:  "+userDTO.getUserDni()+" ha sido eliminado correctamente",
+                            "El usuario con DNI:  " + userDTO.getUserDni() + " ha sido eliminado correctamente",
                             "Ok",
                             ev -> {
                                 modalDialog.close(); // Cierra el modal
                             });
 
                     modalDialog.showModal(root);
-
-
 
 
                 });
@@ -266,7 +256,7 @@ public class UserManagementController implements Initializable {
     @FXML
     void handleSearchUser(ActionEvent event) {
         // Obtiene el DNI ingresado en el campo de búsqueda y lo limpia de espacios en blanco.
-        String dni = txtfSearchUser.getText().trim();
+        String dni = textSearch.getText().trim();
 
         if (!dni.isEmpty()) {
             // Busca un usuario en la base de datos por su DNI.
@@ -329,18 +319,8 @@ public class UserManagementController implements Initializable {
         dataLoadingUtil.loadUserTableData(userTable);
 
 
-//        loadUserTableData();
-
-
-
-        // Agregar un ChangeListener al campo de búsqueda
-        txtfSearchUser.textProperty().addListener((observable, oldValue, newValue) -> {
-            // Filtrar los usuarios en función del nuevo valor del campo de búsqueda
-            filterUsers(newValue);
-        });
-
-
-
+        userUtil = new UserUtil(textSearch, userTable);
+        userUtil.startUserSearch();
 
 
 //        // Iniciar una tarea en un hilo separado para cargar los datos

@@ -3,12 +3,8 @@ l
 <src/main/java/com/tienda/ControllerGUI/User/UserSession.java,3\7\37fb541e89f73d8ce1d0b6fe5f034326a9948d67
 Y
 )src/main/java/com/tienda/DAO/UserDao.java,4\d\4dfb78cc0b7b5a41d8d9fc7250e686ecb7e5a48f
-e
-5src/main/java/com/tienda/DAO/ProductDaoHibernate.java,8\f\8feffdd1ca09c8cc408d44414a0a02d083e46b43
 r
 Bsrc/main/java/com/tienda/ControllerGUI/Main/SidebarController.java,5\d\5dab3859cac7d75e7fd7bedfd6f7c854e1853ef9
-b
-2src/main/java/com/tienda/DAO/UserDaoHibernate.java,5\4\54d868f572efde87b398608220778a0d6e3bae23
 f
 6src/test/java/com/tienda/DAO/UserDaoHibernateTest.java,6\b\6b0e3ffcfee718bff85f54432fde6176fed525d7
 7
@@ -19,8 +15,6 @@ X
 (src/main/java/com/tienda/Model/User.java,7\7\7714f0cba5105adc93249e49f933fd842746ff58
 Y
 )src/main/java/com/tienda/Dao/UserDao.java,6\c\6c175b0fcf8f8ec325b53e1ace2dd02c48cea6c0
-b
-2src/main/java/com/tienda/Dao/UserDaoHibernate.java,b\b\bb30dbfcf52b524762d319b910d444387055d644
 f
 6src/test/java/com/tienda/Dao/UserDaoHibernateTest.java,e\3\e38785461c2c6e6285cdf7d5e0f505e53dd9d376
 9
@@ -41,8 +35,6 @@ l
 <src/main/java/com/tienda/ControllerGUI/Components/Modal.java,0\8\085f4522f8558d678cf165e329b69d9434140a87
 w
 Gsrc/main/java/com/tienda/ControllerGUI/User/RegisterUserController.java,0\1\01f0fab2a360cba91eca606005b2b2a8b3a94435
-e
-5src/main/java/com/tienda/Dao/ProductDaoHibernate.java,c\c\ccc728b43ff59907c77b1ca69d408c4e679e12e6
 b
 2src/main/java/com/tienda/Model/UserRoleChange.java,4\1\41228375b0dc28275ab289b1f91d12e661770feb
 X

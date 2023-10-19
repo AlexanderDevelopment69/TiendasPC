@@ -4,21 +4,19 @@ import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.Components.ModalSupplier;
 import com.tienda.Dao.SupplierDAO;
-import com.tienda.Dao.SupplierDAOHibernate;
-import com.tienda.Exception.SupplierException;
+import com.tienda.DaoImpl.SupplierDAOHibernate;
 import com.tienda.Utils.SupplierDataLoadingUtil;
+import com.tienda.Utils.SupplierUtil;
 import com.tienda.dto.SupplierDTO;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -61,11 +59,12 @@ public class SupplierManagementController implements Initializable {
     private MFXLegacyTableView<SupplierDTO> supplierTable;
 
     @FXML
-    private MFXTextField txtfSearch;
+    private MFXTextField txtSearch;
 
     SupplierDAO supplierDAO;
     SupplierDataLoadingUtil supplierDataLoadingUtil;
 
+    private SupplierUtil supplierUtil;
 
     @FXML
     void handleAddSupplier() {
@@ -314,7 +313,7 @@ public class SupplierManagementController implements Initializable {
                     System.out.println("Eliminar usuario: " + supplierDTO.getSupplierId());
                     supplierDAO.deleteSupplier(supplierDTO.getSupplierId());
                     //Actualizar la tabla con el proveedor eliminado
-                    handleLoadDate();
+                    supplierDataLoadingUtil.loadSupplierTableData(supplierTable);
 
 
                     //Crear una instancia del modal
@@ -358,6 +357,9 @@ public class SupplierManagementController implements Initializable {
         supplierDataLoadingUtil = new SupplierDataLoadingUtil(supplierDAO);
         // Carga los datos en la TableView al inicializar la ventana
         supplierDataLoadingUtil.loadSupplierTableData(supplierTable);
+
+        supplierUtil= new SupplierUtil(txtSearch,supplierTable);
+        supplierUtil.startSupplierSearch();
 
     }
 }

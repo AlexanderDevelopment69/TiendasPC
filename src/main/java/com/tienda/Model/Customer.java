@@ -15,9 +15,15 @@ public class Customer {
 
     @Column(name = "first_name")
     private String customerFirstName;
-
     @Column(name = "last_name")
     private String customerLastName;
+
+    @Column(name = "dni", unique = true)
+    private String customerDni;
+
+    @Column(name = "ruc", unique = true)
+    private String customerRuc;
+
 
     @Column(name = "address")
     private String customerAddress;

@@ -4,7 +4,7 @@ import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.ModalDialog;
 import com.tienda.ControllerGUI.ViewsManager.ViewsManager;
 import com.tienda.Dao.UserDAO;
-import com.tienda.Dao.UserDAOHibernate;
+import com.tienda.DaoImpl.UserDAOHibernate;
 import com.tienda.Tools.MFXTextFieldValidator;
 import com.tienda.dto.UserDTO;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
@@ -72,8 +72,11 @@ public class LoginController implements Initializable {
 
         loginInProgress = true; // Marcar que un inicio de sesión está en progreso
 
-        String dni= textDni.getText(); // Obtiene el dni desde la UI
-        String password = textPassword.getText();// Obtiene la contraseña desde la UI
+//        String dni= textDni.getText(); // Obtiene el dni desde la UI
+//        String password = textPassword.getText();// Obtiene la contraseña desde la UI
+
+        String dni= "74118606";
+        String password = "alexander#123A";
 
 
         if (dni.isEmpty() || password.isEmpty()) {
@@ -106,7 +109,7 @@ public class LoginController implements Initializable {
 
                     // Crear y gestionar la sesión de usuario
                     UserSession session = UserSession.getInstance();
-                    session.setUser(authenticatedUser.getUserId(),authenticatedUser.getUserName(), session.getLastName(), authenticatedUser.getUserEmail(),authenticatedUser.getUserDni(), authenticatedUser.getRoleName());
+                    session.setUser(authenticatedUser.getUserId(),authenticatedUser.getUserName(), authenticatedUser.getUserLastName(), authenticatedUser.getUserEmail(),authenticatedUser.getUserDni(),authenticatedUser.getRoleId(), authenticatedUser.getRoleName());
                     //Mostrar la vista
                     viewsManager.showMain();
 

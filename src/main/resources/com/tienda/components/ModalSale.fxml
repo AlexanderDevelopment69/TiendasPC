@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyComboBox?>
+<?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="878.0" stylesheets="@../../../Styles/ModalSale.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane fx:id="anchorPane">
+         <children>
+            <Label alignment="BOTTOM_LEFT" layoutX="34.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="243.0" styleClass="label-title" text="Nueva Venta" />
+            <Label layoutX="34.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Completa todos los campos para registrar una nueva venta." wrapText="true" />
+            <Label layoutX="35.0" layoutY="97.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Datos del cliente" wrapText="true" />
+            <MFXTextField fx:id="txtSearchCustomer" floatMode="BORDER" floatingText="Buscar cliente por DNI o RUC " layoutX="35.0" layoutY="193.0" prefHeight="44.0" prefWidth="280.0" />
+            <MFXTextField fx:id="txtValidateCustomer" editable="false" floatMode="BORDER" floatingText="Validacion cliente" layoutX="365.0" layoutY="193.0" prefHeight="44.0" prefWidth="280.0" />
+            <Label fx:id="labelValidateCustomer" layoutX="365.0" layoutY="241.0" prefHeight="18.0" prefWidth="280.0" wrapText="true" />
+            <Label layoutX="35.0" layoutY="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Datos del producto" wrapText="true" />
+            <MFXTextField fx:id="txtSearchProduct" floatMode="BORDER" floatingText="Buscar producto por categoria" layoutX="35.0" layoutY="298.0" prefHeight="44.0" prefWidth="280.0" />
+            <MFXTextField fx:id="txtAvailableStock" editable="false" floatMode="BORDER" floatingText="Stock Disponible" layoutX="35.0" layoutY="365.0" prefHeight="44.0" prefWidth="134.0" style="-fx-text-fill: green;" />
+            <MFXTextField fx:id="txtQuantity" floatMode="BORDER" floatingText="Cantidad a vender" layoutX="35.0" layoutY="425.0" prefHeight="44.0" prefWidth="134.0" />
+            <Label fx:id="labelValidateQuantity" layoutX="35.0" layoutY="476.0" prefHeight="18.0" prefWidth="134.0" wrapText="true" />
+            <MFXTextField fx:id="txtDiscount" floatMode="BORDER" floatingText="Descuento" layoutX="192.0" layoutY="425.0" prefHeight="44.0" prefWidth="126.0" />
+            <Label fx:id="labelValidateDiscount" layoutX="192.0" layoutY="475.0" prefHeight="18.0" prefWidth="126.0" wrapText="true" />
+            <MFXButton fx:id="addProductSaleButton" alignment="CENTER" layoutX="365.0" layoutY="367.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Agregar producto" />
+            <MFXButton fx:id="cleanButton" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="367.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Limpiar" />
+            <MFXLegacyTableView fx:id="saleTable" layoutX="34.0" layoutY="501.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="181.0" prefWidth="810.0" styleClass="table-view-container" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
+               <columns>
+                  <TableColumn fx:id="colCode" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Codigo" />
+                  <TableColumn fx:id="colProductName" prefWidth="113.5999984741211" text="Producto" />
+                  <TableColumn fx:id="colBrand" prefWidth="96.80000305175781" text="Marca" />
+                  <TableColumn fx:id="colDescription" prefWidth="124.0" text="Descripcion" />
+                  <TableColumn fx:id="colPrice" prefWidth="64.7999267578125" text="Precio" />
+                  <TableColumn fx:id="colQuantity" prefWidth="68.0" text="Cantidad" />
+                  <TableColumn fx:id="colSubtotal" prefWidth="68.0" text="SubTotal" />
+                  <TableColumn fx:id="colDiscount" prefWidth="84.80010986328125" resizable="false" text="Descuento" />
+                  <TableColumn fx:id="colTotal" prefWidth="68.0" resizable="false" text="Total" />
+                  <TableColumn fx:id="colActions" maxWidth="140.0" minWidth="114.39990234375" prefWidth="114.39990234375" resizable="false" text="Acciones" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </MFXLegacyTableView>
+            <MFXButton fx:id="confirmSaleButton" alignment="CENTER" layoutX="35.0" layoutY="698.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Registrar venta" />
+            <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="698.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
+            <MFXTextField fx:id="txtSaleNumber" alignment="CENTER" floatMode="BORDER" floatingText="Numero de venta" layoutX="728.0" layoutY="32.0" prefHeight="44.0" prefWidth="114.0" AnchorPane.rightAnchor="35.99999999999997" />
+            <MFXTextField fx:id="txtTotalDiscount" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Descuento total" layoutX="452.0" layoutY="696.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="244.0" />
+            <MFXTextField fx:id="txtTotalSale" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Total venta" layoutX="656.0" layoutY="696.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="40.0" />
+            <MFXLegacyComboBox fx:id="cbProducts" layoutX="365.0" layoutY="298.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="280.0" promptText="Productos " unfocusedLineColor="#3a18ff" />
+            <MFXButton fx:id="newCustomer" alignment="CENTER" layoutX="35.0" layoutY="129.0" prefHeight="40.0" prefWidth="126.0" styleClass="buttonB" text="Nuevo cliente" />
+            <MFXTextField fx:id="txtProductPrice" editable="false" floatMode="BORDER" floatingText="Precio" layoutX="191.0" layoutY="365.0" prefHeight="44.0" prefWidth="126.0" />
+         </children>
+         <StackPane.margin>
+            <Insets />
+         </StackPane.margin>
+         <padding>
+            <Insets bottom="20.0" />
+         </padding>
+      </AnchorPane>
+   </children>
+</fx:root>

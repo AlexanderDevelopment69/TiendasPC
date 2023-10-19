@@ -1,24 +1,10 @@
 package com.tienda.Model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
-// Marca la clase como una entidad de JPA, que se mapeará a una tabla en la base de datos.
+@Data
 @Entity
-//@ToString(exclude = {"users"})
-@ToString
-@Getter
-@Setter
-// Constructor sin argumentos.
-@NoArgsConstructor
-
-// Constructor con todos los argumentos.
-@AllArgsConstructor
-
-// Define el nombre de la tabla en la base de datos.
 @Table(name = "roles")
 public class Role {
 
@@ -40,7 +26,5 @@ public class Role {
 //    private Set<User> users = new HashSet<>();
 
 
-    public Role(Long roleId) {
-        this.roleId = roleId;
-    }
+
 }

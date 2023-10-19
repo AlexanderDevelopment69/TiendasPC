@@ -3,6 +3,7 @@ package com.tienda.Model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,15 @@ public class Sale {
     @Column(name = "sale_date_time")
     private Date saleDateTime;
 
+    @Column(name = "subtotal", precision = 10, scale = 2) // precision = total de dígitos, scale = decimales
+    private BigDecimal subtotal;
+
+    @Column(name = "discount_total", precision = 10, scale = 2) // precision = total de dígitos, scale = decimales
+    private BigDecimal discountTotal;
+
+    @Column(name = "total", precision = 10, scale = 2) // precision = total de dígitos, scale = decimales
+    private BigDecimal total;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
@@ -25,9 +35,6 @@ public class Sale {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @Column(name = "total_sale")
-    private double totalSale;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
     private List<SaleDetail> saleDetails;

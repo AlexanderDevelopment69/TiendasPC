@@ -2,13 +2,9 @@ package com.tienda.dto;
 
 
 import com.tienda.Model.Role;
-import com.tienda.Model.User;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 //import lombok.NoArgsConstructor;
-
-import javax.persistence.Column;
 
 
 @NoArgsConstructor
@@ -20,6 +16,7 @@ public class UserDTO {
     private String userDni;
     private String userEmail;
     private String userPassword;
+    private Role role;
 
     //Role
     private Long roleId;

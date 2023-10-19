@@ -1,0 +1,70 @@
+StackPane {
+    -fx-background-color: white;
+}
+
+AnchorPane {
+    -fx-background-color: white;
+}
+
+
+.label-title {
+    -fx-text-fill: black;
+    -fx-font-weight: bold; /* Establece el texto en negrita */
+    -fx-font-size: 15;
+    -fx-alignment: center-left;
+    /*-fx-padding: 30 0 0 20;  !* arriba derecha abajo izquierda *!*/
+}
+
+.label-subTitle {
+    /*-fx-padding: 10 0 10 20; !* arriba derecha abajo izquierda *!*/
+}
+
+
+MFXLegacyTableView {
+    -fx-border-color: white;
+    -fx-fixed-cell-size: 40px;
+}
+
+MFXLegacyTableView .table-column {
+    -fx-alignment: center;
+
+}
+
+MFXLegacyTableView .column-header {
+    -fx-background-color: #F9FAFC;
+    -fx-border-color: transparent transparent transparent transparent;
+}
+
+
+
+.centered-buttons {
+    -fx-alignment: center;
+    -fx-spacing: 5px; /* Espacio entre botones si es necesario */
+}
+
+.buttonA{
+    -fx-background-color: #5771f7;
+    -fx-text-fill: white;
+}
+.buttonB{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+
+
+
+
+
+
+.button-confirm {
+    -fx-background-color: #5771f7;
+    -fx-text-fill: white;
+}
+
+.button-cancel{
+    -fx-background-color: #F1F5F5;
+    -fx-text-fill: black;
+}
+
+

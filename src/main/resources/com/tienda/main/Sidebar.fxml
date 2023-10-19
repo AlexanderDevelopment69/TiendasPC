@@ -28,7 +28,7 @@
                   <Insets left="10.0" top="40.0" />
                </VBox.margin>
             </Label>
-            <JFXButton fx:id="btnMain" layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleMainView" text="Vista principal">
+            <JFXButton layoutX="10.0" layoutY="118.0" mnemonicParsing="false" onAction="#handleMainView" text="Vista principal">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -44,7 +44,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnUser" layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleUserManagement" text="Administracion de usuario">
+            <JFXButton layoutX="10.0" layoutY="116.0" mnemonicParsing="false" onAction="#handleUserManagement" text="Usuarios">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -57,7 +57,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnProduct" layoutX="10.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleProductManagement" text="Productos">
+            <JFXButton layoutX="10.0" layoutY="156.0" mnemonicParsing="false" onAction="#handleProductManagement" text="Productos">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -70,20 +70,7 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnSupplier" layoutX="10.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleSupplierManagement" text="Proveedores">
-               <graphic>
-                  <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
-                     <children>
-                        <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
-                           <image>
-                              <Image url="@../../../Images/baseline_local_shipping_white_48dp.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-               </graphic>
-            </JFXButton>
-            <JFXButton fx:id="btnSales" layoutX="10.0" layoutY="196.0" mnemonicParsing="false" text="Ventas">
+            <JFXButton layoutX="10.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleSaleManagement" text="Ventas">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>
@@ -96,7 +83,33 @@
                   </StackPane>
                </graphic>
             </JFXButton>
-            <JFXButton fx:id="btnCustomer" layoutX="10.0" layoutY="276.0" mnemonicParsing="false" text="Administracion Clientes">
+            <JFXButton layoutX="10.0" layoutY="196.0" mnemonicParsing="false" onAction="#handlePurchaseManagement" text="Compras">
+               <graphic>
+                  <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
+                     <children>
+                        <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../../../Images/baseline_shop_two_white_48dp.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="10.0" layoutY="236.0" mnemonicParsing="false" onAction="#handleSupplierManagement" text="Proveedores">
+               <graphic>
+                  <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
+                     <children>
+                        <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+                           <image>
+                              <Image url="@../../../Images/baseline_local_shipping_white_48dp.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="10.0" layoutY="276.0" mnemonicParsing="false" onAction="#handleCustomerManagement" text="Clientes">
                <graphic>
                   <StackPane prefHeight="36.0" prefWidth="37.0" styleClass="stack-image">
                      <children>

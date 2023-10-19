@@ -19,6 +19,7 @@
 <!--        <property name="hibernate.hbm2ddl.auto">create-drop</property>-->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
+
         <!-- Configuración de clases de modelo -->
         <!-- Aquí se agregarían todas las clases de modelo (entidades) que deseas mapear -->
         <mapping class="com.tienda.Model.User"/>
@@ -31,6 +32,11 @@
         <mapping class="com.tienda.Model.PurchaseDetail"/>
         <mapping class="com.tienda.Model.Sale"/>
         <mapping class="com.tienda.Model.SaleDetail"/>
+        <mapping class="com.tienda.Model.DocumentType"/>
+        <mapping class="com.tienda.Model.Document"/>
         <!--        <mapping class="com.tienda.Model.UserRoleChange"/>-->
+
+
+
     </session-factory>
 </hibernate-configuration>
