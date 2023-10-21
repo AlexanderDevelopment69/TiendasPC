@@ -170,7 +170,6 @@ public class ModalSale extends StackPane implements Initializable {
     //id del cliente
     long customerId;
 
-    long saleId;
 
 
     // Calcula el descuento total
@@ -187,6 +186,8 @@ public class ModalSale extends StackPane implements Initializable {
     CustomerUtil customerUtil;
 
     DocumentUtil documentUtil;
+
+   long saleId=0;
 
 
     public ModalSale() {
@@ -511,6 +512,7 @@ public class ModalSale extends StackPane implements Initializable {
 
     public void confirmSale() {
 
+
         if (txtTotalSale.getText().equals("0")|| txtTotalSale.getText().isEmpty()) {
             ModalDialog modalDialog = new ModalDialog();
             modalDialog.configureModal(
@@ -593,22 +595,6 @@ public class ModalSale extends StackPane implements Initializable {
             cleanInputs();
 
 
-//            //Crear una instancia del modal
-//            ModalDialog modalDialog = new ModalDialog();
-//            // Configurar el modal mediante un solo método
-//            modalDialog.configureModal(new Image("Images/iconCheck.png"),
-//                    "Venta exitosa.",
-//                    "Venta realizada con exito.",
-//                    "Ok",
-//                    ev -> {
-//                        modalDialog.close(); // Cierra el modal
-//                    });
-//
-//            modalDialog.showModal(stackPane);
-
-            txtSaleNumber.setText(String.valueOf(saleId));
-
-
 
             // Crear un nuevo objeto DocumentDTO con la información del documento
             DocumentDTO newDocument = new DocumentDTO();
@@ -616,13 +602,14 @@ public class ModalSale extends StackPane implements Initializable {
 
             documentTypeDTO.setDocumentTypeId(1L);
             newDocument.setDocumentType(documentTypeDTO);// Establece el tipo de documento
-            newDocument.setDocumentNumber(txtSaleNumber.getText()); // Establece el número de documento
+            newDocument.setDocumentNumber(String.valueOf(saleId)); // Establece el número de documento
             newDocument.setIssueDate(currentDate); // Establece la fecha de emisión
             SaleDTO saleDTO= new SaleDTO();
             saleDTO.setSaleId(saleId);
             newDocument.setSale(saleDTO); // Establece la venta relacionada (si es relevante)
-
-            newDocument.setCustomer(customerDetail); // Establece el cliente relacionado (si es relevante)
+            CustomerDTO customer = new CustomerDTO();
+            customer.setCustomerId(customerId);
+            newDocument.setCustomer(customer);// Establece el cliente relacionado (si es relevante)
             newDocument.setUser(userDetail); // Establece el usuario relacionado (si es relevante)
             newDocument.setSubtotal(totalSumSubTotal); // Establece el subtotal
 
@@ -636,20 +623,13 @@ public class ModalSale extends StackPane implements Initializable {
             documentUtil.saveDocument(newDocument);
 
 
-            DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleId);
+
+            DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleId-1);
             String recipientEmail = documentSendEmail.getCustomer().getCustomerEmail();
 
-
-            String subject = "¡Su Comprobante Electrónico Está Listo!";
-            String customerName = documentSendEmail.getCustomer().getCustomerFirstName() + " " + documentSendEmail.getCustomer().getCustomerLastName();
-
-            String body = "Estimado " + customerName + ",\n\n" +
-                    "Es un placer informarle que su comprobante electrónico ya está listo para su revisión. " +
-                    "Puede acceder a su comprobante electrónico en su cuenta.\n\n" +
-                    "Por favor, no dude en ponerse en contacto si necesita alguna asistencia adicional o tiene alguna pregunta.\n\n" +
-                    "Gracias por su confianza en nuestros servicios.\n\n" +
-                    "Atentamente,\n" +
-                    "TechComputer";
+            String names= documentSendEmail.getCustomer().getCustomerFirstName();
+            String lastNames= documentSendEmail.getCustomer().getCustomerLastName();
+            String namesCustomer= names.concat(" "+lastNames);
 
 
 
@@ -659,10 +639,23 @@ public class ModalSale extends StackPane implements Initializable {
             modalSendEmail.configureModal(
                     new Image("Images/logoEmail.png"),
                     "Venta exitosa",
-                    " Enviar recibo de compra a este correo: "+recipientEmail,
+                    " Enviar recibo de venta al cliente con correo: "+recipientEmail,
                     "Enviar",
                     "Cancelar",
                     e -> {
+
+
+                        String subject = "¡Su Comprobante Electrónico Está Listo!";
+                        String body = "Estimado " + namesCustomer + ",\n\n" +
+                                "Es un placer informarle que su comprobante electrónico ya está listo para su revisión. " +
+                                "Puede acceder a su comprobante electrónico en su cuenta.\n\n" +
+                                "Por favor, no dude en ponerse en contacto si necesita alguna asistencia adicional o tiene alguna pregunta.\n\n" +
+                                "Gracias por su confianza en nuestros servicios.\n\n" +
+                                "Atentamente,\n" +
+                                "TechComputer";
+
+
+
                         PDFGenerator pdfGenerator = new PDFGenerator();
                         String pdfPath =pdfGenerator.onlyGeneratePDF(documentSendEmail);
                         PDFGenerator.sendPDFByEmail(recipientEmail, subject, body, pdfPath);
@@ -671,7 +664,7 @@ public class ModalSale extends StackPane implements Initializable {
                         ModalDialog modalDialog = new ModalDialog();
                         // Configurar el modal mediante un solo método
                         modalDialog.configureModal(new Image("Images/iconCheck.png"),
-                                "Comprobante exitoso.",
+                                "Comprobante enviado.",
                                 "Comprobante exitoso enviado correctamente.",
                                 "Ok",
                                 ev -> {
@@ -691,9 +684,11 @@ public class ModalSale extends StackPane implements Initializable {
 
             modalSendEmail.showModal(stackPane);
 
+            saleId= saleId+1;
 
-
+            txtSaleNumber.setText(String.valueOf(saleId));
         }
+
     }
 
 
@@ -905,6 +900,7 @@ public class ModalSale extends StackPane implements Initializable {
 
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configureTable();
@@ -914,6 +910,7 @@ public class ModalSale extends StackPane implements Initializable {
         documentDAO= new DocumentDAOHibernate(HibernateUtil.getSessionFactory());
 
         documentUtil= new DocumentUtil(documentDAO);
+
 
         saleId= saleDAO.getLastSaleId()+1;
 
