@@ -1,9 +1,12 @@
 package com.tienda.mapper;
 
 import com.tienda.Model.Sale;
+import com.tienda.Model.SaleDetail;
 import com.tienda.Model.User;
 import com.tienda.dto.SaleDTO;
+import com.tienda.dto.SaleDetailDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +24,15 @@ public class SaleMapper {
         saleDTO.setTotal(sale.getTotal());
 
 
-
-//        saleDTO.setCustomerId(sale.getCustomer().getCustomerId());
-//        saleDTO.setUserId(sale.getUser().getUserId());
+//
+//        // Mapear la lista de SaleDetail a SaleDetailDTO utilizando Streams
+//        if (sale.getSaleDetails() != null) {
+//            List<SaleDetailDTO> saleDetailDTOList = sale.getSaleDetails()
+//                    .stream()
+//                    .map(SaleDetailMapper::toSaleDetailDTO) // Utiliza el método de mapeo de SaleDetailMapper
+//                    .collect(Collectors.toList());
+//            saleDTO.setSaleDetails(saleDetailDTOList);
+//        }
 
 
         // Mapea el campo customer utilizando CustomerMapper

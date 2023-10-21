@@ -1,7 +1,5 @@
 package com.tienda.mapper;
 
-import com.tienda.Model.Product;
-import com.tienda.Model.Sale;
 import com.tienda.Model.SaleDetail;
 import com.tienda.dto.SaleDetailDTO;
 
@@ -16,6 +14,8 @@ public class SaleDetailMapper {
         saleDetailDTO.setQuantitySold(saleDetail.getQuantitySold());
         saleDetailDTO.setDiscountPerProduct(saleDetail.getDiscountPerProduct());
         saleDetailDTO.setSubtotalPerProduct(saleDetail.getSubtotalPerProduct());
+
+
 //
 //        if (saleDetail.getSale() != null) {
 //            saleDetailDTO.setSaleId(saleDetail.getSale().getSaleId());

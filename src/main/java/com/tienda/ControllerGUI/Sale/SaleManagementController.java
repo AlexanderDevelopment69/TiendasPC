@@ -2,18 +2,24 @@ package com.tienda.ControllerGUI.Sale;
 
 import com.tienda.Configs.HibernateUtil;
 import com.tienda.ControllerGUI.Components.*;
+import com.tienda.Dao.DocumentDAO;
+import com.tienda.Dao.ProductDAO;
 import com.tienda.Dao.SaleDAO;
+import com.tienda.DaoImpl.DocumentDAOHibernate;
 import com.tienda.DaoImpl.SaleDAOHibernate;
 import com.tienda.Tools.PDFGenerator;
+import com.tienda.Utils.DocumentUtil;
 import com.tienda.Utils.SaleDataLoadingUtil;
 import com.tienda.dto.*;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -23,7 +29,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import javax.swing.event.ChangeListener;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -71,9 +80,10 @@ public class SaleManagementController implements Initializable {
     private MFXTextField txtSearch;
 
     SaleDAO saleDAO;
+    DocumentDAO documentDAO;
 
     SaleDataLoadingUtil saleDataLoadingUtil;
-
+    DocumentUtil documentUtil;
 
 
     @FXML
@@ -86,16 +96,19 @@ public class SaleManagementController implements Initializable {
     @FXML
     void handleNewSale(ActionEvent event) {
 
+        // Crear un nuevo Stage para el modal
+        Stage modalStage = new Stage();
+
+
         //Crear una instancia del modal
         ModalSale modalSale = new ModalSale();
         // Configurar el modal mediante un solo método
         modalSale.configureModal(
-                ev1-> {
-                    modalSale.handleNewCustomer(root);
-
+                ev1 -> {
+                    modalSale.handleNewCustomer(modalSale);
                 },
 
-                ev2-> {
+                ev2 -> {
                     modalSale.addProductDetailToTable();
                 },
                 ev3 -> {
@@ -104,18 +117,32 @@ public class SaleManagementController implements Initializable {
                 ev4 -> {
                     modalSale.confirmSale();
                     saleDataLoadingUtil.loadSaleTableData(saleTable);
+
                 },
                 ev5 -> {
-                    modalSale.close();
+//                    modalSale.close();
+                    modalStage.close();
                 }
 
-                );
+        );
 
-        modalSale.showModal(root);
+
+        // Usar un StackPane dentro del modal para que se expanda
+        StackPane modalRoot = new StackPane();
+        Scene modalScene = new Scene(modalRoot);
+
+        modalStage.setScene(modalScene);
+
+        // Mostrar el modal en el nuevo Stage
+        modalSale.showModal(modalRoot);
+        modalStage.show();
+
+        // Vincular el tamaño del StackPane del modal al tamaño del Stage
+        modalRoot.prefWidthProperty().bind(modalStage.widthProperty());
+        modalRoot.prefHeightProperty().bind(modalStage.heightProperty());
 
 
     }
-
 
 
     private void configureTable() {
@@ -132,32 +159,92 @@ public class SaleManagementController implements Initializable {
         // Configura las celdas de la tabla
         colCode.setCellValueFactory(new PropertyValueFactory<>("saleId"));
         colDateTime.setCellValueFactory(new PropertyValueFactory<>("saleDateTime"));
-        // Configura la columna "colSupplier" para mostrar el nombre del proveedor en lugar del objeto SupplierDTO.
-        colCustomer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomer().getCustomerDni()));
+//        // Configura la columna "colSupplier" para mostrar el nombre del proveedor en lugar del objeto SupplierDTO.
+//        colCustomer.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomer().getCustomerDni()));
+
         // Configura la columna "colUser" para mostrar el número de DNI del usuario en lugar del objeto UserDTO.
         colUser.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUser().getUserDni()));
+
+        colCustomer.setCellValueFactory(cellData -> {
+            String customerDni = cellData.getValue().getCustomer().getCustomerDni();
+            String customerRuc = cellData.getValue().getCustomer().getCustomerRuc();
+
+            if (customerDni != null && customerRuc != null) {
+                return new SimpleStringProperty("DNI: "+customerDni);
+            }
+            if (customerRuc != null) {
+                return new SimpleStringProperty("RUC: "+customerRuc);
+            }
+            if (customerDni != null) {
+                return new SimpleStringProperty("DNI: "+customerDni);
+            }
+
+            return new SimpleStringProperty("N/A"); // Otra alternativa si ambos son nulos
+
+        });
+
         colSubtotal.setCellValueFactory(new PropertyValueFactory<>("subtotal"));
         colDiscount.setCellValueFactory(new PropertyValueFactory<>("discountTotal"));
         colTotalSale.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         // Configura la columna de acciones
         colActions.setCellFactory(param -> new TableCell<>() {
+            private final Button documentButton = new Button("Descargar");
             private final Button showButton = new Button("Ver detalle");
 
             private final Button deleteButton = new Button("Eliminar");
 
-            private final HBox buttons = new HBox(showButton,deleteButton);
+            private final HBox buttons = new HBox(documentButton, showButton, deleteButton);
 
 
             {
                 // Asigna la clase CSS para centrar los botones
                 buttons.getStyleClass().add("centered-buttons");
-                showButton .getStyleClass().add("buttonA");
-                deleteButton .getStyleClass().add("buttonB");
+                documentButton.getStyleClass().add("buttonA");
+                showButton.getStyleClass().add("buttonA");
+                deleteButton.getStyleClass().add("buttonB");
+
+
+                documentButton.setOnAction(event -> {
+                    SaleDTO saleDTO = getTableView().getItems().get(getIndex());
+                    System.out.println(saleDTO.getSaleId());
+                    DocumentDTO document= documentDAO.getDocumentBySaleId(saleDTO.getSaleId());
+
+
+
+                    System.out.println("Document number: "+document.getDocumentNumber());
+                    System.out.println("Tipo de documento: "+document.getDocumentType().getDocumentTypeName());
+                    System.out.println("Fecha: "+document.getIssueDate());
+//                     Obtener la lista de detalles de venta (productos)
+                    List<SaleDetailDTO> saleDetails = document.getSaleDetails();
+
+                    for (SaleDetailDTO saleDetail : saleDetails) {
+                        System.out.println("Cantidad: "+saleDetail.getQuantitySold());
+                        System.out.println("ProductName: "+saleDetail.getProduct().getProductName());
+                        System.out.println("Precio"+saleDetail.getProduct().getUnitPrice());
+                        System.out.println("SubTotal: "+saleDetail.getSubtotalPerProduct());
+
+                    }
+
+                    System.out.println("Cliente: " + (document.getCustomer().getCustomerDni() == null ? document.getCustomer().getCustomerRuc() : document.getCustomer().getCustomerDni()));
+                    System.out.println("Usuario: "+document.getUser().getUserName().concat(" "+document.getUser().getUserLastName()));
+                    System.out.println("SubTotal: "+ document.getSubtotal());
+                    System.out.println("Descuento Total: "+document.getTotalDiscount());
+                    System.out.println("IGV: "+document.getIgvAmount());
+                    System.out.println("Total: "+ document.getTotalAmount());
+
+
+
+//                    // Genera el PDF utilizando PDFGenerator
+                    PDFGenerator pdfGenerator = new PDFGenerator();
+                    pdfGenerator.generatePDF(document);
+
+
+                });
 
 
                 showButton.setOnAction(event -> {
-                    ModalSaleDetail modalSaleDetail= new ModalSaleDetail();
+                    ModalSaleDetail modalSaleDetail = new ModalSaleDetail();
                     SaleDTO saleDTO = getTableView().getItems().get(getIndex());
                     modalSaleDetail.loadingDataToTable(saleDTO.getSaleId());
                     modalSaleDetail.configureModal(
@@ -215,8 +302,6 @@ public class SaleManagementController implements Initializable {
 //
 
 
-
-
                 });
 
             }
@@ -234,86 +319,21 @@ public class SaleManagementController implements Initializable {
 
     }
 
-//    @FXML
-//    void handleNewDocument(ActionEvent event) {
-//        // Crea una instancia de DocumentDTO
-//        DocumentDTO document = new DocumentDTO();
-//
-//        // Configura los atributos de DocumentDTO
-//        document.setDocumentId(1L);
-//        document.setDocumentNumber("F2023-001");
-//        document.setIssueDate(new Date());
-//        document.setSubtotal(new BigDecimal("250.00"));
-//        document.setTotalDiscount(new BigDecimal("30.00"));
-//        document.setIgvAmount(new BigDecimal("0.18"));
-//        document.setTotalAmount(new BigDecimal("295.00"));
-//
-//        // Crea una instancia de DocumentTypeDTO con datos ficticios
-//        DocumentTypeDTO documentType = new DocumentTypeDTO();
-//        documentType.setDocumentTypeName("Boleta");
-//        document.setDocumentType(documentType);
-//
-//        // Crea una instancia de SaleDTO con datos ficticios
-//        SaleDTO sale = new SaleDTO();
-//        sale.setSaleId(1L);
-//        sale.setSaleDateTime(new Date());
-//
-//        // Crea una lista de detalles de venta (productos vendidos) con datos ficticios
-//        List<SaleDetailDTO> saleDetails = new ArrayList<>();
-//
-//        SaleDetailDTO saleDetail1 = new SaleDetailDTO();
-//        saleDetail1.setDetailId(1L);
-//        saleDetail1.setQuantitySold(2);
-////        saleDetail1.setDiscountPerProduct(new BigDecimal("10.00"));
-//        saleDetail1.setSubtotalPerProduct(new BigDecimal("90.00"));
-//
-//        // Crea una instancia de ProductDTO con datos ficticios
-//        ProductDTO product1 = new ProductDTO();
-//        product1.setProductId(1L);
-//        product1.setProductName("Producto 1");
-//        product1.setUnitPrice(new BigDecimal("266666.00"));
-//        // Configura otros atributos del producto
-//
-//        // Asocia el producto al detalle de venta
-//        saleDetail1.setProduct(product1);
-//
-//        // Agrega el detalle de venta a la lista de detalles
-//        saleDetails.add(saleDetail1);
-//
-//        // Repite el proceso para otros detalles de venta (productos) si es necesario
-//
-//        // Asigna la lista de detalles de venta a la venta
-//        sale.setSaleDetails(saleDetails);
-//
-//        // Asigna una instancia de CustomerDTO con datos ficticios a la venta
-//        CustomerDTO customer = new CustomerDTO();
-//        customer.setCustomerDni("23333");
-//        customer.setCustomerFirstName("Alexander Bryan");
-//        customer.setCustomerLastName("Onocc Navarro");
-//        // Configura otros atributos del cliente
-//        document.setCustomer(customer);
-//
-//        // Asigna una instancia de UserDTO con datos ficticios a la venta
-//        UserDTO user = new UserDTO();
-//        // Configura atributos del usuario
-//        document.setUser(user);
-//
-//        // Asigna la instancia de SaleDTO a DocumentDTO
-//        document.setSale(sale);
-//
-//        // Genera el PDF utilizando PDFGenerator
-//        PDFGenerator pdfGenerator = new PDFGenerator();
-//        pdfGenerator.generatePDF(document);
-//    }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configureTable();
-        saleDAO= new SaleDAOHibernate(HibernateUtil.getSessionFactory());
-        saleDataLoadingUtil=new SaleDataLoadingUtil(saleDAO);
+        saleDAO = new SaleDAOHibernate(HibernateUtil.getSessionFactory());
+        documentDAO= new DocumentDAOHibernate(HibernateUtil.getSessionFactory());
+
+
+        saleDataLoadingUtil = new SaleDataLoadingUtil(saleDAO);
         saleDataLoadingUtil.loadSaleTableData(saleTable);
+
+
+        documentUtil= new DocumentUtil(documentDAO);
+
+
 
     }
 }

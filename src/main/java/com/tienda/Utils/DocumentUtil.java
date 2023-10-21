@@ -3,12 +3,17 @@ package com.tienda.Utils;
 import com.tienda.Dao.CustomerDAO;
 import com.tienda.Dao.DocumentDAO;
 import com.tienda.dto.DocumentDTO;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+
+import java.util.concurrent.CompletableFuture;
 
 public class DocumentUtil {
 
     private DocumentDAO documentDAO;
     private boolean isDocumentSaveInProgress = false;
+    private boolean isGetDocumentBySaleIdInProgress = false;
 
     public DocumentUtil(DocumentDAO documentDAO) {
         this.documentDAO = documentDAO;
@@ -50,4 +55,36 @@ public class DocumentUtil {
         new Thread(saveDocumentTask).start();
     }
 
+    public DocumentDTO getDocumentBySaleId(Long saleId) {
+        if (isGetDocumentBySaleIdInProgress) {
+            // Puedes manejar el caso cuando una solicitud ya está en progreso.
+            // Puedes lanzar una excepción, mostrar un mensaje o tomar la acción que desees.
+            return null; // Por ejemplo, devolvemos null en este caso.
+        }
+
+        isGetDocumentBySaleIdInProgress = true;
+
+        Task<DocumentDTO> task = new Task<>() {
+            @Override
+            protected DocumentDTO call() {
+                try {
+                    System.out.println("Hilo de obtención de documento iniciado");
+                    DocumentDTO result = documentDAO.getDocumentBySaleId(saleId);
+                    return result;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null; // Manejo de errores, puedes ajustarlo según tus necesidades.
+                } finally {
+                    System.out.println("Hilo de obtención de documento terminado");
+                    isGetDocumentBySaleIdInProgress = false;
+                }
+            }
+        };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+
+        return task.getValue();
+    }
 }

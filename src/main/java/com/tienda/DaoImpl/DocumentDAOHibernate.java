@@ -5,6 +5,7 @@ import com.tienda.Model.Customer;
 import com.tienda.Model.Document;
 import com.tienda.dto.DocumentDTO;
 import com.tienda.mapper.DocumentMapper;
+import com.tienda.mapper.SaleDetailMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -265,5 +266,38 @@ public class DocumentDAOHibernate implements DocumentDAO {
 
         return documentDTOs; // Devuelve la lista de DTOs de documentos relacionados con el usuario.
     }
+
+    /**
+     * Obtiene un documento por el ID de venta asociado.
+     *
+     * @param saleId El ID de la venta asociada al documento.
+     * @return Un DTO de documento relacionado con la venta especificada, o null si no se encuentra.
+     */
+    @Override
+    public DocumentDTO getDocumentBySaleId(Long saleId) {
+        Session session = sessionFactory.openSession(); // Abre una nueva sesión de Hibernate
+        DocumentDTO documentDTO = null; // Inicializa un DTO de documento
+
+        try {
+            Query<Document> query = session.createQuery("FROM Document WHERE sale.saleId = :saleId", Document.class);
+            query.setParameter("saleId", saleId);
+            Document document = query.uniqueResult(); // Obtiene el documento relacionado con la venta
+
+            if (document != null) {
+                documentDTO = DocumentMapper.toDocumentDTO(document);
+
+                // Ahora, obtén los detalles de la venta y asígnalos al documentoDTO
+                documentDTO.setSaleDetails(SaleDetailMapper.toSaleDetailDTOList(document.getSale().getSaleDetails()));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close(); // Cierra la sesión de Hibernate
+        }
+
+        return documentDTO; // Devuelve el DTO de documento relacionado con la venta o null si no se encuentra.
+    }
+
 
 }

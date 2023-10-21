@@ -82,8 +82,9 @@ public class MainViewController implements Initializable {
 
         // Validar campos vacíos
         if (email.isEmpty() || password.isEmpty() || dni.isEmpty() || lastNames.isEmpty() || names.isEmpty()) {
-            System.out.println("Por favor, complete todos los campos.\n");
-            return;
+//            System.out.println("Por favor, complete todos los campos.\n");
+            errorMessages.append("Ingrese la contraseñá.\n");
+//            return;
         }
 
         // Validar contraseña
@@ -174,16 +175,11 @@ public class MainViewController implements Initializable {
                         "Actualizado correctamente.",
                         "Datos actualizados correctamente.",
                         "Continuar",
-                        "Cancelar",
+
                         e -> {
                             // Lógica cuando se hace clic en el botón "Confirmar"
                             modalDialog.close();
                             System.out.println("Se hizo clic en Confirmar");
-                        },
-                        e -> {
-                            // Lógica cuando se hace clic en el botón "Cancelar"
-                            System.out.println("Se hizo clic en Cancelar");
-                            modalDialog.close(); // Cierra el modal
                         }
                 );
 

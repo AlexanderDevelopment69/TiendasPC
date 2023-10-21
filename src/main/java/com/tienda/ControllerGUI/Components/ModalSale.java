@@ -11,6 +11,7 @@ import com.tienda.DaoImpl.DocumentDAOHibernate;
 import com.tienda.DaoImpl.ProductDAOHibernate;
 import com.tienda.DaoImpl.SaleDAOHibernate;
 import com.tienda.Model.Customer;
+import com.tienda.Tools.PDFGenerator;
 import com.tienda.Tools.TextFieldValidator;
 import com.tienda.Utils.CustomerUtil;
 import com.tienda.Utils.DocumentUtil;
@@ -592,44 +593,106 @@ public class ModalSale extends StackPane implements Initializable {
             cleanInputs();
 
 
-            //Crear una instancia del modal
-            ModalDialog modalDialog = new ModalDialog();
-            // Configurar el modal mediante un solo método
-            modalDialog.configureModal(new Image("Images/iconCheck.png"),
-                    "Venta exitosa.",
-                    "Venta realizada con exito.",
-                    "Ok",
-                    ev -> {
-                        modalDialog.close(); // Cierra el modal
-                    });
-
-            modalDialog.showModal(stackPane);
+//            //Crear una instancia del modal
+//            ModalDialog modalDialog = new ModalDialog();
+//            // Configurar el modal mediante un solo método
+//            modalDialog.configureModal(new Image("Images/iconCheck.png"),
+//                    "Venta exitosa.",
+//                    "Venta realizada con exito.",
+//                    "Ok",
+//                    ev -> {
+//                        modalDialog.close(); // Cierra el modal
+//                    });
+//
+//            modalDialog.showModal(stackPane);
 
             txtSaleNumber.setText(String.valueOf(saleId));
 
 
 
+            // Crear un nuevo objeto DocumentDTO con la información del documento
+            DocumentDTO newDocument = new DocumentDTO();
+            DocumentTypeDTO documentTypeDTO= new DocumentTypeDTO();
+
+            documentTypeDTO.setDocumentTypeId(1L);
+            newDocument.setDocumentType(documentTypeDTO);// Establece el tipo de documento
+            newDocument.setDocumentNumber(txtSaleNumber.getText()); // Establece el número de documento
+            newDocument.setIssueDate(currentDate); // Establece la fecha de emisión
+            SaleDTO saleDTO= new SaleDTO();
+            saleDTO.setSaleId(saleId);
+            newDocument.setSale(saleDTO); // Establece la venta relacionada (si es relevante)
+
+            newDocument.setCustomer(customerDetail); // Establece el cliente relacionado (si es relevante)
+            newDocument.setUser(userDetail); // Establece el usuario relacionado (si es relevante)
+            newDocument.setSubtotal(totalSumSubTotal); // Establece el subtotal
 
 
-//            // Crear un nuevo objeto DocumentDTO con la información del documento
-//            DocumentDTO newDocument = new DocumentDTO();
-//            DocumentTypeDTO documentTypeDTO= new DocumentTypeDTO();
-//
-//            documentTypeDTO.setDocumentTypeId(1L);
-//            newDocument.setDocumentType(documentTypeDTO);// Establece el tipo de documento
-//            newDocument.setDocumentNumber(txtSaleNumber.getText()); // Establece el número de documento
-//            newDocument.setIssueDate(currentDate); // Establece la fecha de emisión
-//            SaleDTO saleDTO= new SaleDTO();
-//            saleDTO.setSaleId(saleId);
-//
-//            newDocument.setSale(saleDTO); // Establece la venta relacionada (si es relevante)
-//            newDocument.setCustomer(customerDetail); // Establece el cliente relacionado (si es relevante)
-//            newDocument.setUser(userDetail); // Establece el usuario relacionado (si es relevante)
-//            newDocument.setSubtotal(totalSumSubTotal); // Establece el subtotal
-//            newDocument.setSubtotal(totalDiscount);
-//            newDocument.setIgvAmount(new BigDecimal("0.18").multiply(totalSumSubTotal)); // Establece el IGV
-//            newDocument.setTotalAmount(totalSumSale); // Establece el total
-//            documentUtil.saveDocument(newDocument);
+            BigDecimal igvAmount= new BigDecimal("0.18").multiply(totalSumSubTotal);
+            BigDecimal totalAmount= new BigDecimal(String.valueOf(totalSumSale.add(igvAmount)));
+
+            newDocument.setTotalDiscount(totalDiscount);
+            newDocument.setIgvAmount(igvAmount); // Establece el IGV
+            newDocument.setTotalAmount(totalAmount); // Establece el total
+            documentUtil.saveDocument(newDocument);
+
+
+            DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleId);
+            String recipientEmail = documentSendEmail.getCustomer().getCustomerEmail();
+
+
+            String subject = "¡Su Comprobante Electrónico Está Listo!";
+            String customerName = documentSendEmail.getCustomer().getCustomerFirstName() + " " + documentSendEmail.getCustomer().getCustomerLastName();
+
+            String body = "Estimado " + customerName + ",\n\n" +
+                    "Es un placer informarle que su comprobante electrónico ya está listo para su revisión. " +
+                    "Puede acceder a su comprobante electrónico en su cuenta.\n\n" +
+                    "Por favor, no dude en ponerse en contacto si necesita alguna asistencia adicional o tiene alguna pregunta.\n\n" +
+                    "Gracias por su confianza en nuestros servicios.\n\n" +
+                    "Atentamente,\n" +
+                    "TechComputer";
+
+
+
+            //Crear una instancia del modal
+            ModalDialog modalSendEmail = new ModalDialog();
+            // Configurar el modal mediante un solo método
+            modalSendEmail.configureModal(
+                    new Image("Images/logoEmail.png"),
+                    "Venta exitosa",
+                    " Enviar recibo de compra a este correo: "+recipientEmail,
+                    "Enviar",
+                    "Cancelar",
+                    e -> {
+                        PDFGenerator pdfGenerator = new PDFGenerator();
+                        String pdfPath =pdfGenerator.onlyGeneratePDF(documentSendEmail);
+                        PDFGenerator.sendPDFByEmail(recipientEmail, subject, body, pdfPath);
+
+                        //Crear una instancia del modal
+                        ModalDialog modalDialog = new ModalDialog();
+                        // Configurar el modal mediante un solo método
+                        modalDialog.configureModal(new Image("Images/iconCheck.png"),
+                                "Comprobante exitoso.",
+                                "Comprobante exitoso enviado correctamente.",
+                                "Ok",
+                                ev -> {
+                                    modalSendEmail.close();
+                                    modalDialog.close(); // Cierra el modal
+                                });
+
+                        modalDialog.showModal(stackPane);
+
+
+                    },
+                    e -> {
+                        // Lógica cuando se hace clic en el botón "Cancelar"
+                        modalSendEmail.close(); // Cierra el modal
+                    }
+            );
+
+            modalSendEmail.showModal(stackPane);
+
+
+
         }
     }
 

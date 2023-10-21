@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<fx:root fx:id="stackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="900.0" stylesheets="@../../../Styles/ModalPurchase.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="stackPane" prefWidth="900.0" stylesheets="@../../../Styles/ModalPurchase.css" type="StackPane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane fx:id="anchorPane">
          <children>
@@ -20,6 +20,7 @@
             <MFXTextField fx:id="txtSearchSupplier" floatMode="BORDER" floatingText="Buscar nombre del proveedor o RUC" layoutX="35.0" layoutY="143.0" prefHeight="44.0" prefWidth="280.0" />
             <MFXLegacyComboBox fx:id="cbSupplierProducts" layoutX="35.0" layoutY="254.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="280.0" promptText="Productos del proveedor" unfocusedLineColor="#3a18ff" />
             <MFXTextField fx:id="txtQuantity" floatMode="BORDER" floatingText="Cantidad a comprar" layoutX="367.0" layoutY="248.0" prefHeight="44.0" prefWidth="135.0" />
+            <Label fx:id="labelValidateQuantity" layoutX="367.0" layoutY="298.0" prefHeight="18.0" wrapText="true" />
             <MFXTextField fx:id="txtCost" floatMode="BORDER" floatingText="Costo" layoutX="367.0" layoutY="324.0" prefHeight="44.0" prefWidth="135.0" />
             <MFXButton fx:id="addProductPurchaseButton" alignment="CENTER" layoutX="35.0" layoutY="383.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Agregar producto" />
             <MFXButton fx:id="cleanButton" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="383.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Limpiar" />
@@ -45,7 +46,6 @@
             <MFXTextField fx:id="txtPurchaseNumber" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Numero de compra" layoutX="700.0" layoutY="32.0" prefHeight="44.0" prefWidth="135.0" AnchorPane.rightAnchor="64.80000000000001" />
             <MFXTextField fx:id="txtTotalPurchase" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Total Compra" layoutX="653.0" layoutY="589.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="64.60000000000002" />
             <MFXLegacyComboBox fx:id="cbSupplierName" layoutX="367.0" layoutY="143.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="280.0" promptText="Proveedores" unfocusedLineColor="#3a18ff" />
-            <Label fx:id="labelValidateQuantity" layoutX="367.0" layoutY="298.0" prefHeight="18.0" wrapText="true" />
             <Label fx:id="labelValidateCost" layoutX="367.0" layoutY="374.0" prefHeight="18.0" wrapText="true" />
          </children>
          <StackPane.margin>

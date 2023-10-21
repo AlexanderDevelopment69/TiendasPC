@@ -6,7 +6,7 @@
     <!-- Configuración de la base de datos -->
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost/techComputer</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/techComputer</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
 

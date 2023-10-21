@@ -15,7 +15,6 @@
       <AnchorPane fx:id="anchorPane">
          <children>
             <Label alignment="BOTTOM_LEFT" layoutX="34.0" layoutY="36.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="243.0" styleClass="label-title" text="Detalles de venta" />
-            <Label layoutX="34.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="label-subTitle" text="Detallas de la venta N" wrapText="true" />
             <MFXLegacyTableView fx:id="saleDetailTable" layoutX="34.0" layoutY="161.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="802.0" styleClass="table-view-container" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="64.0">
                <columns>
                   <TableColumn fx:id="colCode" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Codigo" />

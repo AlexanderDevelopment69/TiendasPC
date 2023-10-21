@@ -36,6 +36,7 @@ public class PurchaseDetailMapper {
             // Puedes establecer otros campos de Product en PurchaseDetailDTO si es necesario
         }
 
+
         return purchaseDetailDTO;
     }
 

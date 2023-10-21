@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class DocumentDTO {
@@ -19,5 +20,8 @@ public class DocumentDTO {
     private BigDecimal totalDiscount;
     private BigDecimal igvAmount;
     private BigDecimal totalAmount;
+
+    // Agregar una lista de detalles de venta
+    private List<SaleDetailDTO> saleDetails;
 
 }

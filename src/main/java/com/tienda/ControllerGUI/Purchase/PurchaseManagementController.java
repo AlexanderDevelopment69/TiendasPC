@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -25,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.List;
@@ -67,6 +69,12 @@ public class PurchaseManagementController implements Initializable {
 
     @FXML
     void handleAddPurchase(ActionEvent event) {
+
+        // Crear un nuevo Stage para el modal
+        Stage modalStage = new Stage();
+
+
+
         //Crear una instancia del modal
         ModalPurchase modalPurchase = new ModalPurchase();
         // Configurar el modal mediante un solo método
@@ -82,12 +90,26 @@ public class PurchaseManagementController implements Initializable {
                     purchaseDataLoadingUtil.loadPurchaseTableData(purchaseTable);
                 },
                 ev4 -> {
-                    modalPurchase.close(); // Cierra el modal
+//                    modalPurchase.close(); // Cierra el modal
+                    modalStage.close();
                 }
 
         );
 
-        modalPurchase.showModal(root);
+
+        // Usar un StackPane dentro del modal para que se expanda
+        StackPane modalRoot = new StackPane();
+        Scene modalScene = new Scene(modalRoot);
+
+        modalStage.setScene(modalScene);
+
+        // Mostrar el modal en el nuevo Stage
+        modalPurchase.showModal(modalRoot);
+        modalStage.show();
+
+        // Vincular el tamaño del StackPane del modal al tamaño del Stage
+        modalRoot.prefWidthProperty().bind(modalStage.widthProperty());
+        modalRoot.prefHeightProperty().bind(modalStage.heightProperty());
 
 
     }

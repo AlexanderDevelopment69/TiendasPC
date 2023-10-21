@@ -14,4 +14,6 @@ public interface DocumentDAO {
     DocumentDTO getDocumentByDocumentNumber(String documentNumber);
     List<DocumentDTO> getDocumentsByCustomer(Long customerId);
     List<DocumentDTO> getDocumentsByUser(Long userId);
+
+    DocumentDTO getDocumentBySaleId(Long saleId);
 }

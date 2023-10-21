@@ -26,8 +26,8 @@
                   <TableColumn fx:id="colUser" prefWidth="117.60003662109375" text="Usuario" />
                   <TableColumn fx:id="colSubtotal" prefWidth="117.60003662109375" text="SubTotal" />
                   <TableColumn fx:id="colDiscount" prefWidth="117.60003662109375" text="Descuento" />
-                  <TableColumn fx:id="colTotalSale" prefWidth="147.19998168945312" text="Total de venta" />
-                  <TableColumn fx:id="colActions" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" text="Acciones" />
+                  <TableColumn fx:id="colTotalSale" prefWidth="104.79998779296875" text="Total" />
+                  <TableColumn fx:id="colActions" maxWidth="220.0" minWidth="220.0" prefWidth="220.0" text="Acciones" />
                </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

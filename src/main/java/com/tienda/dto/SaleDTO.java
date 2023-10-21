@@ -15,13 +15,10 @@ public class SaleDTO {
     private BigDecimal discountTotal;     // Descuento total aplicado
     private BigDecimal total;              // Monto total de la venta
 
-    private List<SaleDetailDTO> saleDetails;  // Detalles de la compra.
+    private List<SaleDetailDTO> saleDetails;  // Detalles de la venta.
 
     private CustomerDTO customer;
     private UserDTO user;
-
-//    private Long customerId;  // ID del cliente asociado a la venta
-//    private Long userId;  // ID del usuario que realizó la venta
 
 
 
