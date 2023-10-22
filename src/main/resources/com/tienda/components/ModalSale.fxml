@@ -30,7 +30,7 @@
             <Label fx:id="labelValidateDiscount" layoutX="192.0" layoutY="475.0" prefHeight="18.0" prefWidth="126.0" wrapText="true" />
             <MFXButton fx:id="addProductSaleButton" alignment="CENTER" layoutX="365.0" layoutY="367.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Agregar producto" />
             <MFXButton fx:id="cleanButton" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="367.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Limpiar" />
-            <MFXLegacyTableView fx:id="saleTable" layoutX="34.0" layoutY="501.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="114.0" prefWidth="810.0" styleClass="table-view-container" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
+            <MFXLegacyTableView fx:id="saleTable" layoutX="34.0" layoutY="501.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="153.0" prefWidth="810.0" styleClass="table-view-container" AnchorPane.leftAnchor="34.0" AnchorPane.rightAnchor="34.0">
                <columns>
                   <TableColumn fx:id="colCode" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="Codigo" />
                   <TableColumn fx:id="colProductName" prefWidth="113.5999984741211" text="Producto" />
@@ -47,11 +47,11 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </MFXLegacyTableView>
-            <MFXButton fx:id="confirmSaleButton" alignment="CENTER" layoutX="37.0" layoutY="636.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Registrar venta" />
-            <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="636.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
+            <MFXButton fx:id="confirmSaleButton" alignment="CENTER" layoutX="37.0" layoutY="666.0" prefHeight="40.0" prefWidth="126.0" styleClass="button-confirm" text="Registrar venta" />
+            <MFXButton fx:id="cancelButton" alignment="CENTER" contentDisplay="CENTER" layoutX="177.0" layoutY="666.0" prefHeight="40.0" prefWidth="85.0" styleClass="button-cancel" text="Cancelar" />
             <MFXTextField fx:id="txtSaleNumber" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Numero de venta" layoutX="728.0" layoutY="32.0" prefHeight="44.0" prefWidth="114.0" AnchorPane.rightAnchor="35.99999999999997" />
-            <MFXTextField fx:id="txtTotalDiscount" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Descuento total" layoutX="454.0" layoutY="634.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="242.0" />
-            <MFXTextField fx:id="txtTotalSale" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Total venta" layoutX="658.0" layoutY="634.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="38.0" />
+            <MFXTextField fx:id="txtTotalDiscount" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Descuento total" layoutX="454.0" layoutY="664.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="242.0" />
+            <MFXTextField fx:id="txtTotalSale" alignment="CENTER" editable="false" floatMode="BORDER" floatingText="Total venta" layoutX="658.0" layoutY="664.0" prefHeight="44.0" prefWidth="182.0" AnchorPane.rightAnchor="38.0" />
             <MFXLegacyComboBox fx:id="cbProducts" layoutX="365.0" layoutY="298.0" lineStrokeWidth="1.0" prefHeight="44.0" prefWidth="280.0" promptText="Productos " unfocusedLineColor="#3a18ff" />
             <MFXButton fx:id="newCustomer" alignment="CENTER" layoutX="35.0" layoutY="129.0" prefHeight="40.0" prefWidth="126.0" styleClass="buttonB" text="Nuevo cliente" />
             <MFXTextField fx:id="txtProductPrice" editable="false" floatMode="BORDER" floatingText="Precio" layoutX="191.0" layoutY="365.0" prefHeight="44.0" prefWidth="126.0" />
