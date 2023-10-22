@@ -238,7 +238,7 @@ public class PDFGenerator {
         // Configuración de autenticación (si es necesario)
         Authenticator authenticator = new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("blesgodd34@gmail.com", "zgjs cmax nila tpyp");
+                return new PasswordAuthentication("blesgodd34@gmail.com", "ujkn lgha nwsk qjdf");
             }
         };
 

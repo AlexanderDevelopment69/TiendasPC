@@ -10,7 +10,6 @@ import com.tienda.DaoImpl.CustomerDAOHibernate;
 import com.tienda.DaoImpl.DocumentDAOHibernate;
 import com.tienda.DaoImpl.ProductDAOHibernate;
 import com.tienda.DaoImpl.SaleDAOHibernate;
-import com.tienda.Model.Customer;
 import com.tienda.Tools.PDFGenerator;
 import com.tienda.Tools.TextFieldValidator;
 import com.tienda.Utils.CustomerUtil;
@@ -26,8 +25,6 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -624,8 +621,9 @@ public class ModalSale extends StackPane implements Initializable {
 
 
 
-            DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleId-1);
+            DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleDAO.getLastSaleId());
             String recipientEmail = documentSendEmail.getCustomer().getCustomerEmail();
+            System.out.println(recipientEmail);
 
             String names= documentSendEmail.getCustomer().getCustomerFirstName();
             String lastNames= documentSendEmail.getCustomer().getCustomerLastName();
@@ -639,7 +637,7 @@ public class ModalSale extends StackPane implements Initializable {
             modalSendEmail.configureModal(
                     new Image("Images/logoEmail.png"),
                     "Venta exitosa",
-                    " Enviar recibo de venta al cliente con correo: "+recipientEmail,
+                    " Enviar recibo de venta al cliente: ",
                     "Enviar",
                     "Cancelar",
                     e -> {

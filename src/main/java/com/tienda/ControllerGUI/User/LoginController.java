@@ -72,11 +72,10 @@ public class LoginController implements Initializable {
 
         loginInProgress = true; // Marcar que un inicio de sesión está en progreso
 
-//        String dni= textDni.getText(); // Obtiene el dni desde la UI
-//        String password = textPassword.getText();// Obtiene la contraseña desde la UI
+        String dni= textDni.getText(); // Obtiene el dni desde la UI
+        String password = textPassword.getText();// Obtiene la contraseña desde la UI
 
-        String dni= "74118606";
-        String password = "alexander#123A";
+
 
 
         if (dni.isEmpty() || password.isEmpty()) {
