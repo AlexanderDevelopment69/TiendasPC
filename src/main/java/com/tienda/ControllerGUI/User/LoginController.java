@@ -77,7 +77,6 @@ public class LoginController implements Initializable {
 
 
 
-
         if (dni.isEmpty() || password.isEmpty()) {
             // Mostrar una alerta indicando que se deben completar ambos campos
             System.out.println("Error de inicio de sesión\", \"Por favor, complete todos los campos");

@@ -621,13 +621,6 @@ public class ModalSale extends StackPane implements Initializable {
 
 
 
-            DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleDAO.getLastSaleId());
-            String recipientEmail = documentSendEmail.getCustomer().getCustomerEmail();
-            System.out.println(recipientEmail);
-
-            String names= documentSendEmail.getCustomer().getCustomerFirstName();
-            String lastNames= documentSendEmail.getCustomer().getCustomerLastName();
-            String namesCustomer= names.concat(" "+lastNames);
 
 
 
@@ -641,6 +634,13 @@ public class ModalSale extends StackPane implements Initializable {
                     "Enviar",
                     "Cancelar",
                     e -> {
+                        DocumentDTO documentSendEmail= documentDAO.getDocumentBySaleId(saleDAO.getLastSaleId());
+                        String recipientEmail = documentSendEmail.getCustomer().getCustomerEmail();
+                        System.out.println(recipientEmail);
+
+                        String names= documentSendEmail.getCustomer().getCustomerFirstName();
+                        String lastNames= documentSendEmail.getCustomer().getCustomerLastName();
+                        String namesCustomer= names.concat(" "+lastNames);
 
 
                         String subject = "¡Su Comprobante Electrónico Está Listo!";
