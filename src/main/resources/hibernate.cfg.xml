@@ -6,9 +6,9 @@
     <!-- Configuración de la base de datos -->
     <session-factory>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/techComputer</property>
+        <property name="hibernate.connection.url">jdbc:mysql://20.241.10.159:3306/TiendaPC</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">root</property>
+        <property name="hibernate.connection.password">EwYNY0Dvz6bst3vI</property>
 
         <!-- Configuración de dialecto SQL -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
